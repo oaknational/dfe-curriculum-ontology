@@ -1,0 +1,100 @@
+@prefix curric: <https://w3id.org/uk/curriculum/core/> .
+@prefix eng: <https://w3id.org/uk/curriculum/england/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ======================================================================
+# National Curriculum England - Science Subject
+# ======================================================================
+
+# ----------------------------------------------------------------------
+# Ontology Declaration
+# ----------------------------------------------------------------------
+
+<https://w3id.org/uk/curriculum/england/science-subject>
+  rdf:type owl:Ontology ;
+
+  rdfs:label "National Curriculum England - Science Subject"@en ;
+  dc:title "National Curriculum England - Science Subject"@en ;
+  rdfs:comment """Science subject definition, including aims and strands for the 
+  National Curriculum in England."""@en ;
+
+  owl:versionInfo "2025-12-03" ;
+  owl:versionIRI <https://w3id.org/uk/curriculum/england/science-subject/2025-12-03> ;
+  # Placeholder for prior version - use when a prior version is available
+  # owl:priorVersion <https://w3id.org/uk/curriculum/england/science-subject/2025-11-19> ;
+  
+  dcterms:description """This file defines the Science subject in the National Curriculum 
+  for England, including its aims and strands within the knowledge taxonomy."""@en ;
+  dc:creator "Department for Education" ;
+  dcterms:created "2025-11-24"^^xsd:date ;
+  dcterms:modified "2025-12-03"^^xsd:date ;
+  dcterms:issued "2025-12-03"^^xsd:date ;
+  
+  dcterms:license <http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/> ;
+  dcterms:rights "Crown Copyright"@en ;
+
+  rdfs:seeAlso <https://www.gov.uk/government/collections/national-curriculum> ;
+  vann:preferredNamespacePrefix "eng" ;
+  vann:preferredNamespaceUri "https://w3id.org/uk/curriculum/england/" ;
+
+  owl:imports <https://w3id.org/uk/curriculum/core/> .
+
+# ----------------------------------------------------------------------
+# Knowledge Taxonomy
+# ----------------------------------------------------------------------
+
+eng:knowledge-taxonomy
+  a skos:ConceptScheme ;
+  skos:prefLabel "English National Curriculum Knowledge Structure"@en ;
+  skos:hasTopConcept eng:subject-science .
+
+# ----------------------------------------------------------------------
+# Subject: Science
+# ----------------------------------------------------------------------
+
+eng:subject-science
+  a skos:Concept, curric:Subject ;
+  skos:prefLabel "Science"@en ;
+  rdfs:label "Science"@en ;
+  skos:inScheme eng:knowledge-taxonomy ;
+  skos:topConceptOf eng:knowledge-taxonomy ;
+  skos:definition """The systematic study of the natural world through observation, experimentation, 
+  and theory, encompassing biology, chemistry, and physics."""@en ;
+  dcterms:description """A high-quality science education provides the foundations for 
+  understanding the world through the specific disciplines of biology, chemistry and 
+  physics."""@en ;
+  dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study> ;
+  skos:scopeNote """Science is essential for understanding the natural world and making informed 
+  decisions about scientific developments. It develops critical thinking, analytical skills, and 
+  systematic investigation methods that students will use throughout their lives."""@en ;
+  rdfs:comment "Science as both a subject discipline and a taught programme."@en ;
+  curric:hasStrand eng:strand-structure-function-living-organisms ,
+                   eng:strand-material-cycles-and-energy ;
+  
+  curric:hasAim 
+    """Develop scientific knowledge and conceptual understanding through the specific disciplines 
+    of biology, chemistry and physics"""@en ,
+    """Develop understanding of the nature, processes and methods of science through different 
+    types of science enquiries that help them to answer scientific questions about the world around 
+    them"""@en ,
+    """Are equipped with the scientific knowledge required to understand the uses and implications 
+    of science, today and for the future"""@en .
+
+# ----------------------------------------------------------------------
+# Sub-Subjects
+# ----------------------------------------------------------------------
+
+eng:subsubject-science
+  a curric:SubSubject ;
+  rdfs:label "Science"@en ;
+  rdfs:comment "Science subject in the National Curriculum for England."@en ;
+  curric:isPartOf eng:subject-science ;
+  curric:includesStrand eng:strand-structure-function-living-organisms ,
+                        eng:strand-material-cycles-and-energy .
