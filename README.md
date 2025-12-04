@@ -21,9 +21,7 @@ eng:scheme-science-key-stage-3
 
 This ontology uses [w3id.org](https://w3id.org/) to provide **permanent, resolvable URIs** for all curriculum resources.
 
-### Why w3id.org?
-
-**Persistence**: URIs remain stable even if the repository moves or changes hosting. Once published, `https://w3id.org/uk/curriculum/core/Phase` will always resolve, regardless of where the actual files are stored.
+**Persistence**: URIs remain stable even if the repository moves or hosting changes. For example, `https://w3id.org/uk/curriculum/core/Phase` will always resolve, regardless of where the actual files are stored.
 
 **Content Negotiation**: w3id.org supports automatic format negotiation. When you request a URI, it can serve different formats based on your needs:
 - Web browsers receive human-readable documentation
@@ -33,13 +31,13 @@ This ontology uses [w3id.org](https://w3id.org/) to provide **permanent, resolva
 **Professional Trust**: w3id.org is a community-managed service specifically designed for linked data identifiers. Using it signals this is a production-ready, professionally maintained ontology.
 
 **Separation of Concerns**: The persistent identifier (`w3id.org`) is separate from the storage location (GitHub). This means:
-- URIs in your data never need to change
-- You can migrate hosting providers without breaking links
-- Other ontologies can safely reference your URIs
+- URIs never need to change
+- Hosting providers can change without breaking links
+- Other ontologies can safely reference these URIs
 
 ### How It Works
 
-w3id.org uses HTTP redirects (303 See Other) to point persistent URIs to the actual file locations:
+w3id.org uses HTTP redirects to point persistent URIs to the actual file locations:
 
 ```
 User requests: https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl
@@ -52,8 +50,6 @@ GitHub: https://raw.githubusercontent.com/oaknational/uk-curriculum-ontology/mai
 ```
 
 This redirection is configured via a `.htaccess` file in the [perma-id/w3id.org](https://github.com/perma-id/w3id.org) repository.
-
-**Always use w3id.org URIs** in your ontology files, data, and documentation. Never use direct GitHub URLs - they're just implementation details.
 
 ## Purpose
 
@@ -68,27 +64,37 @@ Designed to be reusable across England, Wales, Scotland, and Northern Ireland, t
 
 ## Core Concepts
 
-The ontology organizes curriculum data into two main hierarchies:
+The ontology organizes curriculum data into three main hierarchies:
 
-**Programme Structure** (organizational framework):
+### 1. Temporal Hierarchy
+Defines the age-based progression through the education system:
 ```
 Phase (Primary, Secondary)
-    KeyStage (KS1, KS2, KS3, KS4)
-        YearGroup (Year 1-11)
+  └─ KeyStage (KS1, KS2, KS3, KS4)
+      └─ YearGroup (Year 1-11)
 ```
 
-**Knowledge Structure** (content organization):
+### 2. Programme Hierarchy
+Defines how subjects are organized and delivered:
 ```
 Subject (e.g., Science)
-    Strand (e.g., Structure and function of living organisms)
-        SubStrand (e.g., Cells and organisation)
-            ContentDescriptor (e.g., Cells as fundamental unit)
-                ContentSubDescriptor (detailed elaborations)
+  └─ SubSubject (e.g., Science as taught in England)
+      └─ Scheme (e.g., Science Key Stage 3)
+```
+A **Scheme** connects temporal and knowledge hierarchies by specifying which content descriptors are taught at which key stage.
+
+### 3. Knowledge Taxonomy
+Organizes the actual curriculum content and concepts:
+```
+Subject (e.g., Science)
+  └─ Strand (e.g., Structure and function of living organisms)
+      └─ SubStrand (e.g., Cells and organisation)
+          └─ ContentDescriptor (e.g., Cells as fundamental unit)
+              └─ ContentSubDescriptor (e.g., Specific details about cell observation)
 ```
 
-**Schemes** connect these hierarchies by mapping content descriptors to specific key stages within subjects.
-
-**Themes** provide cross-cutting connections (e.g., Climate Change, Digital Literacy) that span multiple subjects.
+### Cross-Cutting Themes
+**Themes** provide connections across subjects (e.g., Climate Change, Digital Literacy) and can be linked to any content descriptor to show where these important topics appear throughout the curriculum.
 
 ## Quick Example
 
@@ -112,20 +118,21 @@ See [docs/examples.md](docs/examples.md) for more SPARQL query examples.
 ```
 uk-curriculum-ontology/
 ├── ontology/
-│   ├── curriculum-ontology.ttl          # Core classes and properties
+│   ├── curriculum-ontology.ttl           # Core classes and properties
 │   └── versions/                         # Versioned releases
 ├── constraints/
 │   ├── curriculum-constraints.ttl        # SHACL validation shapes
 │   └── versions/
 ├── data/
 │   └── england/
-│       ├── programme-structure.ttl       # Phases, key stages, year groups
-│       ├── themes.ttl                    # Cross-cutting themes
+│       ├── programme-structure.ttl       # Phases, Key Stages, Year Groups
+│       ├── themes.ttl                    # Cross-cutting Themes
 │       └── subjects/
 │           └── science/
-│               ├── science-subject.ttl           # Subject definition
-│               ├── science-knowledge-taxonomy.ttl # Strands and content
-│               └── science-schemes.ttl           # KS mappings
+│               ├── science-subject.ttl                 # Subjects, Sub-Subjects
+│               ├── science-knowledge-taxonomy.ttl      # Strands, Sub-Strands, ContentDescriptors
+│               └── science-schemes.ttl                 # Schemes 
+│
 ├── docs/                                 # Documentation
 ├── tools/                                # Utility scripts
 └── validation/                           # Test data and examples
