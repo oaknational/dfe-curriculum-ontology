@@ -1,0 +1,81 @@
+# macOS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.project
+.settings/
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+*~
+
+# Triple store databases (if generated locally)
+tdb/
+tdb2/
+blazegraph.jnl
+*.db
+
+# Build artifacts
+dist/
+build/
+target/
+*.pyc
+__pycache__/
+
+# Generated documentation (if auto-generated)
+docs/generated/
+*.html
+!docs/**/*.html
+
+# Test outputs
+validation-reports/
+*.report.ttl
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Package manager
+node_modules/
+package-lock.json
+yarn.lock
+
+# Python
+venv/
+env/
+ENV/
+*.egg-info/
+.pytest_cache/
+
+# Java
+*.class
+*.jar
+!lib/*.jar
+
+# Coverage
+coverage/
+.coverage
+*.cover
