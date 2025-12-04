@@ -77,9 +77,9 @@ Phase (Primary, Secondary)
 ### 2. Programme Hierarchy
 Defines how subjects are organized and delivered:
 ```
-Subject (e.g., Science)
-  └─ SubSubject (e.g., Science as taught in England)
-      └─ Scheme (e.g., Science Key Stage 3)
+Subject (e.g. Science)
+  └─ SubSubject (e.g. Biology)
+      └─ Scheme (e.g. Biology Key Stage 3)
 ```
 A **Scheme** connects temporal and knowledge hierarchies by specifying which content descriptors are taught at which key stage.
 
@@ -87,16 +87,16 @@ A **Scheme** connects temporal and knowledge hierarchies by specifying which con
 Organizes the actual curriculum content and concepts:
 ```
 Subject (e.g., Science)
-  └─ Strand (e.g., Structure and function of living organisms)
-      └─ SubStrand (e.g., Cells and organisation)
-          └─ ContentDescriptor (e.g., Cells as fundamental unit)
-              └─ ContentSubDescriptor (e.g., Specific details about cell observation)
+  └─ Strand (e.g. Structure and function of living organisms)
+      └─ SubStrand (e.g. Cells and organisation)
+          └─ ContentDescriptor (e.g. Cells as the fundamental unit of living organisms)
+              └─ ContentSubDescriptor (further detail, elaboration, examples)
 ```
 
 ### Cross-Cutting Themes
 **Themes** provide connections across subjects (e.g., Climate Change, Digital Literacy) and can be linked to any content descriptor to show where these important topics appear throughout the curriculum.
 
-![The three main hierarchies](https://raw.githubusercontent.com/oaknational/uk-curriculum-ontology/main/docs/images/model.png)
+![The three main hierarchies](https://raw.githubusercontent.com/oaknational/uk-curriculum-ontology/main/docs/images/model.png?raw=1)
 
 ## Quick Example
 
