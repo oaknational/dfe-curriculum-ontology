@@ -1,0 +1,237 @@
+@prefix curric: <https://w3id.org/uk/curriculum/core/> .
+@prefix eng: <https://w3id.org/uk/curriculum/england/> .
+@prefix ex: <https://w3id.org/uk/curriculum/example/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# ======================================================================
+# Invalid Example - Demonstrates Common Errors
+# ======================================================================
+#
+# This file shows INCORRECT usage of the UK Curriculum Ontology.
+# It should fail SHACL validation with specific violations.
+#
+# To test:
+#   shacl validate --shapes=../constraints/curriculum-constraints.ttl \
+#                  --data=invalid-example.ttl
+#
+# Expected result: Multiple violations (see expected-violations.txt)
+# ======================================================================
+
+# ----------------------------------------------------------------------
+# ERROR 1: Missing Required Label
+# ----------------------------------------------------------------------
+
+ex:phase-missing-label
+  a curric:Phase ;
+  # VIOLATION: Missing rdfs:label
+  rdfs:comment "This phase is missing its required label."@en ;
+  curric:lowerAgeBoundary 5 ;
+  curric:upperAgeBoundary 11 .
+
+# ----------------------------------------------------------------------
+# ERROR 2: Invalid Age Boundaries (Lower >= Upper)
+# ----------------------------------------------------------------------
+
+ex:phase-invalid-ages
+  a curric:Phase ;
+  rdfs:label "Phase with Invalid Ages"@en ;
+  curric:lowerAgeBoundary 11 ;
+  curric:upperAgeBoundary 11 .  # VIOLATION: lower should be < upper
+
+# ----------------------------------------------------------------------
+# ERROR 3: Age Out of Reasonable Range
+# ----------------------------------------------------------------------
+
+ex:phase-unreasonable-age
+  a curric:Phase ;
+  rdfs:label "Phase with Unreasonable Age"@en ;
+  curric:lowerAgeBoundary 5 ;
+  curric:upperAgeBoundary 30 .  # VIOLATION: > 25 years
+
+# ----------------------------------------------------------------------
+# ERROR 4: Missing Required Relationship
+# ----------------------------------------------------------------------
+
+ex:keystage-orphaned
+  a curric:KeyStage ;
+  rdfs:label "Orphaned Key Stage"@en ;
+  # VIOLATION: Missing curric:isPartOf (required to link to Phase)
+  curric:lowerAgeBoundary 5 ;
+  curric:upperAgeBoundary 7 .
+
+# ----------------------------------------------------------------------
+# ERROR 5: Cardinality Violation (Too Many)
+# ----------------------------------------------------------------------
+
+ex:scheme-multiple-keystages
+  a curric:Scheme ;
+  rdfs:label "Scheme with Multiple Key Stages"@en ;
+  curric:isPartOf ex:valid-subsubject ;
+  curric:hasKeyStage ex:valid-keystage-1 ;
+  curric:hasKeyStage ex:valid-keystage-2 .  # VIOLATION: max 1 key stage
+
+# ----------------------------------------------------------------------
+# ERROR 6: Age Boundary Outside Parent Range
+# ----------------------------------------------------------------------
+
+ex:parent-phase
+  a curric:Phase ;
+  rdfs:label "Parent Phase"@en ;
+  curric:lowerAgeBoundary 11 ;
+  curric:upperAgeBoundary 16 .
+
+ex:keystage-outside-parent
+  a curric:KeyStage ;
+  rdfs:label "Key Stage Outside Parent Range"@en ;
+  curric:isPartOf ex:parent-phase ;
+  curric:lowerAgeBoundary 10 ;  # VIOLATION: 10 < parent's 11
+  curric:upperAgeBoundary 14 .
+
+# ----------------------------------------------------------------------
+# ERROR 7: Missing Inverse Relationship
+# ----------------------------------------------------------------------
+
+ex:valid-subsubject
+  a curric:SubSubject ;
+  rdfs:label "Valid SubSubject"@en ;
+  curric:isPartOf ex:valid-subject ;
+  curric:includesStrand ex:strand-missing-inverse .
+
+ex:strand-missing-inverse
+  a skos:Concept, curric:Strand ;
+  skos:prefLabel "Strand Missing Inverse"@en ;
+  skos:broader ex:valid-subject ;
+  skos:narrower ex:valid-substrand ;
+  skos:inScheme ex:valid-taxonomy .
+  # VIOLATION: Missing curric:applicableToSubSubject ex:valid-subsubject
+
+# ----------------------------------------------------------------------
+# ERROR 8: Missing Required SKOS Properties
+# ----------------------------------------------------------------------
+
+ex:subject-missing-skos
+  a curric:Subject ;
+  rdfs:label "Subject Missing SKOS"@en ;
+  # VIOLATION: Missing skos:prefLabel (required)
+  # VIOLATION: Missing skos:inScheme (required)
+  curric:hasAim "Some aim"@en .
+
+# ----------------------------------------------------------------------
+# ERROR 9: Wrong Datatype
+# ----------------------------------------------------------------------
+
+ex:phase-wrong-datatype
+  a curric:Phase ;
+  rdfs:label "Phase with Wrong Datatype"@en ;
+  curric:lowerAgeBoundary "five" ;  # VIOLATION: should be xsd:nonNegativeInteger
+  curric:upperAgeBoundary 11 .
+
+# ----------------------------------------------------------------------
+# ERROR 10: Orphaned Entity (Not Connected)
+# ----------------------------------------------------------------------
+
+ex:orphaned-keystage
+  a curric:KeyStage ;
+  rdfs:label "Orphaned Key Stage"@en ;
+  curric:isPartOf ex:valid-phase ;
+  curric:lowerAgeBoundary 5 ;
+  curric:upperAgeBoundary 7 .
+  # VIOLATION: Not used in any scheme (orphaned check)
+
+ex:orphaned-strand
+  a skos:Concept, curric:Strand ;
+  skos:prefLabel "Orphaned Strand"@en ;
+  skos:inScheme ex:valid-taxonomy ;
+  skos:narrower ex:valid-substrand .
+  # VIOLATION: Not referenced by any subject via hasStrand
+  # VIOLATION: Missing curric:applicableToSubSubject
+
+# ----------------------------------------------------------------------
+# ERROR 11: Missing Required Children
+# ----------------------------------------------------------------------
+
+ex:strand-no-children
+  a skos:Concept, curric:Strand ;
+  skos:prefLabel "Strand Without Children"@en ;
+  skos:broader ex:valid-subject ;
+  skos:inScheme ex:valid-taxonomy ;
+  curric:applicableToSubSubject ex:valid-subsubject .
+  # VIOLATION: Missing skos:narrower (must have at least one SubStrand)
+
+# ----------------------------------------------------------------------
+# ERROR 12: Theme Not Related to Content
+# ----------------------------------------------------------------------
+
+ex:orphaned-theme
+  a skos:Concept, curric:Theme ;
+  skos:prefLabel "Orphaned Theme"@en ;
+  skos:definition "A theme not connected to any content."@en ;
+  skos:inScheme ex:valid-taxonomy .
+  # VIOLATION: Not related to any content via skos:related
+
+# ----------------------------------------------------------------------
+# ERROR 13: Missing Language Tag
+# ----------------------------------------------------------------------
+
+ex:subject-no-lang-tag
+  a skos:Concept, curric:Subject ;
+  skos:prefLabel "Missing Language Tag" ;  # VIOLATION: should be "..."@en
+  rdfs:label "Missing Language Tag"@en ;
+  skos:inScheme ex:valid-taxonomy .
+
+# ----------------------------------------------------------------------
+# Supporting Valid Entities (for context)
+# ----------------------------------------------------------------------
+
+ex:valid-taxonomy
+  a skos:ConceptScheme ;
+  skos:prefLabel "Valid Taxonomy"@en .
+
+ex:valid-phase
+  a curric:Phase ;
+  rdfs:label "Valid Phase"@en ;
+  curric:lowerAgeBoundary 5 ;
+  curric:upperAgeBoundary 11 .
+
+ex:valid-keystage-1
+  a curric:KeyStage ;
+  rdfs:label "Valid Key Stage 1"@en ;
+  curric:isPartOf ex:valid-phase ;
+  curric:lowerAgeBoundary 5 ;
+  curric:upperAgeBoundary 7 .
+
+ex:valid-keystage-2
+  a curric:KeyStage ;
+  rdfs:label "Valid Key Stage 2"@en ;
+  curric:isPartOf ex:valid-phase ;
+  curric:lowerAgeBoundary 7 ;
+  curric:upperAgeBoundary 11 .
+
+ex:valid-subject
+  a skos:Concept, curric:Subject ;
+  skos:prefLabel "Valid Subject"@en ;
+  rdfs:label "Valid Subject"@en ;
+  skos:inScheme ex:valid-taxonomy ;
+  skos:topConceptOf ex:valid-taxonomy .
+
+ex:valid-substrand
+  a skos:Concept, curric:SubStrand ;
+  skos:prefLabel "Valid SubStrand"@en ;
+  skos:inScheme ex:valid-taxonomy ;
+  skos:narrower ex:valid-content .
+
+ex:valid-content
+  a skos:Concept, curric:ContentDescriptor ;
+  skos:prefLabel "Valid Content"@en ;
+  skos:broader ex:valid-substrand ;
+  skos:inScheme ex:valid-taxonomy .
+
+# ======================================================================
+# Summary of Expected Violations
+# ======================================================================
+#
+# See expected-violations.txt for the complete list of validation
+# errors that should be reported by SHACL validation.
+# ======================================================================

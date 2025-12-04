@@ -1,0 +1,153 @@
+@prefix curric: <https://w3id.org/uk/curriculum/core/> .
+@prefix eng: <https://w3id.org/uk/curriculum/england/> .
+@prefix ex: <https://w3id.org/uk/curriculum/example/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+
+# ======================================================================
+# Valid Example - Demonstrates Correct Usage
+# ======================================================================
+#
+# This file shows correct usage of the UK Curriculum Ontology.
+# It should pass all SHACL validation constraints.
+#
+# To test:
+#   shacl validate --shapes=../constraints/curriculum-constraints.ttl \
+#                  --data=valid-example.ttl
+#
+# Expected result: No violations
+# ======================================================================
+
+# ----------------------------------------------------------------------
+# Programme Structure - Valid Examples
+# ----------------------------------------------------------------------
+
+# Valid Phase
+ex:example-phase
+  a curric:Phase ;
+  rdfs:label "Example Phase"@en ;
+  rdfs:comment "An example phase for testing."@en ;
+  curric:lowerAgeBoundary 5 ;
+  curric:upperAgeBoundary 11 .
+
+# Valid Key Stage
+ex:example-key-stage
+  a curric:KeyStage ;
+  rdfs:label "Example Key Stage"@en ;
+  rdfs:comment "An example key stage for testing."@en ;
+  curric:isPartOf ex:example-phase ;
+  curric:lowerAgeBoundary 5 ;
+  curric:upperAgeBoundary 7 .
+
+# Valid Year Group
+ex:example-year-group
+  a curric:YearGroup ;
+  rdfs:label "Example Year Group"@en ;
+  rdfs:comment "An example year group for testing."@en ;
+  curric:isPartOf ex:example-key-stage ;
+  curric:lowerAgeBoundary 5 ;
+  curric:upperAgeBoundary 6 .
+
+# ----------------------------------------------------------------------
+# Knowledge Structure - Valid Examples
+# ----------------------------------------------------------------------
+
+# Valid Concept Scheme
+ex:example-taxonomy
+  a skos:ConceptScheme ;
+  skos:prefLabel "Example Knowledge Taxonomy"@en ;
+  skos:hasTopConcept ex:example-subject .
+
+# Valid Subject
+ex:example-subject
+  a skos:Concept, curric:Subject ;
+  skos:prefLabel "Example Subject"@en ;
+  rdfs:label "Example Subject"@en ;
+  skos:definition "An example subject for testing purposes."@en ;
+  skos:inScheme ex:example-taxonomy ;
+  skos:topConceptOf ex:example-taxonomy ;
+  curric:hasAim "To demonstrate correct subject definition"@en ;
+  curric:hasStrand ex:example-strand .
+
+# Valid SubSubject
+ex:example-subsubject
+  a curric:SubSubject ;
+  rdfs:label "Example SubSubject"@en ;
+  rdfs:comment "An example sub-subject for testing."@en ;
+  curric:isPartOf ex:example-subject ;
+  curric:includesStrand ex:example-strand .
+
+# Valid Strand (with inverse relationships properly defined)
+ex:example-strand
+  a skos:Concept, curric:Strand ;
+  skos:prefLabel "Example Strand"@en ;
+  skos:broader ex:example-subject ;
+  skos:narrower ex:example-substrand ;
+  skos:inScheme ex:example-taxonomy ;
+  curric:applicableToSubSubject ex:example-subsubject .
+
+# Valid SubStrand
+ex:example-substrand
+  a skos:Concept, curric:SubStrand ;
+  skos:prefLabel "Example SubStrand"@en ;
+  skos:broader ex:example-strand ;
+  skos:narrower ex:example-content-descriptor ;
+  skos:inScheme ex:example-taxonomy .
+
+# Valid ContentDescriptor
+ex:example-content-descriptor
+  a skos:Concept, curric:ContentDescriptor ;
+  skos:prefLabel "Students will understand example concepts"@en ;
+  skos:broader ex:example-substrand ;
+  skos:narrower ex:example-content-subdescriptor ;
+  skos:inScheme ex:example-taxonomy .
+
+# Valid ContentSubDescriptor
+ex:example-content-subdescriptor
+  a skos:Concept, curric:ContentSubDescriptor ;
+  skos:prefLabel "Detailed example elaboration"@en ;
+  skos:broader ex:example-content-descriptor ;
+  skos:inScheme ex:example-taxonomy ;
+  curric:example "For example, students might learn about X, Y, and Z"@en ;
+  curric:exampleURL <https://example.org/educational-resource> .
+
+# ----------------------------------------------------------------------
+# Schemes - Valid Examples
+# ----------------------------------------------------------------------
+
+# Valid Scheme (connects programme structure to knowledge structure)
+ex:example-scheme
+  a curric:Scheme ;
+  rdfs:label "Example Subject - Example Key Stage"@en ;
+  rdfs:comment "Example scheme connecting content to a key stage."@en ;
+  curric:isPartOf ex:example-subsubject ;
+  curric:hasKeyStage ex:example-key-stage ;
+  curric:hasContent ex:example-content-descriptor .
+
+# ----------------------------------------------------------------------
+# Themes - Valid Examples
+# ----------------------------------------------------------------------
+
+# Valid Theme
+ex:example-theme
+  a skos:Concept, curric:Theme ;
+  skos:prefLabel "Example Cross-Cutting Theme"@en ;
+  skos:definition "A theme that spans multiple subjects to demonstrate valid usage."@en ;
+  skos:inScheme ex:example-taxonomy ;
+  skos:related ex:example-content-descriptor .
+
+# ----------------------------------------------------------------------
+# Validation Notes
+# ----------------------------------------------------------------------
+#
+# This example demonstrates:
+# 1. All required properties are present
+# 2. Cardinality constraints are satisfied (exactly one where required)
+# 3. Age boundaries are logical (lower < upper)
+# 4. Hierarchical relationships are complete
+# 5. Inverse relationships are consistent (both directions present)
+# 6. No orphaned entities (all are connected to the hierarchy)
+# 7. Language tags are used correctly
+# 8. Datatypes are correct
+# ======================================================================
