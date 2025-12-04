@@ -5,7 +5,21 @@ All notable changes to the UK Curriculum Ontology will be documented in this fil
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## Versioning Policy
+
+Version numbers follow Semantic Versioning (MAJOR.MINOR.PATCH):
+
+- **MAJOR**: Breaking changes to class or property definitions
+- **MINOR**: New classes, properties, or data (backward compatible)
+- **PATCH**: Bug fixes, corrections, documentation updates (backward compatible)
+
+Each version is preserved in the `versions/` directories with dated version IRIs.
+
+---
+
 ## [0.1.0] - 2025-12-03
+
+**Release:** [curriculum-ontology/0.1.0](https://w3id.org/uk/curriculum/core/curriculum-ontology/0.1.0)
 
 ### Added
 - Initial public release of UK Curriculum Ontology
@@ -52,6 +66,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.0.9] - 2025-12-03
 
+**Release:** [curriculum-ontology/0.0.9](https://w3id.org/uk/curriculum/core/curriculum-ontology/0.0.9)
+
 ### Added
 - Development version with initial structure
 - Core class definitions
@@ -60,18 +76,3 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Namespace URIs finalized to w3id.org structure
 - Refined property domains and ranges
-
-## Links
-
-- [0.1.0](https://w3id.org/uk/curriculum/core/curriculum-ontology/0.1.0)
-- [0.0.9](https://w3id.org/uk/curriculum/core/curriculum-ontology/0.0.9)
-
-## Versioning Policy
-
-Version numbers follow Semantic Versioning (MAJOR.MINOR.PATCH):
-
-- **MAJOR**: Breaking changes to class or property definitions
-- **MINOR**: New classes, properties, or data (backward compatible)
-- **PATCH**: Bug fixes, corrections, documentation updates (backward compatible)
-
-Each version is preserved in the `versions/` directories with dated version IRIs.
