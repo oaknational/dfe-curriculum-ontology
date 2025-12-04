@@ -1,0 +1,227 @@
+@prefix curric: <https://w3id.org/uk/curriculum/core/> .
+@prefix eng: <https://w3id.org/uk/curriculum/england/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ======================================================================
+# National Curriculum England - Programme Structure
+# ======================================================================
+
+# ----------------------------------------------------------------------
+# Ontology Declaration
+# ----------------------------------------------------------------------
+
+<https://w3id.org/uk/curriculum/england/programme-structure>
+  rdf:type owl:Ontology ;
+
+  rdfs:label "National Curriculum England - Programme Structure"@en ;
+  dc:title "National Curriculum England - Programme Structure"@en ;
+  rdfs:comment """Programme structure defining the organizational framework of education 
+  in England: phases, key stages, and year groups."""@en ;
+
+  owl:versionInfo "0.0.9" ;
+  owl:versionIRI <https://w3id.org/uk/curriculum/england/programme-structure/0.0.9> ;
+  
+  dcterms:description """This ontology defines the organizational structure of education in 
+  England, including phases (Primary, Secondary), key stages (KS1-4), and year groups (Year 1 - 
+  Year 11) that provide the framework for curriculum delivery."""@en ;
+  dc:creator "Department for Education" ;
+  dcterms:created "2025-11-19"^^xsd:date ;
+  dcterms:modified "2025-11-19"^^xsd:date ;
+  dcterms:issued "2025-11-19"^^xsd:date ;
+  
+  dcterms:license <http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/> ;
+  dcterms:rights "Crown Copyright"@en ;
+
+  rdfs:seeAlso <https://www.gov.uk/government/collections/national-curriculum> ;
+  vann:preferredNamespacePrefix "eng" ;
+  vann:preferredNamespaceUri "https://w3id.org/uk/curriculum/england/" ;
+
+  owl:imports <https://w3id.org/uk/curriculum/core/> .
+
+# ----------------------------------------------------------------------
+# Phases
+# ----------------------------------------------------------------------
+
+eng:phase-primary
+  a curric:Phase ;
+  rdfs:label "Primary"@en ;
+  rdfs:comment "Primary education phase covering years 1-6."@en ;
+  curric:lowerAgeBoundary 5 ;
+  curric:upperAgeBoundary 11 .
+
+eng:phase-secondary
+  a curric:Phase ;
+  rdfs:label "Secondary"@en ;
+  rdfs:comment "Secondary education phase covering years 7-11."@en ;
+  curric:lowerAgeBoundary 11 ;
+  curric:upperAgeBoundary 16 .
+
+eng:education-phases
+  a skos:OrderedCollection ;
+  rdfs:label "Education Phases"@en ;
+  skos:memberList (eng:phase-primary eng:phase-secondary) .
+
+# ----------------------------------------------------------------------
+# Key Stages
+# ----------------------------------------------------------------------
+
+eng:key-stage-1
+  a curric:KeyStage ;
+  rdfs:label "Key Stage 1"@en ;
+  rdfs:comment "Key Stage 1 covering years 1-2."@en ;
+  curric:lowerAgeBoundary 5 ;
+  curric:upperAgeBoundary 7 ;
+  curric:isPartOf eng:phase-primary .
+
+eng:key-stage-2
+  a curric:KeyStage ;
+  rdfs:label "Key Stage 2"@en ;
+  rdfs:comment "Key Stage 2 covering years 3-6."@en ;
+  curric:lowerAgeBoundary 7 ;
+  curric:upperAgeBoundary 11 ;
+  curric:isPartOf eng:phase-primary .
+
+eng:key-stage-3
+  a curric:KeyStage ;
+  rdfs:label "Key Stage 3"@en ;
+  rdfs:comment "Key Stage 3 covering years 7-9."@en ;
+  curric:lowerAgeBoundary 11 ;
+  curric:upperAgeBoundary 14 ;
+  curric:isPartOf eng:phase-secondary .
+
+eng:key-stage-4
+  a curric:KeyStage ;
+  rdfs:label "Key Stage 4"@en ;
+  rdfs:comment "Key Stage 4 covering years 10-11 (GCSE years)."@en ;
+  curric:lowerAgeBoundary 14 ;
+  curric:upperAgeBoundary 16 ;
+  curric:isPartOf eng:phase-secondary .
+
+eng:primary-key-stages
+  a skos:OrderedCollection ;
+  rdfs:label "Primary Key Stages"@en ;
+  skos:memberList (eng:key-stage-1 eng:key-stage-2) .
+
+eng:secondary-key-stages
+  a skos:OrderedCollection ;
+  rdfs:label "Secondary Key Stages"@en ;
+  skos:memberList (eng:key-stage-3 eng:key-stage-4) .
+
+# ----------------------------------------------------------------------
+# Year Groups
+# ----------------------------------------------------------------------
+
+eng:year-group-1
+  a curric:YearGroup ;
+  rdfs:label "Year Group 1"@en ;
+  rdfs:comment "Year Group 1 (age 5-6)."@en ;
+  curric:lowerAgeBoundary 5 ;
+  curric:upperAgeBoundary 6 ;
+  curric:isPartOf eng:key-stage-1 .
+
+eng:year-group-2
+  a curric:YearGroup ;
+  rdfs:label "Year Group 2"@en ;
+  rdfs:comment "Year Group 2 (age 6-7)."@en ;
+  curric:lowerAgeBoundary 6 ;
+  curric:upperAgeBoundary 7 ;
+  curric:isPartOf eng:key-stage-1 .
+
+eng:year-group-3
+  a curric:YearGroup ;
+  rdfs:label "Year Group 3"@en ;
+  rdfs:comment "Year Group 3 (age 7-8)."@en ;
+  curric:lowerAgeBoundary 7 ;
+  curric:upperAgeBoundary 8 ;
+  curric:isPartOf eng:key-stage-2 .
+
+eng:year-group-4
+  a curric:YearGroup ;
+  rdfs:label "Year Group 4"@en ;
+  rdfs:comment "Year Group 4 (age 8-9)."@en ;
+  curric:lowerAgeBoundary 8 ;
+  curric:upperAgeBoundary 9 ;
+  curric:isPartOf eng:key-stage-2 .
+
+eng:year-group-5
+  a curric:YearGroup ;
+  rdfs:label "Year Group 5"@en ;
+  rdfs:comment "Year Group 5 (age 9-10)."@en ;
+  curric:lowerAgeBoundary 9 ;
+  curric:upperAgeBoundary 10 ;
+  curric:isPartOf eng:key-stage-2 .
+
+eng:year-group-6
+  a curric:YearGroup ;
+  rdfs:label "Year Group 6"@en ;
+  rdfs:comment "Year Group 6 (age 10-11)."@en ;
+  curric:lowerAgeBoundary 10 ;
+  curric:upperAgeBoundary 11 ;
+  curric:isPartOf eng:key-stage-2 .
+
+eng:year-group-7
+  a curric:YearGroup ;
+  rdfs:label "Year Group 7"@en ;
+  rdfs:comment "Year Group 7 (age 11-12)."@en ;
+  curric:lowerAgeBoundary 11 ;
+  curric:upperAgeBoundary 12 ;
+  curric:isPartOf eng:key-stage-3 .
+
+eng:year-group-8
+  a curric:YearGroup ;
+  rdfs:label "Year Group 8"@en ;
+  rdfs:comment "Year Group 8 (age 12-13)."@en ;
+  curric:lowerAgeBoundary 12 ;
+  curric:upperAgeBoundary 13 ;
+  curric:isPartOf eng:key-stage-3 .
+
+eng:year-group-9
+  a curric:YearGroup ;
+  rdfs:label "Year Group 9"@en ;
+  rdfs:comment "Year Group 9 (age 13-14)."@en ;
+  curric:lowerAgeBoundary 13 ;
+  curric:upperAgeBoundary 14 ;
+  curric:isPartOf eng:key-stage-3 .
+
+eng:year-group-10
+  a curric:YearGroup ;
+  rdfs:label "Year Group 10"@en ;
+  rdfs:comment "Year Group 10 (age 14-15), first year of GCSE study."@en ;
+  curric:lowerAgeBoundary 14 ;
+  curric:upperAgeBoundary 15 ;
+  curric:isPartOf eng:key-stage-4 .
+
+eng:year-group-11
+  a curric:YearGroup ;
+  rdfs:label "Year Group 11"@en ;
+  rdfs:comment "Year Group 11 (age 15-16), final year of GCSE study."@en ;
+  curric:lowerAgeBoundary 15 ;
+  curric:upperAgeBoundary 16 ;
+  curric:isPartOf eng:key-stage-4 .
+
+eng:key-stage-1-year-groups
+  a skos:OrderedCollection ;
+  rdfs:label "Key Stage 1 Year Groups"@en ;
+  skos:memberList (eng:year-group-1 eng:year-group-2) .
+
+eng:key-stage-2-year-groups
+  a skos:OrderedCollection ;
+  rdfs:label "Key Stage 2 Year Groups"@en ;
+  skos:memberList (eng:year-group-3 eng:year-group-4 eng:year-group-5 eng:year-group-6) .
+
+eng:key-stage-3-year-groups
+  a skos:OrderedCollection ;
+  rdfs:label "Key Stage 3 Year Groups"@en ;
+  skos:memberList (eng:year-group-7 eng:year-group-8 eng:year-group-9) .
+
+eng:key-stage-4-year-groups
+  a skos:OrderedCollection ;
+  rdfs:label "Key Stage 4 Year Groups"@en ;
+  skos:memberList (eng:year-group-10 eng:year-group-11) .
