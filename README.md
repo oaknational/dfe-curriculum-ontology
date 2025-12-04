@@ -96,7 +96,7 @@ Subject (e.g., Science)
 ### Cross-Cutting Themes
 **Themes** provide connections across subjects (e.g., Climate Change, Digital Literacy) and can be linked to any content descriptor to show where these important topics appear throughout the curriculum.
 
-![The three main hierarchies](https://raw.githubusercontent.com/oaknational/uk-curriculum-ontology/main/docs/images/model.png?raw=1)
+![The three main hierarchies](docs/images/model.png)
 
 ## Quick Example
 
