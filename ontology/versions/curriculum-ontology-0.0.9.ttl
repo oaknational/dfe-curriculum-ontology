@@ -1,0 +1,280 @@
+@prefix curric: <https://w3id.org/uk/curriculum/core/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+# ======================================================================
+# UK Curriculum Ontology
+# ======================================================================
+
+# ----------------------------------------------------------------------
+# Ontology Declaration
+# ----------------------------------------------------------------------
+
+<https://w3id.org/uk/curriculum/core/curriculum-ontology>
+  rdf:type owl:Ontology ;
+
+  rdfs:label "UK Curriculum Ontology"@en ;
+  dc:title "UK Curriculum Ontology"@en ;
+  rdfs:comment """Core vocabulary for describing curriculum structures, content organization, and 
+  educational programmes in the UK."""@en ;
+  
+  owl:versionInfo "0.0.9" ;
+  owl:versionIRI <https://w3id.org/uk/curriculum/core/curriculum-ontology/0.0.9> ;
+  
+  dcterms:description """This ontology defines the foundational classes and properties for 
+  representing educational curriculum structures. While it is currently used to describe the 
+  National Curriculum for England, it is designed to be reusable across the UK, including Wales, 
+  Scotland, and Northern Ireland."""@en ;
+  dcterms:creator "Department for Education" ;
+  dcterms:created "2025-11-19"^^xsd:date ;
+  dcterms:modified "2025-11-19"^^xsd:date ;
+  dcterms:issued "2025-11-19"^^xsd:date ;
+ 
+  dcterms:license <http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/> ;
+  dcterms:rights "Crown Copyright"@en ;
+  
+  rdfs:seeAlso <https://www.gov.uk/government/collections/national-curriculum> ;
+  vann:preferredNamespacePrefix "curric" ;
+  vann:preferredNamespaceUri "https://w3id.org/uk/curriculum/core/" ;
+
+  owl:imports <http://www.w3.org/2004/02/skos/core> .
+
+# ----------------------------------------------------------------------
+# Changelog
+# ----------------------------------------------------------------------
+
+curric:version-0.1.0
+  dcterms:date "2025-12-03"^^xsd:date ;
+  rdfs:comment "Initial release"@en .
+
+curric:version-0.0.9
+  dcterms:date "2025-12-03"^^xsd:date ;
+  rdfs:comment "Development version"@en .
+
+# ----------------------------------------------------------------------
+# Classes: Programme Structure
+# (Phase, KeyStage, YearGroup, Subject, SubSubject, Scheme)
+# ----------------------------------------------------------------------
+
+curric:Phase 
+  rdf:type owl:Class ;
+  rdfs:label "Phase"@en ;
+  rdfs:comment "A phase of study in the UK education system."@en ;
+  rdfs:isDefinedBy curric: .
+    
+curric:KeyStage 
+  rdf:type owl:Class ;
+  rdfs:label "Key Stage"@en ;
+  rdfs:comment "A key stage that structures learning for specific age groups."@en ;
+  rdfs:isDefinedBy curric: .
+
+curric:YearGroup 
+  rdf:type owl:Class ;
+  rdfs:label "Year Group"@en ;
+  rdfs:comment "A year group within a key stage."@en ;
+  rdfs:isDefinedBy curric: .
+
+curric:Subject
+  rdf:type owl:Class ;
+  rdfs:subClassOf skos:Concept ;
+  rdfs:label "Subject"@en ;
+  rdfs:comment "Subject (e.g. science, history, physical education)."@en ;
+  rdfs:isDefinedBy curric: .
+
+curric:SubSubject
+  rdf:type owl:Class ;
+  rdfs:label "Sub-Subject"@en ;
+  rdfs:comment "Sub-subject (e.g. biology, history, physical education)."@en ;
+  rdfs:isDefinedBy curric: .
+
+curric:Scheme
+  rdf:type owl:Class ;
+  rdfs:label "Scheme"@en ;
+  rdfs:comment """A scheme that defines curriculum content for a subject across one or more 
+  year groups."""@en ;
+  rdfs:isDefinedBy curric: .
+
+# ----------------------------------------------------------------------
+# Classes: Knowledge Structure
+# (Strand, SubStrand, ContentDescriptor, ContentSubDescriptor, Theme)
+# ----------------------------------------------------------------------
+
+curric:Strand
+  rdf:type owl:Class ;
+  rdfs:subClassOf skos:Concept ;
+  rdfs:label "Strand"@en ;
+  rdfs:comment "An organisational strand within a discipline (e.g. number, algebra)."@en ;
+  rdfs:isDefinedBy curric: .
+
+curric:SubStrand
+  rdf:type owl:Class ;
+  rdfs:subClassOf skos:Concept ;
+  rdfs:label "Sub-Strand"@en ;
+  rdfs:comment "A sub-division of a strand (e.g. place value, addition and subtraction)."@en ;
+  rdfs:isDefinedBy curric: .
+
+curric:ContentDescriptor
+  rdf:type owl:Class ;
+  rdfs:subClassOf skos:Concept ;
+  rdfs:label "Content Descriptor"@en ;
+  rdfs:comment "A statement of knowledge (a concept, fact or skill) within a sub-strand."@en ;
+  rdfs:isDefinedBy curric: .
+
+curric:ContentSubDescriptor
+  rdf:type owl:Class ;
+  rdfs:subClassOf skos:Concept ;
+  rdfs:label "Content Sub-Descriptor"@en ;
+  rdfs:comment "Elaboration or specific detail relating to a content descriptor."@en ;
+  rdfs:isDefinedBy curric: .
+
+curric:Theme
+  rdf:type owl:Class ;
+  rdfs:subClassOf skos:Concept ;
+  rdfs:label "Theme"@en ;
+  rdfs:comment "A cross-cutting theme that can span multiple subjects and content areas."@en ;
+  rdfs:isDefinedBy curric: .
+
+# ----------------------------------------------------------------------
+# Object Properties
+# (hasPart, isPartOf, hasKeyStage, isKeyStageOf, hasStrand, isStrandOf, 
+# includesStrand, applicableToSubSubject, hasContent, isContentOf)
+# ----------------------------------------------------------------------
+
+curric:hasPart
+  rdf:type owl:ObjectProperty , owl:TransitiveProperty ;
+  rdfs:label "has part"@en ;
+  rdfs:comment "Indicates that one curriculum entity contains another narrower entity."@en ;
+  owl:inverseOf curric:isPartOf ;
+  rdfs:isDefinedBy curric: .
+
+curric:isPartOf
+  rdf:type owl:ObjectProperty , owl:TransitiveProperty ;
+  rdfs:label "is part of"@en ;
+  rdfs:comment "Indicates that one curriculum entity is part of another broader entity."@en ;
+  owl:inverseOf curric:hasPart ;
+  rdfs:isDefinedBy curric: .
+
+curric:hasKeyStage
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "has key stage"@en ;
+  rdfs:comment "Indicates that a scheme covers a specific key stage."@en ;
+  rdfs:domain curric:Scheme ;
+  rdfs:range curric:KeyStage ;
+  owl:inverseOf curric:isKeyStageOf ;
+  rdfs:isDefinedBy curric: .
+
+curric:isKeyStageOf
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "is key stage of"@en ;
+  rdfs:comment "Indicates that a key stage is covered by a specific scheme."@en ;
+  rdfs:domain curric:KeyStage ;
+  rdfs:range curric:Scheme ;
+  owl:inverseOf curric:hasKeyStage ;
+  rdfs:isDefinedBy curric: .
+
+curric:hasStrand
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "has strand"@en ;
+  rdfs:comment "Indicates that a subject includes content from a strand of knowledge."@en ;
+  rdfs:domain curric:Subject ;
+  rdfs:range curric:Strand ;
+  owl:inverseOf curric:isStrandOf ;
+  rdfs:subPropertyOf skos:narrower ;
+  rdfs:isDefinedBy curric: .
+
+curric:isStrandOf
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "is strand of"@en ;
+  rdfs:comment "Indicates that content from a strand of knowledge is part of a subject."@en ;
+  rdfs:domain curric:Strand ;
+  rdfs:range curric:Subject ;
+  owl:inverseOf curric:hasStrand ;
+  rdfs:subPropertyOf skos:broader ;
+  rdfs:isDefinedBy curric: .
+
+curric:includesStrand
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "includes strand"@en ;
+  rdfs:comment "Indicates that a sub-subject includes content from a strand of knowledge."@en ;
+  rdfs:domain curric:SubSubject ;
+  rdfs:range curric:Strand ;
+  owl:inverseOf curric:applicableToSubSubject ;
+  rdfs:isDefinedBy curric: .
+
+curric:applicableToSubSubject
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "applicable to sub-subject"@en ;
+  rdfs:comment "Indicates that content from a strand of knowledge is part of a sub-subject."@en ;
+  rdfs:domain curric:Strand ;
+  rdfs:range curric:SubSubject ;
+  owl:inverseOf curric:includesStrand ;
+  rdfs:isDefinedBy curric: .
+
+curric:hasContent
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "has content"@en ;
+  rdfs:comment "Indicates that a scheme includes a specific content descriptor."@en ;
+  rdfs:domain curric:Scheme ;
+  rdfs:range curric:ContentDescriptor ;
+  owl:inverseOf curric:isContentOf ;
+  rdfs:isDefinedBy curric: .
+
+curric:isContentOf
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "is content of"@en ;
+  rdfs:comment "Indicates that a content descriptor is included in a specific scheme."@en ;
+  rdfs:domain curric:ContentDescriptor ;
+  rdfs:range curric:Scheme ;
+  owl:inverseOf curric:hasContent ;
+  rdfs:isDefinedBy curric: .
+
+# ----------------------------------------------------------------------
+# Datatype Properties
+# (lowerAgeBoundary, upperAgeBoundary, hasAim, example, exampleURL)
+# ----------------------------------------------------------------------
+
+curric:lowerAgeBoundary
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "lower age boundary"@en ;
+  rdfs:comment "Lower age boundary of an educational level."@en ;
+  rdfs:domain [ owl:unionOf (curric:Phase curric:KeyStage curric:YearGroup) ] ;
+  rdfs:range xsd:nonNegativeInteger ;
+  rdfs:isDefinedBy curric: .
+
+curric:upperAgeBoundary
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "upper age boundary"@en ;
+  rdfs:comment "Upper age boundary of an educational level."@en ;
+  rdfs:domain [ owl:unionOf (curric:Phase curric:KeyStage curric:YearGroup) ] ;
+  rdfs:range xsd:positiveInteger ;
+  rdfs:isDefinedBy curric: .
+
+curric:hasAim
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "has aim"@en ;
+  rdfs:comment "A specific educational aim for this subject as stated in the National Curriculum."@en ;
+  rdfs:domain curric:Subject ;
+  rdfs:range rdf:langString ;
+  rdfs:isDefinedBy curric: .
+
+curric:example
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "example"@en ;
+  rdfs:comment "A text example that illustrates content detail."@en ;
+  rdfs:domain curric:ContentSubDescriptor ;
+  rdfs:range rdf:langString ;
+  rdfs:isDefinedBy curric: .
+
+curric:exampleURL
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "example URL"@en ;
+  rdfs:comment "A URL example that illustrates content detail."@en ;
+  rdfs:domain curric:ContentSubDescriptor ;
+  rdfs:range xsd:anyURI ;
+  rdfs:isDefinedBy curric: .

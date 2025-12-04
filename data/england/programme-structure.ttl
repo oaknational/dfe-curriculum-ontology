@@ -25,10 +25,9 @@
   rdfs:comment """Programme structure defining the organizational framework of education 
   in England: phases, key stages, and year groups."""@en ;
 
-  owl:versionInfo "2025-12-03" ;
-  owl:versionIRI <https://w3id.org/uk/curriculum/england/programme-structure/2025-12-03> ;
-  # Placeholder for prior version - use when a prior version is available
-  # owl:priorVersion <https://w3id.org/uk/curriculum/england/programme-structure/2025-11-19> ;
+  owl:versionInfo "0.1.0" ;
+  owl:versionIRI <https://w3id.org/uk/curriculum/england/programme-structure/0.1.0> ;
+  owl:priorVersion <https://w3id.org/uk/curriculum/england/programme-structure/0.0.9> ;
   
   dcterms:description """This ontology defines the organizational structure of education in 
   England, including phases (Primary, Secondary), key stages (KS1-4), and year groups (Year 1 - 

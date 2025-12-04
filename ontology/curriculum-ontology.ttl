@@ -3,8 +3,8 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl: <http://www.w3.org/2002/07/owl#> .
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
-@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix dc: <http://purl.org/dc/elements/1.1/> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix vann: <http://purl.org/vocab/vann/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
@@ -16,7 +16,7 @@
 # Ontology Declaration
 # ----------------------------------------------------------------------
 
-<https://w3id.org/uk/curriculum/core/>
+<https://w3id.org/uk/curriculum/core/curriculum-ontology>
   rdf:type owl:Ontology ;
 
   rdfs:label "UK Curriculum Ontology"@en ;
@@ -25,9 +25,8 @@
   educational programmes in the UK."""@en ;
   
   owl:versionInfo "0.1.0" ;
-  owl:versionIRI <https://w3id.org/uk/curriculum/core/0.1.0> ;
-  # Placeholder for prior version - use when a prior version is available
-  # owl:priorVersion <https://w3id.org/uk/curriculum/core/0.0.9> ;
+  owl:versionIRI <https://w3id.org/uk/curriculum/core/curriculum-ontology/0.1.0> ;
+  owl:priorVersion <https://w3id.org/uk/curriculum/core/curriculum-ontology/0.0.9> ;
   
   dcterms:description """This ontology defines the foundational classes and properties for 
   representing educational curriculum structures. While it is currently used to describe the 
