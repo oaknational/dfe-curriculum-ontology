@@ -64,6 +64,8 @@ Each version is preserved in the `versions/` directories with dated version IRIs
 - Triple store loading script template
 - Documentation generation script template
 
+---
+
 ## [0.0.9] - 2025-12-03
 
 **Release:** [curriculum-ontology/0.0.9](https://w3id.org/uk/curriculum/core/curriculum-ontology/0.0.9)
