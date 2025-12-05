@@ -1,4 +1,5 @@
 @prefix curric: <https://w3id.org/uk/curriculum/core/> .
+@prefix curricshapes: <https://w3id.org/uk/curriculum/core/shapes/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -17,7 +18,7 @@
 # Ontology Declaration
 # ----------------------------------------------------------------------
 
-<https://w3id.org/uk/curriculum/core/curriculum-constraints>
+<https://w3id.org/uk/curriculum/core/shapes>
   rdf:type owl:Ontology ;
 
   rdfs:label "UK Curriculum Ontology - SHACL Constraints"@en ;
@@ -25,8 +26,8 @@
   rdfs:comment "SHACL validation constraints for UK Curriculum Ontology."@en ;
 
   owl:versionInfo "0.1.0" ;
-  owl:versionIRI <https://w3id.org/uk/curriculum/core/curriculum-constraints/0.1.0> ;
-  owl:priorVersion <https://w3id.org/uk/curriculum/core/curriculum-constraints/0.0.9> ;
+  owl:versionIRI <https://w3id.org/uk/curriculum/core/shapes/0.1.0> ;
+  owl:priorVersion <https://w3id.org/uk/curriculum/core/shapes/0.0.9> ;
   
   dcterms:description """These SHACL constraints represent current rules and policies that may 
   evolve over time, separate from the core ontology definitions."""@en ;
@@ -39,14 +40,14 @@
   dcterms:rights "Crown Copyright"@en ;
   
   rdfs:seeAlso <https://www.gov.uk/government/collections/national-curriculum> ;
-  vann:preferredNamespacePrefix "curric" ;
-  vann:preferredNamespaceUri "https://w3id.org/uk/curriculum/core/" .
+  vann:preferredNamespacePrefix "curricshapes" ;
+  vann:preferredNamespaceUri "https://w3id.org/uk/curriculum/core/shapes/" .
 
 # ----------------------------------------------------------------------
 # Shape: Phase
 # ----------------------------------------------------------------------
 
-curric:PhaseShape
+curricshapes:PhaseShape
   a sh:NodeShape ;
   sh:targetClass curric:Phase ;
 
@@ -107,7 +108,7 @@ curric:PhaseShape
 # Shape: KeyStage
 # ----------------------------------------------------------------------
 
-curric:KeyStageShape
+curricshapes:KeyStageShape
   a sh:NodeShape ;
   sh:targetClass curric:KeyStage ;
 
@@ -196,7 +197,7 @@ curric:KeyStageShape
 # Shape: YearGroup
 # ----------------------------------------------------------------------
 
-curric:YearGroupShape
+curricshapes:YearGroupShape
   a sh:NodeShape ;
   sh:targetClass curric:YearGroup ;
 
@@ -272,7 +273,7 @@ curric:YearGroupShape
 # Shape: Subject
 # ----------------------------------------------------------------------
 
-curric:SubjectShape
+curricshapes:SubjectShape
   a sh:NodeShape ;
   sh:targetClass curric:Subject ;
 
@@ -334,7 +335,7 @@ curric:SubjectShape
 # Shape: SubSubject
 # ----------------------------------------------------------------------
 
-curric:SubSubjectShape
+curricshapes:SubSubjectShape
   a sh:NodeShape ;
   sh:targetClass curric:SubSubject ;
 
@@ -395,7 +396,7 @@ curric:SubSubjectShape
 # Shape: Scheme
 # ----------------------------------------------------------------------
 
-curric:SchemeShape
+curricshapes:SchemeShape
   a sh:NodeShape ;
   sh:targetClass curric:Scheme ;
 
@@ -438,7 +439,7 @@ curric:SchemeShape
 # Shape: Strand
 # ----------------------------------------------------------------------
 
-curric:StrandShape
+curricshapes:StrandShape
   a sh:NodeShape ;
   sh:targetClass curric:Strand ;
 
@@ -524,7 +525,7 @@ curric:StrandShape
 # Shape: SubStrand
 # ----------------------------------------------------------------------
 
-curric:SubStrandShape
+curricshapes:SubStrandShape
   a sh:NodeShape ;
   sh:targetClass curric:SubStrand ;
 
@@ -584,7 +585,7 @@ curric:SubStrandShape
 # Shape: ContentDescriptor
 # ----------------------------------------------------------------------
 
-curric:ContentDescriptorShape
+curricshapes:ContentDescriptorShape
   a sh:NodeShape ;
   sh:targetClass curric:ContentDescriptor ;
 
@@ -646,7 +647,7 @@ curric:ContentDescriptorShape
 # Shape: ContentSubDescriptor
 # ----------------------------------------------------------------------
 
-curric:ContentSubDescriptorShape
+curricshapes:ContentSubDescriptorShape
   a sh:NodeShape ;
   sh:targetClass curric:ContentSubDescriptor ;
 
@@ -711,7 +712,7 @@ curric:ContentSubDescriptorShape
 # Shape: Theme
 # ----------------------------------------------------------------------
 
-curric:ThemeShape
+curricshapes:ThemeShape
   a sh:NodeShape ;
   sh:targetClass curric:Theme ;
 
