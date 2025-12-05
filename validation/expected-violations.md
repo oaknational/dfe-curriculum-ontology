@@ -5,7 +5,7 @@ This file documents the expected validation violations when running SHACL valida
 ## Running the Test
 
 ```bash
-shacl validate --shapes=../constraints/curriculum-constraints.ttl \
+shacl validate --shapes=../ontology/curriculum-constraints.ttl \
                --data=invalid-example.ttl
 ```
 
