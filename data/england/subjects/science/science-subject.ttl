@@ -10,7 +10,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # ======================================================================
-# National Curriculum England - Science Subject
+# National Curriculum for England - Science Subject
 # ======================================================================
 
 # ----------------------------------------------------------------------
@@ -20,8 +20,8 @@
 <https://w3id.org/uk/curriculum/england/science-subject>
   rdf:type owl:Ontology ;
 
-  rdfs:label "National Curriculum England - Science Subject"@en ;
-  dc:title "National Curriculum England - Science Subject"@en ;
+  rdfs:label "National Curriculum for England - Science Subject"@en ;
+  dc:title "National Curriculum for England - Science Subject"@en ;
   rdfs:comment """Science subject definition, including aims and strands for the 
   National Curriculum in England."""@en ;
 

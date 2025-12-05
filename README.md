@@ -14,8 +14,8 @@ eng:scheme-science-key-stage-3
 ```
 
 **Namespace URIs:**
-- Core ontology: `https://w3id.org/uk/curriculum/core/`
-- England data: `https://w3id.org/uk/curriculum/england/`
+- UK Curriculum Ontology: `https://w3id.org/uk/curriculum/core/`
+- National Curriculum for England Data: `https://w3id.org/uk/curriculum/england/`
 
 ## Persistent Identifiers via w3id.org
 
