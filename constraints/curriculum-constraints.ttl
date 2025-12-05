@@ -10,7 +10,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # ======================================================================
-# UK Curriculum Ontology SHACL Constraints
+# UK Curriculum Ontology SHACL Constraints 
 # ======================================================================
 
 # ----------------------------------------------------------------------
@@ -82,7 +82,7 @@ curric:PhaseShape
   sh:sparql [
     sh:message "Lower age boundary must be less than upper age boundary" ;
     sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl#>
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
         $this curric:lowerAgeBoundary ?lower ;
               curric:upperAgeBoundary ?upper .
@@ -94,7 +94,7 @@ curric:PhaseShape
   sh:sparql [
     sh:message "Age boundaries must be in reasonable range (0-25 years)" ;
     sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl#>
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
         $this curric:lowerAgeBoundary ?lower ;
               curric:upperAgeBoundary ?upper .
@@ -153,7 +153,7 @@ curric:KeyStageShape
   sh:sparql [
     sh:message "Lower age boundary must be less than upper age boundary" ;
     sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl#>
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
         $this curric:lowerAgeBoundary ?lower ;
               curric:upperAgeBoundary ?upper .
@@ -165,7 +165,7 @@ curric:KeyStageShape
   sh:sparql [
     sh:message "Key stage age boundaries must fall within parent phase boundaries" ;
     sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl#>
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
         $this curric:isPartOf ?phase ;
               curric:lowerAgeBoundary ?childLower ;
@@ -182,7 +182,7 @@ curric:KeyStageShape
   sh:sparql [
     sh:message "Key stage is not used in any scheme (orphaned)" ;
     sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl#>
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
         $this a curric:KeyStage .
         FILTER NOT EXISTS {
@@ -242,7 +242,7 @@ curric:YearGroupShape
   sh:sparql [
     sh:message "Lower age boundary must be less than upper age boundary" ;
     sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl#>
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
         $this curric:lowerAgeBoundary ?lower ;
               curric:upperAgeBoundary ?upper .
@@ -254,7 +254,7 @@ curric:YearGroupShape
   sh:sparql [
     sh:message "Year group age boundaries must fall within parent key stage boundaries" ;
     sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl#>
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
         $this curric:isPartOf ?keystage ;
               curric:lowerAgeBoundary ?childLower ;
@@ -320,7 +320,7 @@ curric:SubjectShape
   sh:sparql [
     sh:message "Subject is not used in any sub-subject (orphaned)" ;
     sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl#>
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
         $this a curric:Subject .
         FILTER NOT EXISTS {
@@ -368,7 +368,7 @@ curric:SubSubjectShape
   sh:sparql [
     sh:message "includesStrand must have corresponding applicableToSubSubject on the strand" ;
     sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl#>
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
         $this curric:includesStrand ?strand .
         FILTER NOT EXISTS { 
@@ -381,7 +381,7 @@ curric:SubSubjectShape
   sh:sparql [
     sh:message "Sub-subject is not used in any scheme (orphaned)" ;
     sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl#>
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
         $this a curric:SubSubject .
         FILTER NOT EXISTS {
@@ -493,7 +493,7 @@ curric:StrandShape
   sh:sparql [
     sh:message "applicableToSubSubject must have corresponding includesStrand on the sub-subject" ;
     sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl#>
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
         $this curric:applicableToSubSubject ?subsubject .
         FILTER NOT EXISTS { 
@@ -506,7 +506,7 @@ curric:StrandShape
   sh:sparql [
     sh:message "Strand is not referenced by any subject or sub-subject (orphaned)" ;
     sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl#>
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
         $this a curric:Strand .
         FILTER NOT EXISTS {
@@ -569,7 +569,7 @@ curric:SubStrandShape
   sh:sparql [
     sh:message "Sub-strand is not referenced by any strand via skos:narrower (orphaned)" ;
     sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl#>
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       SELECT $this WHERE {
         $this a curric:SubStrand .
@@ -627,7 +627,7 @@ curric:ContentDescriptorShape
   sh:sparql [
     sh:message "Content descriptor is not used in any scheme and not referenced by any sub-strand (orphaned)" ;
     sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl#>
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       SELECT $this WHERE {
         $this a curric:ContentDescriptor .
@@ -696,7 +696,7 @@ curric:ContentSubDescriptorShape
   sh:sparql [
     sh:message "Content sub-descriptor is not referenced by any content descriptor via skos:narrower (orphaned)" ;
     sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl#>
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       SELECT $this WHERE {
         $this a curric:ContentSubDescriptor .
@@ -746,7 +746,7 @@ curric:ThemeShape
   sh:sparql [
     sh:message "Theme is not related to any content (orphaned)" ;
     sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl#>
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       SELECT $this WHERE {
         $this a curric:Theme .
