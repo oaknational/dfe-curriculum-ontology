@@ -42,7 +42,7 @@ Install [Apache Jena](https://jena.apache.org/download/):
 ```bash
 # Validate data files against constraints
 shacl validate \
-  --shapes=constraints/curriculum-constraints.ttl \
+  --shapes=ontology/curriculum-constraints.ttl \
   --data=data/england/programme-structure.ttl \
   --data=data/england/subjects/science/science-subject.ttl \
   --data=data/england/subjects/science/science-knowledge-taxonomy.ttl \
@@ -59,7 +59,7 @@ npm install -g shacl
 
 # Validate
 shacl -d data/england/*.ttl \
-      -s constraints/curriculum-constraints.ttl
+      -s ontology/curriculum-constraints.ttl
 ```
 
 ### Using Python (pySHACL)
@@ -70,7 +70,7 @@ Install [pySHACL](https://github.com/RDFLib/pySHACL):
 pip install pyshacl
 
 # Validate
-pyshacl -s constraints/curriculum-constraints.ttl \
+pyshacl -s ontology/curriculum-constraints.ttl \
         -d data/england/programme-structure.ttl \
         -df turtle
 ```
@@ -429,7 +429,7 @@ sh:property [
 When constraints change:
 
 1. Document the change in `CHANGELOG.md`
-2. Save the previous version in `constraints/versions/`
+2. Save the previous version in `ontology/versions/`
 3. Update the version info in the constraints ontology declaration
 4. Consider backward compatibility - new constraints may invalidate previously valid data
 
@@ -454,7 +454,7 @@ jobs:
       - name: Run SHACL Validation
         run: |
           ./apache-jena-*/bin/shacl validate \
-            --shapes=constraints/curriculum-constraints.ttl \
+            --shapes=ontology/curriculum-constraints.ttl \
             --data=data/**/*.ttl
 ```
 

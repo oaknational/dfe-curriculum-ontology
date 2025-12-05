@@ -121,10 +121,8 @@ See [docs/examples.md](docs/examples.md) for more SPARQL query examples.
 uk-curriculum-ontology/
 ├── ontology/
 │   ├── curriculum-ontology.ttl           # Core classes and properties
-│   └── versions/                         # Versioned releases
-├── constraints/
 │   ├── curriculum-constraints.ttl        # SHACL validation shapes
-│   └── versions/
+│   └── versions/                         # Versioned releases
 ├── data/
 │   └── england/
 │       ├── programme-structure.ttl       # Phases, Key Stages, Year Groups
@@ -133,8 +131,9 @@ uk-curriculum-ontology/
 │           └── science/
 │               ├── science-subject.ttl                 # Subjects, Sub-Subjects
 │               ├── science-knowledge-taxonomy.ttl      # Strands, Sub-Strands, ContentDescriptors
-│               └── science-schemes.ttl                 # Schemes 
+│               └── science-schemes.ttl                 # Schemes
 │
+├── distributions/                        # Distribution packages
 ├── docs/                                 # Documentation
 ├── tools/                                # Utility scripts
 └── validation/                           # Test data and examples

@@ -245,9 +245,9 @@ See [OWL 2 Versioning](https://www.w3.org/TR/owl2-syntax/#Ontology_IRI_and_Versi
 
 ### Separation of Ontology and Constraints
 
-The **ontology** (`curriculum-ontology.ttl`) defines what _can_ be said (classes and properties).
+The **ontology** (`ontology/curriculum-ontology.ttl`) defines what _can_ be said (classes and properties).
 
-The **constraints** (`curriculum-constraints.ttl`) define what _should_ be said (validation rules using [SHACL](https://www.w3.org/TR/shacl/)).
+The **constraints** (`ontology/curriculum-constraints.ttl`) define what _should_ be said (validation rules using [SHACL](https://www.w3.org/TR/shacl/)).
 
 This separation allows:
 - Ontology to remain stable while policies evolve
