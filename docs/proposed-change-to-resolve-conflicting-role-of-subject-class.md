@@ -2,7 +2,6 @@
 
 **Version:** 1.0  
 **Date:** December 2025  
-**Audience:** Technical Management  
 **Status:** Proposed Enhancement
 
 ---
@@ -24,16 +23,16 @@ The current curriculum ontology has a structural ambiguity that prevents it from
 In the existing ontology, `Subject` (e.g., "Science", "English") serves as:
 
 1. **Top of the Programme Structure Hierarchy**
-   - Phase → KeyStage → YearGroup → **Subject** → SubSubject → Scheme
-   - Represents what gets taught organizationally
+   - **Subject** → SubSubject → Scheme
+   - Represents what gets taught organisationally
 
 2. **Top of the Knowledge Taxonomy Hierarchy**  
    - **Subject** → Strand → SubStrand → ContentDescriptor → ContentSubDescriptor
-   - Represents how knowledge is conceptually organized
+   - Represents how knowledge is conceptually organised
 
 This means a single entity like `eng:subject-science` is simultaneously:
 - A programme structure component (answering "What do students study?")
-- A knowledge taxonomy root (answering "How is scientific knowledge organized?")
+- A knowledge taxonomy root (answering "How is scientific knowledge organised?")
 
 ### Why This Is Problematic
 
@@ -44,7 +43,8 @@ The dual role creates fundamental ambiguity:
 - Properties and relationships become context-dependent
 - Third parties must understand implicit conventions rather than explicit structure
 
-**Example:** The property `curric:hasStrand` connects Subject to knowledge structure, but `curric:isPartOf` might connect it to programme structure. This mixing of concerns is architecturally unclear.
+**Example:** The property `curric:hasStrand` connects Subject to knowledge structure, but `curric:isPartOf` 
+connects it to programme structure. This mixing of concerns is architecturally unclear.
 
 #### 2. **Query Complexity**
 
@@ -76,10 +76,10 @@ Writing validation constraints becomes convoluted:
 
 #### 5. **Rigidity for Future Evolution**
 
-The current model locks us into a 1:1 relationship between programme subjects and knowledge disciplines. This prevents potential future scenarios like:
+The current model locks us into a 1:1 relationship between programme subjects and knowledge disciplines. This prevents potential future scenarios, such as:
 - Splitting "Science" (as taught) from separate "Biology", "Chemistry", "Physics" knowledge taxonomies
-- Merging "English" and "Drama" in the curriculum while maintaining separate knowledge structures
-- Cross-cutting knowledge organization that doesn't match teaching structures
+- Splitting "English" (as taught) from separate "English" and "Drama" knowledge taxonomies
+- Cross-cutting knowledge organisation that doesn't match teaching structures
 
 ---
 
@@ -90,19 +90,24 @@ The current model locks us into a 1:1 relationship between programme subjects an
 **Create a clean separation:**
 
 1. **Subject** (Programme Structure)
-   - Phase → KeyStage → YearGroup → **Subject** → SubSubject → Scheme
+   - **Subject** → SubSubject → Scheme
    - Focus: "What is taught and when?"
-   - Properties: programme structure relationships
+   - Properties: programme structure relationships (partOf, isPartOf)
 
 2. **Discipline** (Knowledge Taxonomy)
-   - ConceptScheme → **Discipline** → Strand → SubStrand → ContentDescriptor
-   - Focus: "How is knowledge organized?"
+   - **Discipline** → Strand → SubStrand → ContentDescriptor
+   - Focus: "How is knowledge organised?"
    - Properties: SKOS relationships (broader, narrower, related)
 
 3. **Bridge Relationship**
    - New property: `curric:hasDiscipline` / `curric:isDisciplineOf`
-   - Currently 1:1 mapping (e.g., `subject-science` → `discipline-science`)
-   - Future-proof for potential restructuring
+   - This would be a 1:1 mapping (e.g., `subject-science` → `discipline-science`)
+   - This cardinality could be relaxed in the future to enable re-structuring of the knowledge taxonomy
+
+4. **DfE's Impact:**
+- No functional change because of the 1:1 mapping
+- No impact on authoring process or data requirements
+- No additional entities (just separated)
 
 ### Implementation Approach
 
@@ -214,119 +219,19 @@ SHACL shapes become clean and focused:
 - Knowledge taxonomy shapes validate SKOS properties
 - No conditional logic based on implicit context
 
-### 5. **Future-Ready Architecture**
+### 5. **Industry Recognition**
 
-While DfE maintains 1:1 relationships now, the architecture supports:
-
-**Scenario 1: Knowledge Granularity**
-```turtle
-eng:subject-science curric:hasDiscipline 
-  eng:discipline-biology ,
-  eng:discipline-chemistry ,
-  eng:discipline-physics .
-```
-
-**Scenario 2: Cross-Cutting Disciplines**
-```turtle
-eng:subject-english curric:hasDiscipline eng:discipline-literacy .
-eng:subject-drama curric:hasDiscipline eng:discipline-literacy .
-```
-
-**Scenario 3: Emerging Disciplines**
-```turtle
-eng:subject-computing curric:hasDiscipline 
-  eng:discipline-computer-science ,
-  eng:discipline-digital-literacy .
-```
-
-### 6. **Industry Recognition**
-
-Semantic web experts and potential data consumers will recognize:
+Semantic web experts and potential data consumers will recognise:
 - Proper separation of concerns
 - Adherence to ontology design patterns
 - Professional-grade vocabulary engineering
 - Alignment with linked data principles
 
-This distinction elevates the ontology from "functional" to "exemplary".
-
----
-
-## Why We Must Make This Change
-
-### Current Model Is Not World-Class Because:
-
-1. **Violates Single Responsibility Principle**
-   - Subject does too many things
-   - Mixed concerns throughout the model
-
-2. **Creates Technical Debt**
-   - Future enhancements require workarounds
-   - Complexity compounds over time
-   - Documentation burden increases
-
-3. **Limits Interoperability**
-   - Other organizations may misinterpret the model
-   - Integration requires extensive explanation
-   - Reduces reusability across contexts
-
-4. **Complicates DfE Demonstration**
-   - Harder to explain to stakeholders
-   - Validation appears convoluted
-   - Questions about architectural decisions
-
-### Proposed Model Is World-Class Because:
-
-1. **Clear Separation of Concerns**
-   - Each class has one purpose
-   - Relationships are unambiguous
-   - Self-explanatory to newcomers
-
-2. **Follows Best Practices**
-   - Aligns with W3C standards
-   - Uses SKOS appropriately
-   - Implements proven patterns
-
-3. **Enables Growth**
-   - Future use cases don't require rework
-   - Flexibility built into foundation
-   - Extensible without breaking changes
-
-4. **Professional Quality**
-   - Ready for public consumption
-   - Demonstrates technical excellence
-   - Sets standard for UK curriculum data
-
----
-
-## Implementation Impact
-
-### Minimal Disruption
-
-**For DfE's Current Use:**
-- 1:1 mapping means no functional change
-- Equivalent number of entities (just renamed/separated)
-- All current queries still work (with minor updates)
-
-**For the Demonstration:**
-- Clearer explanation of architecture
-- More confidence in technical decisions
-- Better story for future applications
-
-### Migration Path
-
-1. **Phase 1:** Add Discipline class to core ontology
-2. **Phase 2:** Create discipline instances alongside subjects
-3. **Phase 3:** Move knowledge relationships from Subject to Discipline
-4. **Phase 4:** Update SHACL constraints for both classes
-5. **Phase 5:** Update documentation and examples
-
-**Estimated effort:** 2-3 days for core changes, testing, and documentation
-
 ---
 
 ## Recommendation
 
-**We should implement this change before finalizing the ontology for the DfE demonstration.**
+**We should implement this change before finalizing the National Curriculum ontology.**
 
 This is the right time because:
 - The model is still in active development (v0.1.0)
@@ -338,15 +243,13 @@ The alternative—leaving the model as-is—means:
 - Permanently compromised architecture
 - Ongoing complexity burden
 - Reduced credibility with semantic web community
-- Limited future flexibility
-
-This isn't just a "nice to have" improvement—it's the difference between a functional ontology and a world-class one.
+- Compromised future flexibility of knowledge taxonomy
 
 ---
 
 ## Conclusion
 
-The Subject/Discipline separation transforms our curriculum ontology from technically acceptable to architecturally excellent. By cleanly separating programme structure from knowledge taxonomy, we create a model that is:
+The Subject/Discipline separation transforms the National Curriculum ontology from technically acceptable to architecturally excellent. By cleanly separating programme structure from knowledge taxonomy, we create a model that is:
 
 - **Clearer:** Self-explanatory and unambiguous
 - **Queryable:** Intuitive and efficient
@@ -354,6 +257,6 @@ The Subject/Discipline separation transforms our curriculum ontology from techni
 - **Future-proof:** Flexible for emerging requirements
 - **Professional:** Ready for public scrutiny and reuse
 
-For DfE's immediate needs, this change introduces a 1:1 correspondence that maintains all current functionality while establishing a foundation for world-class curriculum data infrastructure.
+In practical terms, from a DfE perspective, this proposed change is 'under-the-hood' and has no impact on the current work authoring the new National Curriculum. With the 1:1 constrain employed, the model is logically equivalent to the current agreed National Curriculum ontology.
 
-**This is the architectural refinement that makes our ontology demonstrably world-class.**
+**This is the architectural refinement results in an ontology that is demonstrably world-class.**
