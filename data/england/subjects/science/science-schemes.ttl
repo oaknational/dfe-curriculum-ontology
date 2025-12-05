@@ -10,7 +10,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # ======================================================================
-# National Curriculum England - Science Schemes
+# National Curriculum for England - Science Schemes
 # ======================================================================
 
 # ----------------------------------------------------------------------
@@ -20,8 +20,8 @@
 <https://w3id.org/uk/curriculum/england/science-schemes>
   rdf:type owl:Ontology ;
 
-  rdfs:label "National Curriculum England - Science Schemes"@en ;
-  dc:title "National Curriculum England - Science Schemes"@en ;
+  rdfs:label "National Curriculum for England - Science Schemes"@en ;
+  dc:title "National Curriculum for England - Science Schemes"@en ;
   rdfs:comment """Science schemes that map content descriptors to each scheme."""@en ;
 
   owl:versionInfo "0.1.0" ;

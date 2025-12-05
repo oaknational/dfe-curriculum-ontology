@@ -10,7 +10,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # ======================================================================
-# National Curriculum England - Cross-Cutting Themes
+# National Curriculum for England - Cross-Cutting Themes
 # ======================================================================
 
 # ----------------------------------------------------------------------
@@ -20,8 +20,8 @@
 <https://w3id.org/uk/curriculum/england/themes>
   rdf:type owl:Ontology ;
 
-  rdfs:label "National Curriculum England - Cross-Cutting Themes"@en ;
-  dc:title "National Curriculum England - Cross-Cutting Themes"@en ;
+  rdfs:label "National Curriculum for England - Cross-Cutting Themes"@en ;
+  dc:title "National Curriculum for England - Cross-Cutting Themes"@en ;
   rdfs:comment """Cross-cutting themes that span multiple subjects and provide connections 
   between different areas of the curriculum."""@en ;
 

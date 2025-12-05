@@ -10,7 +10,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # ======================================================================
-# National Curriculum England - Programme Structure
+# National Curriculum for England - Programme Structure
 # ======================================================================
 
 # ----------------------------------------------------------------------
@@ -20,8 +20,8 @@
 <https://w3id.org/uk/curriculum/england/programme-structure>
   rdf:type owl:Ontology ;
 
-  rdfs:label "National Curriculum England - Programme Structure"@en ;
-  dc:title "National Curriculum England - Programme Structure"@en ;
+  rdfs:label "National Curriculum for England - Programme Structure"@en ;
+  dc:title "National Curriculum for England - Programme Structure"@en ;
   rdfs:comment """Programme structure defining the organizational framework of education 
   in England: phases, key stages, and year groups."""@en ;
 

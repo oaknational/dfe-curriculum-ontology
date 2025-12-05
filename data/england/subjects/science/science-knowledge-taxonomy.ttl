@@ -10,7 +10,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # ======================================================================
-# National Curriculum England - Science Knowledge Taxonomy
+# National Curriculum for England - Science Knowledge Taxonomy
 # ======================================================================
 
 # ----------------------------------------------------------------------
@@ -20,8 +20,8 @@
 <https://w3id.org/uk/curriculum/england/science-knowledge-taxonomy>
   rdf:type owl:Ontology ;
 
-  rdfs:label "National Curriculum England - Science Knowledge Taxonomy"@en ;
-  dc:title "National Curriculum England - Science Knowledge Taxonomy"@en ;
+  rdfs:label "National Curriculum for England - Science Knowledge Taxonomy"@en ;
+  dc:title "National Curriculum for England - Science Knowledge Taxonomy"@en ;
   rdfs:comment """Science knowledge taxonomy defining the hierarchical organization of scientific 
   content from strands through to content sub-descriptors."""@en ;
 
