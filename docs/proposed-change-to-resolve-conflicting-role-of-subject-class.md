@@ -1,7 +1,7 @@
 # Subject/Discipline Separation: Architectural Refinement for World-Class Ontology
 
 **Version:** 1.0  
-**Date:** December 2025  
+**Date:** 5th December 2025  
 **Status:** Proposed Enhancement
 
 ---
