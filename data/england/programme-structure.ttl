@@ -55,14 +55,14 @@ eng:phase-primary
   rdfs:label "Primary"@en ;
   rdfs:comment "Primary education phase covering years 1-6."@en ;
   curric:lowerAgeBoundary "5"^^xsd:nonNegativeInteger ;
-  curric:upperAgeBoundary 11 .
+  curric:upperAgeBoundary "11"^^xsd:positiveInteger .
 
 eng:phase-secondary
   a curric:Phase ;
   rdfs:label "Secondary"@en ;
   rdfs:comment "Secondary education phase covering years 7-11."@en ;
   curric:lowerAgeBoundary "11"^^xsd:nonNegativeInteger ;
-  curric:upperAgeBoundary 16 .
+  curric:upperAgeBoundary "16"^^xsd:positiveInteger .
 
 eng:education-phases
   a skos:OrderedCollection ;
