@@ -30,6 +30,7 @@ yarn-error.log*
 *.bak
 *.backup
 *~
+temp_combined.ttl
 
 # Triple store databases (if generated locally)
 tdb/
@@ -67,6 +68,9 @@ yarn.lock
 venv/
 env/
 ENV/
+.venv/
+.python-version
+uv.lock
 *.egg-info/
 .pytest_cache/
 
