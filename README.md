@@ -98,7 +98,7 @@ Subject (e.g., Science)
 
 ![The three main hierarchies](docs/images/model.png)
 
-## Quick Example
+## Quick Example 
 
 Find all science content for Year 7 students:
 
