@@ -178,19 +178,6 @@ curricshapes:KeyStageShape
         FILTER (?childLower < ?parentLower || ?childUpper > ?parentUpper)
       }
     """ ;
-  ] ;
-
-  sh:sparql [
-    sh:message "Key stage is not used in any scheme (orphaned)" ;
-    sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
-      SELECT $this WHERE {
-        $this a curric:KeyStage .
-        FILTER NOT EXISTS {
-          ?scheme curric:hasKeyStage $this .
-        }
-      }
-    """ ;
   ] .
 
 # ----------------------------------------------------------------------
