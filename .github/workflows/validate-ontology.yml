@@ -3,8 +3,16 @@ name: Validate Ontology
 on:
   push:
     branches: [ main, develop ]
+    paths:
+      - '**/*.ttl'
+      - '.github/workflows/validate-ontology.yml'
+      - 'scripts/validate.py'
   pull_request:
     branches: [ main ]
+    paths:
+      - '**/*.ttl'
+      - '.github/workflows/validate-ontology.yml'
+      - 'scripts/validate.py'
   workflow_dispatch:
 
 jobs:
