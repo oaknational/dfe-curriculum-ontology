@@ -1,108 +1,64 @@
-name: Validate Ontology
+shacl-validation:
+  needs: syntax-check
+  runs-on: ubuntu-latest
+  
+  strategy:
+    fail-fast: false
+    matrix:
+      include:
+        - name: "England Programme Structure"
+          files: "data/england/programme-structure.ttl"
+          
+        - name: "England Curriculum Content (Themes + Science)"
+          files: "data/england/themes.ttl data/england/subjects/science/science-subject.ttl data/england/subjects/science/science-knowledge-taxonomy.ttl data/england/subjects/science/science-schemes.ttl"
+  
+  steps:
+  - uses: actions/checkout@v4
+  
+  - name: Set up Python
+    uses: actions/setup-python@v5
+    with:
+      python-version: '3.11'
+  
+  - name: Install pyshacl
+    run: pip install pyshacl
 
-on:
-  push:
-    branches: [ main, develop ]
-  pull_request:
-    branches: [ main ]
-  workflow_dispatch:
+  - name: Validate ${{ matrix.name }}
+    run: |
+      echo "Validating: ${{ matrix.name }}"
+      echo "Files: ${{ matrix.files }}"
+      echo ""
+      
+      FILES="${{ matrix.files }}"
+      if [[ "$FILES" == *" "* ]]; then
+        echo "Combining multiple files..."
+        cat $FILES > /tmp/combined-data.ttl
+        DATA_FILE="/tmp/combined-data.ttl"
+      else
+        DATA_FILE="$FILES"
+      fi
+      
+      echo "Validating combined dataset..."
+      pyshacl \
+        --shacl ontology/curriculum-constraints.ttl \
+        --ont-graph ontology/curriculum-ontology.ttl \
+        --inference rdfs \
+        --abort \
+        --format human \
+        "$DATA_FILE"
+      
+      echo ""
+      echo "✅ ${{ matrix.name }} validation passed"
+```
 
-jobs:
-  syntax-check:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-    
-    - name: Install rdflib
-      run: pip install rdflib
+## Why This Matters
 
-    - name: Check Turtle syntax
-      run: |
-        python - <<'EOF'
-        import sys
-        from pathlib import Path
-        from rdflib import Graph
-        
-        errors = []
-        files_checked = 0
-        
-        for ttl_file in sorted(Path('.').rglob('*.ttl')):
-            files_checked += 1
-            print(f'Checking: {ttl_file}')
-            try:
-                g = Graph()
-                g.parse(ttl_file, format='turtle')
-                print(f'  ✓ Valid')
-            except Exception as e:
-                errors.append((str(ttl_file), str(e)))
-                print(f'  ✗ ERROR: {e}')
-        
-        print(f'\n{"="*60}')
-        print(f'Checked {files_checked} files')
-        
-        if errors:
-            print(f'\n❌ {len(errors)} file(s) with syntax errors:\n')
-            for file, error in errors:
-                print(f'  {file}')
-                print(f'    {error}\n')
-            sys.exit(1)
-        else:
-            print('✅ All files have valid Turtle syntax')
-        EOF
+This is a fundamental principle of validating modular RDF:
+```
+❌ Validate files individually
+   → Relationships across files appear broken
+   → False validation errors
 
-  shacl-validation:
-    needs: syntax-check
-    runs-on: ubuntu-latest
-    
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-            - name: "England Programme Structure"
-            files: "data/england/programme-structure.ttl"
-            
-          - name: "England Complete Curriculum Data"
-            files: "data/england/themes.ttl data/england/subjects/science/science-subject.ttl data/england/subjects/science/science-knowledge-taxonomy.ttl data/england/subjects/science/science-schemes.ttl"
-    
-    steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-    
-    - name: Install pyshacl
-      run: pip install pyshacl
-
-    - name: Validate ${{ matrix.name }}
-      run: |
-        echo "Validating: ${{ matrix.name }}"
-        echo "Files: ${{ matrix.files }}"
-        echo ""
-        
-        FILES="${{ matrix.files }}"
-        if [[ "$FILES" == *" "* ]]; then
-          echo "Combining multiple files..."
-          cat $FILES > /tmp/combined-data.ttl
-          DATA_FILE="/tmp/combined-data.ttl"
-        else
-          DATA_FILE="$FILES"
-        fi
-        
-        echo "Validating combined dataset..."
-        pyshacl \
-          --shacl ontology/curriculum-constraints.ttl \
-          --ont-graph ontology/curriculum-ontology.ttl \
-          --inference rdfs \
-          --abort \
-          --format human \
-          "$DATA_FILE"
-        
-        echo ""
-        echo "✅ ${{ matrix.name }} validation passed"
+✅ Validate logical datasets together
+   → All relationships visible
+   → Accurate validation
