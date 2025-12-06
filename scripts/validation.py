@@ -39,9 +39,9 @@ def validate_shacl(data_file: Path, repo_root: Path) -> bool:
     ontology_file = repo_root / "ontology" / "curriculum-ontology.ttl"
     
     conforms, _, results_text = validate(
-        data_file,
-        shacl_graph=shapes_file,
-        ont_graph=ontology_file,
+        str(data_file),  # ← Convert to string
+        shacl_graph=str(shapes_file),
+        ont_graph=str(ontology_file),
         inference='rdfs',
         abort_on_first=False,
     )
@@ -68,9 +68,39 @@ def main():
         sys.exit(1)
     
     print("\n" + "=" * 60)
-    print("SHACL VALIDATION")
+    print("SHACL VALIDATION - England Complete Curriculum")
     print("=" * 60)
-    validation_ok = all(validate_shacl(f, repo_root) for f in files)
+    
+    shapes_file = repo_root / "ontology" / "curriculum-constraints.ttl"
+    ontology_file = repo_root / "ontology" / "curriculum-ontology.ttl"
+    
+    combined = repo_root / "temp_combined.ttl"
+    try:
+        print(f"Combining {len(files)} files...")
+        with combined.open('w') as out:
+            for file in files:
+                out.write(file.read_text())
+                out.write('\n\n')
+        
+        print("Validating combined dataset...")
+        conforms, _, results_text = validate(
+            str(combined),
+            shacl_graph=str(shapes_file),
+            ont_graph=str(ontology_file),
+            inference='rdfs',
+            abort_on_first=False,
+        )
+        
+        if conforms:
+            print("✅ Valid")
+            validation_ok = True
+        else:
+            print(f"❌ Validation errors:\n{results_text}")
+            validation_ok = False
+            
+    finally:
+        if combined.exists():
+            combined.unlink()
     
     print("\n" + "=" * 60)
     if syntax_ok and validation_ok:
@@ -81,6 +111,7 @@ def main():
         print("❌ Validation failed")
         print("\n⚠️  Do not push until these are fixed!")
         sys.exit(1)
+
 
 if __name__ == "__main__":
     main()
