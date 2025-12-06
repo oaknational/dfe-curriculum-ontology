@@ -63,10 +63,8 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: "England Programme Structure"
-            files: "data/england/programme-structure.ttl"
-          - name: "England Curriculum Content (Themes + Science)"
-            files: "data/england/themes.ttl data/england/subjects/science/science-subject.ttl data/england/subjects/science/science-knowledge-taxonomy.ttl data/england/subjects/science/science-schemes.ttl"
+          - name: "England Complete Curriculum"
+            files: "data/england/programme-structure.ttl data/england/themes.ttl data/england/subjects/science/science-subject.ttl data/england/subjects/science/science-knowledge-taxonomy.ttl data/england/subjects/science/science-schemes.ttl"
     
     steps:
     - uses: actions/checkout@v4
