@@ -65,10 +65,8 @@ jobs:
         include:
           - name: "England Programme Structure"
             files: "data/england/programme-structure.ttl"
-            
           - name: "England Themes"
             files: "data/england/themes.ttl"
-            
           - name: "Science Subject (Complete)"
             files: "data/england/subjects/science/science-subject.ttl data/england/subjects/science/science-knowledge-taxonomy.ttl data/england/subjects/science/science-schemes.ttl"
     
@@ -78,4 +76,34 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-vers
+        python-version: '3.11'
+    
+    - name: Install pyshacl
+      run: pip install pyshacl
+
+    - name: Validate ${{ matrix.name }}
+      run: |
+        echo "Validating: ${{ matrix.name }}"
+        echo "Files: ${{ matrix.files }}"
+        echo ""
+        
+        FILES="${{ matrix.files }}"
+        if [[ "$FILES" == *" "* ]]; then
+          echo "Combining multiple files..."
+          cat $FILES > /tmp/combined-data.ttl
+          DATA_FILE="/tmp/combined-data.ttl"
+        else
+          DATA_FILE="$FILES"
+        fi
+        
+        echo "Validating combined dataset..."
+        pyshacl \
+          --shacl ontology/curriculum-constraints.ttl \
+          --ont-graph ontology/curriculum-ontology.ttl \
+          --inference rdfs \
+          --abort \
+          --format human \
+          "$DATA_FILE"
+        
+        echo ""
+        echo "✅ ${{ matrix.name }} validation passed"
