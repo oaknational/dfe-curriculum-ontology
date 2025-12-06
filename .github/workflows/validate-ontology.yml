@@ -1,0 +1,105 @@
+name: Validate Ontology
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - '**/*.ttl'
+      - 'ontology/**'
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  syntax-check:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install rdflib
+      run: pip install rdflib
+
+    - name: Check Turtle syntax
+      run: |
+        python - <<'EOF'
+        import sys
+        from pathlib import Path
+        from rdflib import Graph
+        
+        errors = []
+        files_checked = 0
+        
+        for ttl_file in sorted(Path('.').rglob('*.ttl')):
+            files_checked += 1
+            print(f'Checking: {ttl_file}')
+            try:
+                g = Graph()
+                g.parse(ttl_file, format='turtle')
+                print(f'  ✓ Valid')
+            except Exception as e:
+                errors.append((str(ttl_file), str(e)))
+                print(f'  ✗ ERROR: {e}')
+        
+        print(f'\n{"="*60}')
+        print(f'Checked {files_checked} files')
+        
+        if errors:
+            print(f'\n❌ {len(errors)} file(s) with syntax errors:\n')
+            for file, error in errors:
+                print(f'  {file}')
+                print(f'    {error}\n')
+            sys.exit(1)
+        else:
+            print('✅ All files have valid Turtle syntax')
+        EOF
+
+  shacl-validation:
+    needs: syntax-check
+    runs-on: ubuntu-latest
+    
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: "Programme Structure"
+            data: "data/england/programme-structure.ttl"
+          - name: "Themes"
+            data: "data/england/themes.ttl"
+          - name: "Science Subject"
+            data: "data/england/subjects/science/science-subject.ttl"
+          - name: "Science Knowledge Taxonomy"
+            data: "data/england/subjects/science/science-knowledge-taxonomy.ttl"
+          - name: "Science Schemes"
+            data: "data/england/subjects/science/science-schemes.ttl"
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+    
+    - name: Install pyshacl
+      run: pip install pyshacl
+
+    - name: Validate ${{ matrix.name }}
+      run: |
+        echo "Validating: ${{ matrix.name }}"
+        echo "Data file: ${{ matrix.data }}"
+        echo ""
+        
+        pyshacl \
+          --shacl ontology/curriculum-constraints.ttl \
+          --data-file ${{ matrix.data }} \
+          --ont-file ontology/curriculum-ontology.ttl \
+          --inference rdfs \
+          --abort \
+          --format human
+        
+        echo ""
+        echo "✅ ${{ matrix.name }} validation passed"
