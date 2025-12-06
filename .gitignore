@@ -64,13 +64,15 @@ node_modules/
 package-lock.json
 yarn.lock
 
-# Python
+# Python / uv
 venv/
 env/
 ENV/
 .venv/
 .python-version
 uv.lock
+*.pyc
+__pycache__/
 *.egg-info/
 .pytest_cache/
 
