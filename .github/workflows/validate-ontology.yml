@@ -96,11 +96,11 @@ jobs:
         
         pyshacl \
           --shacl ontology/curriculum-constraints.ttl \
-          --data-file ${{ matrix.data }} \
-          --ont-file ontology/curriculum-ontology.ttl \
+          --ont-graph ontology/curriculum-ontology.ttl \
           --inference rdfs \
           --abort \
-          --format human
+          --format human \
+          ${{ matrix.data }}
         
         echo ""
         echo "✅ ${{ matrix.name }} validation passed"
