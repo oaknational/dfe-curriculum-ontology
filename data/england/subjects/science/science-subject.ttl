@@ -73,7 +73,6 @@ eng:subject-science
   skos:scopeNote """Science is essential for understanding the natural world and making informed 
   decisions about scientific developments. It develops critical thinking, analytical skills, and 
   systematic investigation methods that students will use throughout their lives."""@en ;
-  rdfs:comment "Science as both a subject discipline and a taught programme."@en ;
   curric:hasStrand eng:strand-structure-function-living-organisms ,
                    eng:strand-material-cycles-and-energy ;
   
