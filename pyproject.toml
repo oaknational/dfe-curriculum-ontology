@@ -1,7 +1,7 @@
 [project]
 name = "uk-curriculum-ontology"
 version = "0.1.0"
-description = "Add your description here"
+description = "UK Curriculum Ontology with SHACL validation"
 readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
