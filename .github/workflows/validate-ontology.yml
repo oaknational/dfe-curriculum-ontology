@@ -66,16 +66,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          - name: "Programme Structure"
-            data: "data/england/programme-structure.ttl"
-          - name: "Themes"
-            data: "data/england/themes.ttl"
-          - name: "Science Subject"
-            data: "data/england/subjects/science/science-subject.ttl"
-          - name: "Science Knowledge Taxonomy"
-            data: "data/england/subjects/science/science-knowledge-taxonomy.ttl"
-          - name: "Science Schemes"
-            data: "data/england/subjects/science/science-schemes.ttl"
+            - name: "England Programme Structure"
+          files: "data/england/programme-structure.ttl"
+          
+        - name: "England Themes"
+          files: "data/england/themes.ttl"
+          
+        - name: "Science Subject (Complete)"
+          files: "data/england/subjects/science/science-subject.ttl data/england/subjects/science/science-knowledge-taxonomy.ttl data/england/subjects/science/science-schemes.ttl"
     
     steps:
     - uses: actions/checkout@v4
