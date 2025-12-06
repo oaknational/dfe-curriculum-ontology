@@ -124,6 +124,18 @@ eng:content-descriptor-observe-seasonal-changes
   skos:inScheme eng:knowledge-taxonomy ;
   skos:related eng:theme-climate-change-and-sustainability .
 
+eng:content-descriptor-biomechanics
+  a skos:Concept, curric:ContentDescriptor ;
+  skos:prefLabel "Biomechanics"@en ;
+  skos:broader eng:substrand-skeletal-and-muscular-systems ;
+  skos:inScheme eng:knowledge-taxonomy .
+
+eng:content-descriptor-function-of-muscles
+  a skos:Concept, curric:ContentDescriptor ;
+  skos:prefLabel "Function of muscles"@en ;
+  skos:broader eng:substrand-skeletal-and-muscular-systems ;
+  skos:inScheme eng:knowledge-taxonomy .
+
 # ----------------------------------------------------------------------
 # Content Sub-Descriptors
 # ----------------------------------------------------------------------
