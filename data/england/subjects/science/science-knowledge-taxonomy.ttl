@@ -64,9 +64,7 @@ eng:strand-material-cycles-and-energy
   a skos:Concept, curric:Strand ;
   skos:prefLabel "Material cycles and energy"@en ;
   skos:broader eng:subject-science ;
-  skos:narrower eng:substrand-photosynthesis ,
-                eng:substrand-cellular-respiration ,
-                eng:substrand-seasonal-changes ;
+  skos:narrower eng:substrand-seasonal-changes ;
 
   curric:applicableToSubSubject eng:subsubject-science ;
   skos:inScheme eng:knowledge-taxonomy .
