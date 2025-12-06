@@ -8,6 +8,7 @@ on:
       - 'ontology/**'
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
 
 jobs:
   syntax-check:
