@@ -3,9 +3,6 @@ name: Validate Ontology
 on:
   push:
     branches: [ main, develop ]
-    paths:
-      - '**/*.ttl'
-      - 'ontology/**'
   pull_request:
     branches: [ main ]
   workflow_dispatch:
@@ -66,14 +63,14 @@ jobs:
       fail-fast: false
       matrix:
         include:
-            - name: "England Programme Structure"
-          files: "data/england/programme-structure.ttl"
-          
-        - name: "England Themes"
-          files: "data/england/themes.ttl"
-          
-        - name: "Science Subject (Complete)"
-          files: "data/england/subjects/science/science-subject.ttl data/england/subjects/science/science-knowledge-taxonomy.ttl data/england/subjects/science/science-schemes.ttl"
+          - name: "England Programme Structure"
+            files: "data/england/programme-structure.ttl"
+            
+          - name: "England Themes"
+            files: "data/england/themes.ttl"
+            
+          - name: "Science Subject (Complete)"
+            files: "data/england/subjects/science/science-subject.ttl data/england/subjects/science/science-knowledge-taxonomy.ttl data/england/subjects/science/science-schemes.ttl"
     
     steps:
     - uses: actions/checkout@v4
@@ -89,7 +86,7 @@ jobs:
     - name: Validate ${{ matrix.name }}
       run: |
         echo "Validating: ${{ matrix.name }}"
-        echo "Data file: ${{ matrix.data }}"
+        echo "Files: ${{ matrix.files }}"
         echo ""
         
         pyshacl \
@@ -98,7 +95,7 @@ jobs:
           --inference rdfs \
           --abort \
           --format human \
-          ${{ matrix.data }}
+          ${{ matrix.files }}
         
         echo ""
         echo "✅ ${{ matrix.name }} validation passed"
