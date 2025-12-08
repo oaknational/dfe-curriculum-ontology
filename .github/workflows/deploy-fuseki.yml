@@ -1,0 +1,45 @@
+name: Deploy Fuseki to Cloud Run
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      
+      - name: Set up Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+      
+      - name: Build Fuseki container with data
+        run: |
+          # Create Dockerfile that includes data
+          cat > Dockerfile <<EOF
+          FROM stain/jena-fuseki:latest
+          COPY ontology/*.ttl /fuseki/data/
+          COPY deployment/fuseki-config.ttl /fuseki/config.ttl
+          EOF
+          
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/fuseki:${{ github.sha }} .
+      
+      - name: Push to Container Registry
+        run: |
+          gcloud auth configure-docker
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/fuseki:${{ github.sha }}
+      
+      - name: Deploy to Cloud Run
+        run: |
+          gcloud run deploy uk-curriculum-sparql \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/fuseki:${{ github.sha }} \
+            --platform managed \
+            --region europe-west2 \
+            --allow-unauthenticated \
+            --port 3030

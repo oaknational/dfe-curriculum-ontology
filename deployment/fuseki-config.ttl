@@ -1,0 +1,12 @@
+@prefix fuseki: <http://jena.apache.org/fuseki#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+
+<#service> a fuseki:Service ;
+    fuseki:name "uk-curriculum" ;
+    fuseki:endpoint [ fuseki:operation fuseki:query ] ;
+    fuseki:dataset <#dataset> .
+
+<#dataset> a fuseki:DatasetTxnMem ;
+    fuseki:data <file:///data/core.ttl> ;
+    fuseki:data <file:///data/subjects.ttl> ;
+    fuseki:data <file:///data/keystages.ttl> .
