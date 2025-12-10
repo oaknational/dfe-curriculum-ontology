@@ -60,3 +60,13 @@ eng:scheme-science-key-stage-3
   curric:hasContent
     eng:content-descriptor-cells-as-unit-of-living-organism ,
     eng:content-descriptor-functions-of-the-cell-wall .
+
+eng:scheme-science-key-stage-4
+  a curric:Scheme ;
+  rdfs:label "Science Key Stage 4"@en ;
+  rdfs:comment "Science programme of study for key stage 4."@en ;
+  curric:isPartOf eng:subsubject-science ;
+  curric:hasKeyStage eng:key-stage-4 ;
+  curric:hasContent
+    eng:content-descriptor-cells-as-unit-of-living-organism ,
+    eng:content-descriptor-functions-of-the-cell-wall .
