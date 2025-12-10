@@ -6,13 +6,13 @@ on:
     paths:
       - '**/*.ttl'
       - '.github/workflows/validate-ontology.yml'
-      - 'scripts/validate.py'
+      - 'scripts/merge_ttls.py'
   pull_request:
     branches: [ main ]
     paths:
       - '**/*.ttl'
       - '.github/workflows/validate-ontology.yml'
-      - 'scripts/validate.py'
+      - 'scripts/merge_ttls.py'
   workflow_dispatch:
 
 jobs:
@@ -25,7 +25,8 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-    
+        cache: 'pip'
+
     - name: Install rdflib
       run: pip install rdflib
 
@@ -66,48 +67,34 @@ jobs:
   shacl-validation:
     needs: syntax-check
     runs-on: ubuntu-latest
-    
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - name: "England Complete Curriculum"
-            files: "data/england/programme-structure.ttl data/england/themes.ttl data/england/subjects/science/science-subject.ttl data/england/subjects/science/science-knowledge-taxonomy.ttl data/england/subjects/science/science-schemes.ttl"
-    
+
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
         python-version: '3.11'
-    
-    - name: Install pyshacl
-      run: pip install pyshacl
+        cache: 'pip'
 
-    - name: Validate ${{ matrix.name }}
+    - name: Install dependencies
+      run: pip install rdflib pyshacl
+
+    - name: Merge TTL files and check imports
       run: |
-        echo "Validating: ${{ matrix.name }}"
-        echo "Files: ${{ matrix.files }}"
+        python scripts/merge_ttls.py
+
+    - name: Validate combined dataset
+      run: |
         echo ""
-        
-        FILES="${{ matrix.files }}"
-        if [[ "$FILES" == *" "* ]]; then
-          echo "Combining multiple files..."
-          cat $FILES > /tmp/combined-data.ttl
-          DATA_FILE="/tmp/combined-data.ttl"
-        else
-          DATA_FILE="$FILES"
-        fi
-        
-        echo "Validating combined dataset..."
+        echo "Running SHACL validation..."
         pyshacl \
           --shacl ontology/curriculum-constraints.ttl \
           --ont-graph ontology/curriculum-ontology.ttl \
           --inference rdfs \
           --abort \
           --format human \
-          "$DATA_FILE"
-        
+          /tmp/combined-data.ttl
+
         echo ""
-        echo "✅ ${{ matrix.name }} validation passed"
+        echo "✅ Validation passed"
