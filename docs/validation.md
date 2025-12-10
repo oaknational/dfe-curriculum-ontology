@@ -12,6 +12,91 @@ All curriculum data in this repository is automatically validated against SHACL 
 
 **Validation runs automatically** on every push and pull request via GitHub Actions.
 
+## SHACL Constraints
+
+SHACL constraints are defined in `ontology/curriculum-constraints.ttl`. These constraints specify rules that curriculum data must follow.
+
+### Key Validation Rules
+
+#### Phase Constraints:
+- Every phase must have at least one `rdfs:label`
+- Every phase must specify exactly one lower age boundary (non-negative integer)
+- Every phase must specify exactly one upper age boundary (positive integer)
+- Lower age boundary must be less than upper age boundary
+- Age boundaries must be in reasonable range (0-25 years)
+
+#### Key Stage Constraints:
+- Every key stage must have at least one `rdfs:label`
+- Every key stage must be part of exactly one phase (`curric:isPartOf`)
+- Every key stage must specify exactly one lower and upper age boundary
+- Lower age boundary must be less than upper age boundary
+- Key stage age boundaries must fall within parent phase boundaries
+
+#### Year Group Constraints:
+- Every year group must have at least one `rdfs:label`
+- Every year group must be part of exactly one key stage
+- Every year group must specify exactly one lower and upper age boundary
+- Lower age boundary must be less than upper age boundary
+- Year group age boundaries must fall within parent key stage boundaries
+
+#### Subject Constraints:
+- Every subject must have at least one `rdfs:label`
+- Every subject must have at least one `skos:prefLabel` for SKOS taxonomy
+- Every subject must be part of at least one concept scheme (`skos:inScheme`)
+- Subjects may have zero or more strands and aims
+- Subjects must not be orphaned (must have at least one sub-subject)
+
+#### Sub-Subject Constraints:
+- Every sub-subject must have at least one `rdfs:label`
+- Every sub-subject must be part of exactly one subject
+- Sub-subjects may include zero or more strands
+- When a sub-subject includes a strand, the strand must have a corresponding `applicableToSubSubject` link
+- Sub-subjects must not be orphaned (must be used in at least one scheme)
+
+#### Scheme Constraints:
+- Every scheme must have at least one `rdfs:label`
+- Every scheme must be part of at least one sub-subject
+- Every scheme must specify exactly one key stage (`curric:hasKeyStage`)
+- Schemes may have zero or more content descriptors
+
+#### Strand Constraints:
+- Every strand must have at least one `skos:prefLabel`
+- Every strand must be part of exactly one concept scheme
+- Every strand must belong to exactly one subject (`skos:broader`)
+- Every strand must be applicable to at least one sub-subject
+- Every strand must have at least one sub-strand (`skos:narrower`)
+- When a strand is applicable to a sub-subject, the sub-subject must include that strand
+- Strands must not be orphaned (must be referenced by at least one subject or sub-subject)
+
+#### Sub-Strand Constraints:
+- Every sub-strand must have at least one `skos:prefLabel`
+- Every sub-strand must be part of exactly one concept scheme
+- Every sub-strand must belong to exactly one strand (`skos:broader`)
+- Every sub-strand must have at least one content descriptor (`skos:narrower`)
+- Sub-strands must not be orphaned (must be referenced by at least one strand)
+
+#### Content Descriptor Constraints:
+- Every content descriptor must have at least one `skos:prefLabel`
+- Every content descriptor must be part of exactly one concept scheme
+- Every content descriptor must belong to exactly one sub-strand (`skos:broader`)
+- Content descriptors may have zero or more content sub-descriptors (`skos:narrower`)
+- Content descriptors must not be orphaned (must be used in at least one scheme or referenced by a sub-strand)
+
+#### Content Sub-Descriptor Constraints:
+- Every content sub-descriptor must have at least one `skos:prefLabel`
+- Every content sub-descriptor must be part of exactly one concept scheme
+- Every content sub-descriptor must belong to exactly one content descriptor (`skos:broader`)
+- Content sub-descriptors may have zero or more text examples and URL examples
+- Content sub-descriptors must not be orphaned (must be referenced by at least one content descriptor)
+
+#### Theme Constraints:
+- Every theme must have at least one `skos:prefLabel`
+- Every theme must have at least one `skos:definition`
+- Every theme must be part of exactly one concept scheme
+- Themes must not be orphaned (must be related to at least one content item via `skos:related`)
+
+See `ontology/curriculum-constraints.ttl` for the complete constraint definitions.
+
 ## How Validation Works
 
 Validation occurs in two stages:
@@ -198,15 +283,41 @@ Syntax checking runs first as a separate job:
 
 ## Running Validation Locally
 
-### Option 1: Full CI/CD Validation (Recommended)
+### Using the Validation Script (Recommended)
 
-Run the exact same validation as the CI/CD pipeline:
+Run the exact same validation as the CI/CD pipeline with a single command:
 
 ```bash
-# Stage 1: Syntax check (built into merge script)
+./scripts/validate.sh
+```
+
+This script:
+- ✅ Merges all TTL files with auto-discovery
+- ✅ Runs SHACL validation with RDFS inference
+- ✅ Matches CI/CD exactly
+- ✅ Auto-detects pyshacl (checks virtual environment first, then system)
+
+**Prerequisites:**
+
+```bash
+# Install pyshacl if not already installed
+pip install pyshacl
+
+# Or in a virtual environment
+python3 -m venv .venv
+source .venv/bin/activate
+pip install pyshacl
+```
+
+### Manual Validation (Advanced)
+
+If you need to run the validation steps manually:
+
+```bash
+# Step 1: Merge TTL files with auto-discovery
 python3 scripts/merge_ttls.py
 
-# Stage 2: SHACL validation
+# Step 2: Run SHACL validation
 pyshacl \
   --shacl ontology/curriculum-constraints.ttl \
   --ont-graph ontology/curriculum-ontology.ttl \
@@ -215,18 +326,6 @@ pyshacl \
   --format human \
   /tmp/combined-data.ttl
 ```
-
-**This matches CI/CD exactly** and is the authoritative validation method.
-
-### Option 2: Using the Local Validation Script
-
-Use the existing convenience script:
-
-```bash
-python3 scripts/validation.py
-```
-
-**Note:** This script uses a hardcoded file list and may not match CI/CD exactly. It's useful for quick local checks but Option 1 is recommended for final validation.
 
 ### Expected Output
 
@@ -258,60 +357,16 @@ Constraint Violation in MinCountConstraintComponent:
 
 ## Adding New Files
 
-When adding new `.ttl` files to the repository, **no configuration changes are needed**.
+When adding new `.ttl` files to the repository, **no configuration changes are needed** in most cases.
 
-### What Works Automatically
+### Automatic Discovery
 
-The merge script automatically discovers files in these directories:
+The merge script automatically discovers all `.ttl` files in:
+- `ontology/`
+- `data/`
+- All subdirectories (excluding `versions/`)
 
-✅ **New subjects:**
-```
-data/england/subjects/english/
-├── english-subject.ttl
-├── english-knowledge-taxonomy.ttl
-└── english-schemes.ttl
-```
-
-✅ **New regions:**
-```
-data/wales/
-├── programme-structure.ttl
-└── themes.ttl
-```
-
-✅ **New data files:**
-```
-data/england/
-├── assessments.ttl
-├── qualifications.ttl
-└── pedagogical-approaches.ttl
-```
-
-✅ **New ontology files:**
-```
-ontology/
-├── curriculum-ontology.ttl
-├── curriculum-constraints.ttl
-└── extensions.ttl
-```
-
-All these files are **automatically discovered and validated** - zero configuration required.
-
-### Version Files Are Automatically Excluded
-
-Files in `versions/` directories are automatically skipped:
-
-```
-ontology/versions/
-├── curriculum-ontology-0.0.9.ttl    ⏭ Skipped
-└── curriculum-constraints-0.0.9.ttl  ⏭ Skipped
-
-data/england/versions/0.0.9/
-├── programme-structure-0.0.9.ttl    ⏭ Skipped
-└── themes-0.0.9.ttl                  ⏭ Skipped
-```
-
-This ensures historical snapshots don't interfere with current validation.
+New files are automatically included in validation.
 
 ### When Configuration IS Needed
 
@@ -341,9 +396,14 @@ if "versions" in ttl_file.parts or "archive" in ttl_file.parts:
     continue
 ```
 
-#### 3. Complex Import Resolution (Future)
+### What Doesn't Need Configuration
 
-Currently, this repo validates all files as local - no external imports are fetched. If you add external `owl:imports` that need resolution, you'll need to implement a URI mapping system that maps persistent URIs to their actual file locations or URLs.
+These changes work automatically:
+- ✅ Adding new subjects in `data/england/subjects/<subject>/`
+- ✅ Adding new regions in `data/<region>/`
+- ✅ Creating new data files in `data/`
+- ✅ Updating existing files
+- ✅ Adding new SHACL constraints in `ontology/curriculum-constraints.ttl`
 
 ## owl:imports Validation
 
@@ -380,22 +440,6 @@ Standard W3C vocabularies (OWL, RDFS, SKOS, etc.) are not reported as they're ex
 - ✅ **External dependencies** - Track dependencies on external ontologies
 
 ## Common Validation Errors
-
-### Syntax Errors
-
-**Example:**
-```
-Checking: data/england/programme-structure.ttl
-  ✗ ERROR: Bad syntax at line 42: Unexpected token '.'
-```
-
-**Causes:**
-- Missing closing brackets
-- Incorrect punctuation (`.` `;` `,`)
-- Missing prefix declarations
-- Unclosed string literals
-
-**Fix:** Check the specific line number and verify Turtle syntax.
 
 ### Class Constraint Violations
 
@@ -500,55 +544,12 @@ eng:subject-science skos:prefLabel "Science"@en .
 ## Best Practices
 
 1. **Run validation locally** before pushing to catch errors early
-2. **Check CI/CD logs** if validation fails - they show exactly what's wrong
-3. **Keep constraints in sync** with ontology changes
-4. **Use meaningful constraint messages** to help debug failures
-5. **Version your constraints** separately from your data
-6. **Test incrementally** when adding new constraint rules
-7. **Validate before and after** major refactoring
-
-## Troubleshooting
-
-### Problem: Merge script doesn't find my new file
-
-**Check:**
-- Is the file in `ontology/` or `data/` directories?
-- Does the file have a `.ttl` extension?
-- Is the file in a `versions/` directory? (These are excluded)
-
-**Solution:** Move the file to `ontology/` or `data/`, or update `ROOT_DIRS` in the merge script.
-
-### Problem: Validation passes locally but fails in CI/CD
-
-**Causes:**
-- Different files being validated (local script uses hardcoded list)
-- Environment differences
-
-**Solution:** Use `scripts/merge_ttls.py` + `pyshacl` locally (Option 1) to match CI/CD exactly.
-
-### Problem: owl:imports validation shows unexpected URIs
-
-**Check:**
-- Review the list of imports reported by merge_ttls.py
-- Verify all imports are intentional
-- Check for typos in import URIs
-
-**Solution:** Fix or remove unintended `owl:imports` declarations.
-
-### Problem: Workflow runs very slowly
-
-**Check:**
-- Is pip caching enabled? (Should see "Cache restored" in logs)
-- Are there very large TTL files being parsed?
-
-**Solution:**
-- Ensure `cache: 'pip'` is in workflow Python setup steps
-- Consider breaking very large files into smaller ones
+2. **Check the CI/CD output** if validation fails to see detailed error reports
+3. **Update URI mappings** when adding imports from new external files
+4. **Keep constraints synchronized** with data model changes
+5. **Use meaningful SHACL messages** to help diagnose validation failures
 
 ## Further Reading
 
 - [SHACL Specification (W3C)](https://www.w3.org/TR/shacl/)
 - [pyshacl Documentation](https://github.com/RDFLib/pySHACL)
-- [Turtle Syntax](https://www.w3.org/TR/turtle/)
-- [RDF 1.1 Primer](https://www.w3.org/TR/rdf11-primer/)
-- [GitHub Actions: Caching dependencies](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows)
