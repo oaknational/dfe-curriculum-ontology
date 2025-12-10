@@ -343,7 +343,7 @@ if "versions" in ttl_file.parts or "archive" in ttl_file.parts:
 
 #### 3. Complex Import Resolution (Future)
 
-Currently, this repo validates all files as local - no external imports are fetched. If you add external `owl:imports` that need resolution, you'll need to implement a URI mapping system (see oak-curriculum-ontology for an example).
+Currently, this repo validates all files as local - no external imports are fetched. If you add external `owl:imports` that need resolution, you'll need to implement a URI mapping system that maps persistent URIs to their actual file locations or URLs.
 
 ## owl:imports Validation
 
@@ -544,20 +544,6 @@ eng:subject-science skos:prefLabel "Science"@en .
 **Solution:**
 - Ensure `cache: 'pip'` is in workflow Python setup steps
 - Consider breaking very large files into smaller ones
-
-## Differences from oak-curriculum-ontology
-
-This repository has simpler validation needs:
-
-| Aspect | uk-curriculum-ontology | oak-curriculum-ontology |
-|--------|------------------------|-------------------------|
-| **External dependencies** | None (all files local) | Multiple (imports from this repo) |
-| **Import resolution** | Report only | Complex URI mapping + fetching |
-| **File discovery** | Auto-discovery ✅ | Auto-discovery ✅ |
-| **Validation approach** | Simple merging | Import resolution + merging |
-| **Complexity** | Appropriate for needs | More complex (necessarily) |
-
-Both repositories follow the same validation principles with appropriate complexity for their specific requirements.
 
 ## Further Reading
 
