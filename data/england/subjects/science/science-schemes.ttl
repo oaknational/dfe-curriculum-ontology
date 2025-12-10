@@ -72,8 +72,6 @@ eng:scheme-combined-science-key-stage-4
     eng:content-descriptor-functions-of-the-cell-wall .
 
 eng:scheme-english-key-stage-2
-
-eng:scheme-english-key-stage-2
   a curric:Scheme ;
   rdfs:label "English Key Stage 2"@en ;
   rdfs:comment "English programme of study for key stage 2."@en ;
