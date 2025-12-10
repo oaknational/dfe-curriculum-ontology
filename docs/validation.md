@@ -1,490 +1,568 @@
-# SHACL Validation Guide
+# SHACL Validation
 
-This document explains how to validate UK Curriculum Ontology data using SHACL (Shapes Constraint Language).
-
-## Table of Contents
-
-- [Overview](#overview)
-- [Running Validation](#running-validation)
-- [Constraint Shapes](#constraint-shapes)
-- [Common Validation Errors](#common-validation-errors)
-- [Extending Constraints](#extending-constraints)
+This document explains how the UK Curriculum Ontology validates its data quality using SHACL (Shapes Constraint Language) in its automated CI/CD pipeline.
 
 ## Overview
 
-[SHACL (Shapes Constraint Language)](https://www.w3.org/TR/shacl/) is a W3C standard for validating RDF graphs against a set of constraints. The UK Curriculum Ontology uses SHACL to ensure:
+All curriculum data in this repository is automatically validated against SHACL constraints to ensure:
+- Data consistency and completeness
+- Correct relationships between resources
+- Compliance with curriculum structure rules
+- Prevention of invalid or orphaned data
 
-- **Data quality**: Required properties are present
-- **Structural integrity**: Hierarchical relationships are correct
-- **Business rules**: Domain-specific constraints are met (e.g., age boundaries)
-- **Consistency**: Inverse relationships are properly maintained
+**Validation runs automatically** on every push and pull request via GitHub Actions.
 
-### Ontology vs. Constraints
+## How Validation Works
 
-The **ontology** (`curriculum-ontology.ttl`) defines what _can_ be expressed using OWL classes and properties.
+Validation occurs in two stages:
 
-The **constraints** (`curriculum-constraints.ttl`) define what _must_ be expressed using SHACL shapes - enforcing policies and best practices that may evolve independently of the core ontology.
+### Stage 1: Syntax Check
 
-## Running Validation
+**Purpose:** Verify that all TTL files have valid Turtle syntax before attempting SHACL validation.
 
-### Using the Validation Script
+**Tool:** rdflib
 
-The simplest way to validate your data:
+The workflow discovers and checks **every** `.ttl` file in the repository:
+
+```python
+for ttl_file in sorted(Path('.').rglob('*.ttl')):
+    g = Graph()
+    g.parse(ttl_file, format='turtle')
+```
+
+This catches:
+- Syntax errors
+- Malformed URIs
+- Invalid prefixes
+- Structural issues
+- Missing closing brackets or quotes
+
+**If any file has syntax errors, the workflow fails** before proceeding to SHACL validation.
+
+### Stage 2: SHACL Validation
+
+**Purpose:** Validate merged data against SHACL business rules and constraints.
+
+**Tools:** rdflib, pyshacl
+
+This stage has two steps:
+
+#### Step 2.1: Merge TTL Files with Auto-Discovery
+
+**Script:** `scripts/merge_ttls.py`
+
+This script automatically:
+
+1. **Discovers all `.ttl` files** in `ontology/` and `data/` directories
+2. **Excludes versioned files** from `versions/` directories
+3. **Parses and combines** all files into a single RDF graph
+4. **Validates owl:imports** declarations (reports all import URIs found)
+5. **Outputs** merged graph to `/tmp/combined-data.ttl`
+
+**Example output:**
+```
+======================================================================
+MERGING TTL FILES FOR VALIDATION
+======================================================================
+📄 Parsing: ontology/curriculum-ontology.ttl
+📄 Parsing: ontology/curriculum-constraints.ttl
+📄 Parsing: data/england/programme-structure.ttl
+📄 Parsing: data/england/subjects/science/science-subject.ttl
+⏭  Skipping versioned file: ontology/versions/curriculum-ontology-0.0.9.ttl
+
+📋 Local curriculum imports found:
+   ✓ https://w3id.org/uk/curriculum/core/
+   ✓ https://w3id.org/uk/curriculum/england/programme-structure
+
+======================================================================
+✅ Successfully merged 7 files into /tmp/combined-data.ttl
+======================================================================
+```
+
+**Key benefits:**
+- ✅ **Zero maintenance** - New files are automatically discovered
+- ✅ **Version exclusion** - Historical snapshots don't interfere with validation
+- ✅ **Import visibility** - See all dependencies between files
+- ✅ **Early error detection** - Parsing errors caught during merge
+
+#### Step 2.2: Run SHACL Validation
+
+The merged data graph is validated against SHACL constraints with RDFS inference:
 
 ```bash
-./tools/validate.sh data/england/subjects/science/*.ttl
+pyshacl \
+  --shacl ontology/curriculum-constraints.ttl \
+  --ont-graph ontology/curriculum-ontology.ttl \
+  --inference rdfs \
+  --abort \
+  --format human \
+  /tmp/combined-data.ttl
 ```
 
-### Using Apache Jena SHACL
+**Parameters:**
+- `--shacl`: SHACL shapes file defining validation rules
+- `--ont-graph`: Ontology file defining classes and properties
+- `--inference rdfs`: Enable RDFS inference (automatic class membership)
+- `--abort`: Fail immediately on first violation
+- `--format human`: Output human-readable validation reports
 
-Install [Apache Jena](https://jena.apache.org/download/):
+**Success:** `Validation Report - Conforms: True`
+
+**Failure:** Pipeline stops and reports violations with:
+- Focus node (resource that failed validation)
+- Constraint violated
+- Property path
+- Human-readable message
+
+## CI/CD Workflow
+
+**File:** `.github/workflows/validate-ontology.yml`
+
+### Workflow Triggers
+
+The validation runs on:
+- **Pushes** to `main` or `develop` branches when:
+  - Any `.ttl` file changes
+  - Workflow file changes
+  - `scripts/merge_ttls.py` changes
+- **Pull requests** to `main` when files change
+- **Manual dispatch** via GitHub Actions UI
+
+### Workflow Jobs
+
+```yaml
+jobs:
+  syntax-check:          # Stage 1
+    ↓
+  shacl-validation:      # Stage 2 (only runs if syntax-check passes)
+```
+
+### Complete Workflow Steps
+
+```
+Stage 1: Syntax Check
+├─ 1. Checkout repository
+├─ 2. Set up Python 3.11 (with pip dependency caching)
+├─ 3. Install rdflib
+└─ 4. Check all .ttl files for valid Turtle syntax
+      - Discovers files with Path('.').rglob('*.ttl')
+      - Parses each file with rdflib
+      - Reports errors with file path and line number
+   ↓
+   [If syntax errors found → FAIL]
+   ↓
+Stage 2: SHACL Validation (depends on Stage 1 passing)
+├─ 1. Checkout repository
+├─ 2. Set up Python 3.11 (with pip dependency caching)
+├─ 3. Install rdflib + pyshacl
+├─ 4. Merge TTL files with auto-discovery
+│     - Runs: scripts/merge_ttls.py
+│     - Auto-discovers all .ttl files in ontology/ and data/
+│     - Excludes versions/ directories
+│     - Checks owl:imports declarations
+│     - Outputs: /tmp/combined-data.ttl
+└─ 5. Run SHACL validation
+      - Validates merged data against constraints
+      - Uses RDFS inference
+      - Outputs human-readable report
+   ↓
+   [If violations found → FAIL]
+   [If conforms → PASS]
+```
+
+### Performance Optimizations
+
+**Dependency Caching:**
+
+Both jobs use pip caching to speed up workflow runs:
+
+```yaml
+- name: Set up Python
+  uses: actions/setup-python@v5
+  with:
+    python-version: '3.11'
+    cache: 'pip'  # ← Caches installed packages between runs
+```
+
+**Benefits:**
+- ✅ Faster workflow execution (30-60% faster on average)
+- ✅ Reduced network usage
+- ✅ More reliable (less dependent on PyPI availability)
+
+**Two-Stage Validation:**
+
+Syntax checking runs first as a separate job:
+- ✅ **Fail fast** - Syntax errors caught before expensive SHACL validation
+- ✅ **Clear errors** - Syntax errors reported separately from constraint violations
+- ✅ **Parallel-ready** - Jobs can run in parallel in the future if needed
+
+## Running Validation Locally
+
+### Option 1: Full CI/CD Validation (Recommended)
+
+Run the exact same validation as the CI/CD pipeline:
 
 ```bash
-# Validate data files against constraints
-shacl validate \
-  --shapes=ontology/curriculum-constraints.ttl \
-  --data=data/england/programme-structure.ttl \
-  --data=data/england/subjects/science/science-subject.ttl \
-  --data=data/england/subjects/science/science-knowledge-taxonomy.ttl \
-  --data=data/england/subjects/science/science-schemes.ttl
+# Stage 1: Syntax check (built into merge script)
+python3 scripts/merge_ttls.py
+
+# Stage 2: SHACL validation
+pyshacl \
+  --shacl ontology/curriculum-constraints.ttl \
+  --ont-graph ontology/curriculum-ontology.ttl \
+  --inference rdfs \
+  --abort \
+  --format human \
+  /tmp/combined-data.ttl
 ```
 
-### Using TopQuadrant SHACL
+**This matches CI/CD exactly** and is the authoritative validation method.
 
-With [TopQuadrant SHACL](https://github.com/TopQuadrant/shacl):
+### Option 2: Using the Local Validation Script
+
+Use the existing convenience script:
 
 ```bash
-# Install
-npm install -g shacl
-
-# Validate
-shacl -d data/england/*.ttl \
-      -s ontology/curriculum-constraints.ttl
+python3 scripts/validation.py
 ```
 
-### Using Python (pySHACL)
+**Note:** This script uses a hardcoded file list and may not match CI/CD exactly. It's useful for quick local checks but Option 1 is recommended for final validation.
 
-Install [pySHACL](https://github.com/RDFLib/pySHACL):
+### Expected Output
 
-```bash
-pip install pyshacl
+**Success:**
+```
+======================================================================
+MERGING TTL FILES FOR VALIDATION
+======================================================================
+📄 Parsing: ontology/curriculum-ontology.ttl
+...
+✅ Successfully merged 7 files into /tmp/combined-data.ttl
+======================================================================
 
-# Validate
-pyshacl -s ontology/curriculum-constraints.ttl \
-        -d data/england/programme-structure.ttl \
-        -df turtle
+Validation Report
+Conforms: True
 ```
 
-### Validation Output
-
-Successful validation produces no output or a confirmation message.
-
-Failed validation produces a validation report in RDF format:
-
-```turtle
-@prefix sh: <http://www.w3.org/ns/shacl#> .
-
-[ a sh:ValidationReport ;
-  sh:conforms false ;
-  sh:result [
-    a sh:ValidationResult ;
-    sh:resultSeverity sh:Violation ;
-    sh:focusNode eng:key-stage-3 ;
-    sh:resultPath rdfs:label ;
-    sh:resultMessage "Key stages must have an rdfs:label." ;
-    sh:sourceConstraintComponent sh:MinCountConstraintComponent ;
-  ]
-] .
+**Failure:**
+```
+Validation Report
+Conforms: False
+Results (1):
+Constraint Violation in MinCountConstraintComponent:
+    Severity: sh:Violation
+    Focus Node: eng:my-phase
+    Result Path: rdfs:label
+    Message: Phases must have an rdfs:label.
 ```
 
-## Constraint Shapes
+## Adding New Files
 
-The constraints file defines shapes for each major class. Here's what each shape validates:
+When adding new `.ttl` files to the repository, **no configuration changes are needed**.
 
-### Phase Shape
+### What Works Automatically
 
-**Target:** All instances of `curric:Phase`
+The merge script automatically discovers files in these directories:
 
-**Constraints:**
-- Must have at least one `rdfs:label` (language-tagged string)
-- Must have exactly one `curric:lowerAgeBoundary` (non-negative integer)
-- Must have exactly one `curric:upperAgeBoundary` (positive integer)
-- Lower age must be less than upper age
-- Age boundaries must be in reasonable range (0-25 years)
-
-**Example violation:**
-```turtle
-eng:phase-invalid
-  a curric:Phase ;
-  # Missing rdfs:label - VIOLATION
-  curric:lowerAgeBoundary 5 ;
-  curric:upperAgeBoundary 11 .
+✅ **New subjects:**
+```
+data/england/subjects/english/
+├── english-subject.ttl
+├── english-knowledge-taxonomy.ttl
+└── english-schemes.ttl
 ```
 
-### KeyStage Shape
-
-**Target:** All instances of `curric:KeyStage`
-
-**Constraints:**
-- Must have at least one `rdfs:label`
-- Must be part of exactly one `curric:Phase` via `curric:isPartOf`
-- Must have exactly one `curric:lowerAgeBoundary`
-- Must have exactly one `curric:upperAgeBoundary`
-- Lower age must be less than upper age
-- Age boundaries must fall within parent phase boundaries
-- Must be used in at least one scheme (not orphaned)
-
-**Example violation:**
-```turtle
-eng:key-stage-invalid
-  a curric:KeyStage ;
-  rdfs:label "Invalid KS" ;
-  curric:isPartOf eng:phase-secondary ;
-  curric:lowerAgeBoundary 11 ;
-  curric:upperAgeBoundary 10 .  # VIOLATION: upper < lower
+✅ **New regions:**
+```
+data/wales/
+├── programme-structure.ttl
+└── themes.ttl
 ```
 
-### YearGroup Shape
-
-**Target:** All instances of `curric:YearGroup`
-
-**Constraints:**
-- Must have at least one `rdfs:label`
-- Must be part of exactly one `curric:KeyStage` via `curric:isPartOf`
-- Must have exactly one `curric:lowerAgeBoundary`
-- Must have exactly one `curric:upperAgeBoundary`
-- Lower age must be less than upper age
-- Age boundaries must fall within parent key stage boundaries
-
-### Subject Shape
-
-**Target:** All instances of `curric:Subject`
-
-**Constraints:**
-- Must have at least one `rdfs:label` (language-tagged string)
-- Must have at least one `skos:prefLabel` (language-tagged string)
-- Must be in at least one `skos:ConceptScheme` via `skos:inScheme`
-- May have zero or more `curric:hasStrand` relationships
-- May have zero or more `curric:hasAim` statements
-- Must be used in at least one sub-subject (not orphaned)
-
-### SubSubject Shape
-
-**Target:** All instances of `curric:SubSubject`
-
-**Constraints:**
-- Must have at least one `rdfs:label`
-- Must be part of exactly one `curric:Subject` via `curric:isPartOf`
-- May include zero or more `curric:Strand` via `curric:includesStrand`
-- If `curric:includesStrand` is present, inverse `curric:applicableToSubSubject` must exist on the strand
-- Must be used in at least one scheme (not orphaned)
-
-### Scheme Shape
-
-**Target:** All instances of `curric:Scheme`
-
-**Constraints:**
-- Must have at least one `rdfs:label`
-- Must be part of at least one `curric:SubSubject` via `curric:isPartOf`
-- Must have exactly one `curric:KeyStage` via `curric:hasKeyStage`
-- May have zero or more `curric:ContentDescriptor` via `curric:hasContent`
-
-**Example violation:**
-```turtle
-eng:scheme-invalid
-  a curric:Scheme ;
-  rdfs:label "Invalid Scheme" ;
-  curric:isPartOf eng:subsubject-science ;
-  curric:hasKeyStage eng:key-stage-3 , eng:key-stage-4 .  # VIOLATION: max 1 key stage
+✅ **New data files:**
+```
+data/england/
+├── assessments.ttl
+├── qualifications.ttl
+└── pedagogical-approaches.ttl
 ```
 
-### Strand Shape
+✅ **New ontology files:**
+```
+ontology/
+├── curriculum-ontology.ttl
+├── curriculum-constraints.ttl
+└── extensions.ttl
+```
 
-**Target:** All instances of `curric:Strand`
+All these files are **automatically discovered and validated** - zero configuration required.
 
-**Constraints:**
-- Must have at least one `skos:prefLabel`
-- Must be in exactly one `skos:ConceptScheme` via `skos:inScheme`
-- Must have exactly one broader subject via `skos:broader`
-- Must be applicable to at least one `curric:SubSubject` via `curric:applicableToSubSubject`
-- Must have at least one narrower `curric:SubStrand` via `skos:narrower`
-- If `curric:applicableToSubSubject` is present, inverse `curric:includesStrand` must exist on the sub-subject
-- Must be referenced by at least one subject or sub-subject (not orphaned)
+### Version Files Are Automatically Excluded
 
-### SubStrand Shape
+Files in `versions/` directories are automatically skipped:
 
-**Target:** All instances of `curric:SubStrand`
+```
+ontology/versions/
+├── curriculum-ontology-0.0.9.ttl    ⏭ Skipped
+└── curriculum-constraints-0.0.9.ttl  ⏭ Skipped
 
-**Constraints:**
-- Must have at least one `skos:prefLabel`
-- Must be in exactly one `skos:ConceptScheme` via `skos:inScheme`
-- Must have exactly one broader strand via `skos:broader`
-- Must have at least one narrower `curric:ContentDescriptor` via `skos:narrower`
-- Must be referenced by at least one strand via `skos:narrower` (not orphaned)
+data/england/versions/0.0.9/
+├── programme-structure-0.0.9.ttl    ⏭ Skipped
+└── themes-0.0.9.ttl                  ⏭ Skipped
+```
 
-### ContentDescriptor Shape
+This ensures historical snapshots don't interfere with current validation.
 
-**Target:** All instances of `curric:ContentDescriptor`
+### When Configuration IS Needed
 
-**Constraints:**
-- Must have at least one `skos:prefLabel`
-- Must be in exactly one `skos:ConceptScheme` via `skos:inScheme`
-- Must have exactly one broader sub-strand via `skos:broader`
-- May have zero or more narrower `curric:ContentSubDescriptor` via `skos:narrower`
-- Must be used in at least one scheme OR referenced by at least one sub-strand (not orphaned)
+You only need to update `scripts/merge_ttls.py` if:
 
-### ContentSubDescriptor Shape
+#### 1. Adding New Root Directories
 
-**Target:** All instances of `curric:ContentSubDescriptor`
+If you create new top-level directories besides `ontology/` and `data/`:
 
-**Constraints:**
-- Must have at least one `skos:prefLabel`
-- Must be in exactly one `skos:ConceptScheme` via `skos:inScheme`
-- Must have exactly one broader content descriptor via `skos:broader`
-- May have zero or more text examples via `curric:example`
-- May have zero or more URL examples via `curric:exampleURL`
-- Must be referenced by at least one content descriptor via `skos:narrower` (not orphaned)
+```python
+# In scripts/merge_ttls.py
+ROOT_DIRS = [
+    "ontology",
+    "data",
+    "examples",  # ← Add your new directory
+]
+```
 
-### Theme Shape
+#### 2. Adding New Excluded Directories
 
-**Target:** All instances of `curric:Theme`
+If you want to exclude directories besides `versions/`:
 
-**Constraints:**
-- Must have at least one `skos:prefLabel`
-- Must have at least one `skos:definition`
-- Must be in exactly one `skos:ConceptScheme` via `skos:inScheme`
-- Must be related to at least one content item via `skos:related` (not orphaned)
+```python
+# In scripts/merge_ttls.py, update the skip logic:
+if "versions" in ttl_file.parts or "archive" in ttl_file.parts:
+    print(f"⏭  Skipping: {ttl_file}")
+    continue
+```
+
+#### 3. Complex Import Resolution (Future)
+
+Currently, this repo validates all files as local - no external imports are fetched. If you add external `owl:imports` that need resolution, you'll need to implement a URI mapping system (see oak-curriculum-ontology for an example).
+
+## owl:imports Validation
+
+The merge script automatically reports all `owl:imports` declarations:
+
+### Local Imports
+
+```
+📋 Local curriculum imports found:
+   ✓ https://w3id.org/uk/curriculum/core/
+   ✓ https://w3id.org/uk/curriculum/england/programme-structure
+   ✓ https://w3id.org/uk/curriculum/england/science-subject
+```
+
+These are imports within this repository (or to w3id.org URIs that should resolve).
+
+### External Imports
+
+```
+⚠️  External imports found:
+   ! http://www.example.org/some-external-vocab
+   These should resolve via w3id.org or be standard vocabularies.
+```
+
+External imports (non-curriculum URIs) are flagged for visibility.
+
+**What gets skipped:**
+Standard W3C vocabularies (OWL, RDFS, SKOS, etc.) are not reported as they're expected.
+
+**Benefits:**
+- ✅ **Dependency visibility** - See all file dependencies
+- ✅ **Broken imports** - Catch typos in import URIs
+- ✅ **Circular imports** - Identify potential circular dependencies
+- ✅ **External dependencies** - Track dependencies on external ontologies
 
 ## Common Validation Errors
 
-### Missing Required Labels
+### Syntax Errors
 
-**Error message:** "Phases must have an rdfs:label."
+**Example:**
+```
+Checking: data/england/programme-structure.ttl
+  ✗ ERROR: Bad syntax at line 42: Unexpected token '.'
+```
 
-**Cause:** The instance is missing a required label property.
+**Causes:**
+- Missing closing brackets
+- Incorrect punctuation (`.` `;` `,`)
+- Missing prefix declarations
+- Unclosed string literals
 
-**Fix:**
+**Fix:** Check the specific line number and verify Turtle syntax.
+
+### Class Constraint Violations
+
+**Example:**
+```
+Constraint Violation in ClassConstraintComponent:
+    Focus Node: eng:key-stage-1
+    Value Node: eng:my-invalid-phase
+    Result Path: curric:isPartOf
+    Message: Key stages must belong to a Phase.
+```
+
+**Cause:** The referenced resource (`eng:my-invalid-phase`) is not of the required class (`curric:Phase`).
+
+**Fix:** Ensure the referenced resource has the correct `rdf:type`:
 ```turtle
-# Before (invalid)
-eng:my-phase a curric:Phase .
-
-# After (valid)
-eng:my-phase
-  a curric:Phase ;
+eng:my-invalid-phase
+  a curric:Phase ;  # ← Add this
   rdfs:label "My Phase"@en .
 ```
 
-### Age Boundary Issues
+### Cardinality Violations
 
-**Error message:** "Lower age boundary must be less than upper age boundary"
+**Example:**
+```
+Constraint Violation in MinCountConstraintComponent:
+    Focus Node: eng:scheme-science-ks3
+    Result Path: curric:hasKeyStage
+    Message: Schemes must specify exactly which key stage they cover.
+```
+
+**Cause:** Missing required property (minCount violation) or too many values (maxCount violation).
+
+**Fix:** Add the required property:
+```turtle
+eng:scheme-science-ks3
+  a curric:Scheme ;
+  rdfs:label "Science Key Stage 3" ;
+  curric:hasKeyStage eng:key-stage-3 .  # ← Add this
+```
+
+### Orphaned Resource Violations
+
+**Example:**
+```
+Constraint Violation:
+    Focus Node: eng:key-stage-orphaned
+    Message: Key stage is not used in any scheme (orphaned)
+```
+
+**Cause:** A resource exists but nothing references it.
+
+**Fix:** Either:
+1. Add a reference to the resource:
+```turtle
+eng:scheme-something
+  curric:hasKeyStage eng:key-stage-orphaned .
+```
+
+2. Or remove the unused resource if it's not needed.
+
+### Age Boundary Violations
+
+**Example:**
+```
+Constraint Violation:
+    Focus Node: eng:phase-invalid
+    Message: Lower age boundary must be less than upper age boundary
+```
 
 **Cause:** Age boundaries are inverted or equal.
 
 **Fix:**
 ```turtle
-# Before (invalid)
-eng:my-keystage
-  curric:lowerAgeBoundary 14 ;
+eng:phase-invalid
+  curric:lowerAgeBoundary 5 ;   # Must be < upper
   curric:upperAgeBoundary 11 .
-
-# After (valid)
-eng:my-keystage
-  curric:lowerAgeBoundary 11 ;
-  curric:upperAgeBoundary 14 .
 ```
 
-### Cardinality Violations
+### SKOS Violations
 
-**Error message:** "Every key stage must be part of exactly one phase."
+**Example:**
+```
+Constraint Violation in DatatypeConstraintComponent:
+    Focus Node: eng:subject-science
+    Value Node: "Science"
+    Result Path: skos:prefLabel
+    Message: Data type mismatch (expected rdf:langString)
+```
 
-**Cause:** Missing required relationship or too many relationships.
+**Cause:** `skos:prefLabel` requires a language tag.
 
 **Fix:**
 ```turtle
-# Before (invalid - missing relationship)
-eng:my-keystage a curric:KeyStage .
+# Wrong:
+eng:subject-science skos:prefLabel "Science" .
 
-# After (valid)
-eng:my-keystage
-  a curric:KeyStage ;
-  curric:isPartOf eng:phase-primary .
+# Correct:
+eng:subject-science skos:prefLabel "Science"@en .
 ```
 
-### Orphaned Entities
+## Best Practices
 
-**Error message:** "Key stage is not used in any scheme (orphaned)"
-
-**Cause:** A key stage exists but no scheme references it.
-
-**Fix:** Create a scheme that uses the key stage:
-```turtle
-eng:scheme-science-my-keystage
-  a curric:Scheme ;
-  rdfs:label "Science - My Key Stage" ;
-  curric:hasKeyStage eng:my-keystage ;
-  curric:isPartOf eng:subsubject-science .
-```
-
-### Inverse Relationship Mismatches
-
-**Error message:** "includesStrand must have corresponding applicableToSubSubject on the strand"
-
-**Cause:** One direction of an inverse relationship is present but the other is missing.
-
-**Fix:**
-```turtle
-# Both directions must be present
-eng:subsubject-science curric:includesStrand eng:my-strand .
-eng:my-strand curric:applicableToSubSubject eng:subsubject-science .
-```
-
-### Hierarchical Boundary Violations
-
-**Error message:** "Year group age boundaries must fall within parent key stage boundaries"
-
-**Cause:** A child entity has age boundaries outside its parent's range.
-
-**Fix:**
-```turtle
-# Parent
-eng:key-stage-3
-  curric:lowerAgeBoundary 11 ;
-  curric:upperAgeBoundary 14 .
-
-# Before (invalid - 10 < 11)
-eng:year-group-7
-  curric:isPartOf eng:key-stage-3 ;
-  curric:lowerAgeBoundary 10 ;
-  curric:upperAgeBoundary 12 .
-
-# After (valid)
-eng:year-group-7
-  curric:isPartOf eng:key-stage-3 ;
-  curric:lowerAgeBoundary 11 ;
-  curric:upperAgeBoundary 12 .
-```
-
-## Extending Constraints
-
-### Adding New Shape Constraints
-
-To add validation for a new class:
-
-1. Define a new shape in `curriculum-constraints.ttl`:
-
-```turtle
-curric:MyNewClassShape
-  a sh:NodeShape ;
-  sh:targetClass curric:MyNewClass ;
-
-  sh:property [
-    sh:path rdfs:label ;
-    sh:datatype rdf:langString ;
-    sh:minCount 1 ;
-    sh:message "MyNewClass must have a label." ;
-  ] .
-```
-
-2. Test the constraint:
-
-```bash
-./tools/validate.sh data/my-new-data.ttl
-```
-
-### Adding Custom SPARQL Constraints
-
-For complex validation logic, use SPARQL-based constraints:
-
-```turtle
-curric:MyCustomValidation
-  sh:sparql [
-    sh:message "Custom business rule violation" ;
-    sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
-      SELECT $this WHERE {
-        $this a curric:MyClass .
-        # Complex validation logic here
-        FILTER ( ... )
-      }
-    """ ;
-  ] .
-```
-
-See the [SHACL Advanced Features](https://www.w3.org/TR/shacl/#sparql-constraints) specification for details.
-
-### Severity Levels
-
-SHACL supports three severity levels:
-
-```turtle
-sh:property [
-  sh:path curric:myProperty ;
-  sh:severity sh:Warning ;  # or sh:Violation (default), sh:Info
-  sh:message "This is a warning, not an error." ;
-] .
-```
-
-### Constraint Versioning
-
-When constraints change:
-
-1. Document the change in `CHANGELOG.md`
-2. Save the previous version in `ontology/versions/`
-3. Update the version info in the constraints ontology declaration
-4. Consider backward compatibility - new constraints may invalidate previously valid data
-
-## Validation in CI/CD
-
-Example GitHub Actions workflow:
-
-```yaml
-name: Validate Curriculum Data
-
-on: [push, pull_request]
-
-jobs:
-  validate:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Install Apache Jena
-        run: |
-          wget https://downloads.apache.org/jena/binaries/apache-jena-x.x.x.tar.gz
-          tar xzf apache-jena-*.tar.gz
-      - name: Run SHACL Validation
-        run: |
-          ./apache-jena-*/bin/shacl validate \
-            --shapes=ontology/curriculum-constraints.ttl \
-            --data=data/**/*.ttl
-```
-
-## Resources
-
-- [SHACL Specification](https://www.w3.org/TR/shacl/) - W3C Recommendation
-- [SHACL Playground](https://shacl.org/playground/) - Interactive testing environment
-- [Apache Jena SHACL](https://jena.apache.org/documentation/shacl/) - Java implementation
-- [pySHACL](https://github.com/RDFLib/pySHACL) - Python implementation
-- [TopQuadrant SHACL](https://github.com/TopQuadrant/shacl) - JavaScript implementation
+1. **Run validation locally** before pushing to catch errors early
+2. **Check CI/CD logs** if validation fails - they show exactly what's wrong
+3. **Keep constraints in sync** with ontology changes
+4. **Use meaningful constraint messages** to help debug failures
+5. **Version your constraints** separately from your data
+6. **Test incrementally** when adding new constraint rules
+7. **Validate before and after** major refactoring
 
 ## Troubleshooting
 
-**Problem:** Validation runs but reports no violations when there should be some
+### Problem: Merge script doesn't find my new file
 
-**Solution:** Check that:
-- Your constraints file uses the correct namespace URIs
-- Target classes match exactly (`curric:Phase`, not `Phase`)
-- The data and shapes files are both being loaded
+**Check:**
+- Is the file in `ontology/` or `data/` directories?
+- Does the file have a `.ttl` extension?
+- Is the file in a `versions/` directory? (These are excluded)
 
-**Problem:** SPARQL-based constraints fail
+**Solution:** Move the file to `ontology/` or `data/`, or update `ROOT_DIRS` in the merge script.
+
+### Problem: Validation passes locally but fails in CI/CD
+
+**Causes:**
+- Different files being validated (local script uses hardcoded list)
+- Environment differences
+
+**Solution:** Use `scripts/merge_ttls.py` + `pyshacl` locally (Option 1) to match CI/CD exactly.
+
+### Problem: owl:imports validation shows unexpected URIs
+
+**Check:**
+- Review the list of imports reported by merge_ttls.py
+- Verify all imports are intentional
+- Check for typos in import URIs
+
+**Solution:** Fix or remove unintended `owl:imports` declarations.
+
+### Problem: Workflow runs very slowly
+
+**Check:**
+- Is pip caching enabled? (Should see "Cache restored" in logs)
+- Are there very large TTL files being parsed?
 
 **Solution:**
-- Test the SELECT query independently first
-- Ensure all prefixes are defined in the constraint
-- Check that `$this` variable is used correctly (it's bound to the focus node)
+- Ensure `cache: 'pip'` is in workflow Python setup steps
+- Consider breaking very large files into smaller ones
 
-**Problem:** Performance issues with large datasets
+## Differences from oak-curriculum-ontology
 
-**Solution:**
-- Use more specific target definitions instead of `sh:targetClass`
-- Break validation into smaller batches
-- Use a triple store for validation instead of in-memory processing
+This repository has simpler validation needs:
+
+| Aspect | uk-curriculum-ontology | oak-curriculum-ontology |
+|--------|------------------------|-------------------------|
+| **External dependencies** | None (all files local) | Multiple (imports from this repo) |
+| **Import resolution** | Report only | Complex URI mapping + fetching |
+| **File discovery** | Auto-discovery ✅ | Auto-discovery ✅ |
+| **Validation approach** | Simple merging | Import resolution + merging |
+| **Complexity** | Appropriate for needs | More complex (necessarily) |
+
+Both repositories follow the same validation principles with appropriate complexity for their specific requirements.
+
+## Further Reading
+
+- [SHACL Specification (W3C)](https://www.w3.org/TR/shacl/)
+- [pyshacl Documentation](https://github.com/RDFLib/pySHACL)
+- [Turtle Syntax](https://www.w3.org/TR/turtle/)
+- [RDF 1.1 Primer](https://www.w3.org/TR/rdf11-primer/)
+- [GitHub Actions: Caching dependencies](https://docs.github.com/en/actions/using-workflows/caching-dependencies-to-speed-up-workflows)
