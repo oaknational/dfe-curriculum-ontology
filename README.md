@@ -17,39 +17,68 @@ eng:scheme-science-key-stage-3
 - UK Curriculum Ontology: `https://w3id.org/uk/curriculum/core/`
 - National Curriculum for England Data: `https://w3id.org/uk/curriculum/england/`
 
-## Persistent Identifiers via w3id.org
+## Namespace Strategy
 
-This ontology uses [w3id.org](https://w3id.org/) to provide **permanent, resolvable URIs** for all curriculum resources.
+**⚠️ IMPORTANT: The current w3id.org namespaces are TEMPORARY.**
 
-**Persistence**: URIs remain stable even if the repository moves or hosting changes. For example, `https://w3id.org/uk/curriculum/core/Phase` will always resolve, regardless of where the actual files are stored.
+This ontology currently uses w3id.org URIs for development and initial deployment. However, the ultimate production architecture will use organization-owned namespaces with clear ownership boundaries.
 
-**Content Negotiation**: w3id.org supports automatic format negotiation. When you request a URI, it can serve different formats based on your needs:
-- Web browsers receive human-readable documentation
-- RDF tools receive machine-readable Turtle/RDF
-- This is essential for semantic web best practices
+### Ultimate Vision
 
-**Professional Trust**: w3id.org is a community-managed service specifically designed for linked data identifiers. Using it signals this is a production-ready, professionally maintained ontology.
+**Department for Education (DfE)** will own and maintain the core UK curriculum standard at:
+- **curriculum.education.gov.uk** - Core ontology and reference data
 
-**Separation of Concerns**: The persistent identifier (`w3id.org`) is separate from the storage location (GitHub). This means:
-- URIs never need to change
-- Hosting providers can change without breaking links
-- Other ontologies can safely reference these URIs
+This namespace will contain:
+- Core classes: Subject, KeyStage, Phase, Programme, Scheme
+- Core properties: hasSubject, hasKeyStage, isPartOf
+- Reference data: Official subjects, key stages, phases
 
-### How It Works
+**DfE's commitment:**
+- URI persistence (like legislation.gov.uk)
+- Professional infrastructure and governance
+- Content negotiation (HTML for humans, RDF for machines)
+- Stable versioning and documentation
 
-w3id.org uses HTTP redirects to point persistent URIs to the actual file locations:
+### Why Not w3id.org Long-Term?
 
-```
-User requests: https://w3id.org/uk/curriculum/core/curriculum-ontology.ttl
-       |
-       v
-w3id.org redirects (HTTP 303) to:
-       |
-       v
-GitHub: https://raw.githubusercontent.com/oaknational/uk-curriculum-ontology/main/ontology/curriculum-ontology.ttl
-```
+**Clear Ownership**: The DfE wholly owns and maintains the UK curriculum standard. Using curriculum.education.gov.uk makes ownership explicit from the URI itself.
 
-This redirection is configured via a `.htaccess` file in the [perma-id/w3id.org](https://github.com/perma-id/w3id.org) repository.
+**No Governance Complexity**: There's no need for shared namespace coordination. DfE publishes the standard. Other organizations extend it in their own namespaces. This is a standard producer/consumer pattern, not a multi-stakeholder collaboration.
+
+**Infrastructure Control**: DfE controls their own infrastructure, persistence policies, and service levels without dependency on external services.
+
+**Professional Trust**: A .gov.uk domain provides immediate trust and authority for an official government standard.
+
+### The Schema.org Pattern
+
+This architecture follows the established pattern used by Schema.org:
+- **Schema.org** maintains the core vocabulary at schema.org
+- **Extensions** exist in their own namespaces (health-lifesci.schema.org, bib.schema.org)
+- **External adopters** use their own domains and link to the core
+
+The UK curriculum standard works the same way: DfE owns the core, others extend and implement in their own namespaces.
+
+### Standard Semantic Web Linking
+
+Other organizations will extend the DfE standard in their own namespaces using standard OWL linking patterns:
+- Import the DfE ontology
+- Extend with organization-specific classes
+- Link to DfE reference data
+
+This approach:
+- Makes ownership clear from URIs
+- Eliminates coordination overhead
+- Allows each organization to move at their own pace
+- Follows established semantic web best practices
+
+### Current State
+
+During development and initial deployment, w3id.org provides:
+- Quick setup without infrastructure requirements
+- Content negotiation for testing
+- Flexibility to iterate
+
+These temporary URIs will be migrated to curriculum.education.gov.uk once DfE infrastructure is in place.
 
 ## Purpose
 
