@@ -1,6 +1,6 @@
-# UK Curriculum Ontology
+# DfE Curriculum Ontology
 
-A semantic web ontology for describing curriculum structures, content organization, and educational programmes in the UK. Currently provides comprehensive coverage of the National Curriculum for England.
+A semantic web ontology for describing curriculum structures, content organization, and educational programmes. Currently provides comprehensive coverage of the National Curriculum for England.
 
 ## Quick Start
 
@@ -14,7 +14,7 @@ eng:scheme-science-key-stage-3
 ```
 
 **Namespace URIs:**
-- UK Curriculum Ontology: `https://w3id.org/uk/curriculum/core/`
+- DfE Curriculum Ontology: `https://w3id.org/uk/curriculum/core/`
 - National Curriculum for England Data: `https://w3id.org/uk/curriculum/england/`
 
 ## Namespace Strategy
@@ -25,7 +25,7 @@ This ontology currently uses w3id.org URIs for development and initial deploymen
 
 ### Ultimate Vision
 
-**Department for Education (DfE)** will own and maintain the core UK curriculum standard at:
+**Department for Education (DfE)** will own and maintain the core curriculum standard at:
 - **curriculum.education.gov.uk** - Core ontology and reference data
 
 This namespace will contain:
@@ -41,7 +41,7 @@ This namespace will contain:
 
 ### Why Not w3id.org Long-Term?
 
-**Clear Ownership**: The DfE wholly owns and maintains the UK curriculum standard. Using curriculum.education.gov.uk makes ownership explicit from the URI itself.
+**Clear Ownership**: The DfE wholly owns and maintains the national curriculum standard. Using curriculum.education.gov.uk makes ownership explicit from the URI itself.
 
 **No Governance Complexity**: There's no need for shared namespace coordination. DfE publishes the standard. Other organizations extend it in their own namespaces. This is a standard producer/consumer pattern, not a multi-stakeholder collaboration.
 
@@ -56,7 +56,7 @@ This architecture follows the established pattern used by Schema.org:
 - **Extensions** exist in their own namespaces (health-lifesci.schema.org, bib.schema.org)
 - **External adopters** use their own domains and link to the core
 
-The UK curriculum standard works the same way: DfE owns the core, others extend and implement in their own namespaces.
+The DfE curriculum standard works the same way: DfE owns the core, others extend and implement in their own namespaces.
 
 ### Standard Semantic Web Linking
 
@@ -82,7 +82,7 @@ These temporary URIs will be migrated to curriculum.education.gov.uk once DfE in
 
 ## Purpose
 
-This ontology provides a standardized, machine-readable representation of the UK National Curriculum. It enables:
+This ontology provides a standardized, machine-readable representation of the National Curriculum for England. It enables:
 
 - **Interoperability**: Share curriculum data across educational platforms and systems
 - **Semantic queries**: Discover content relationships, dependencies, and cross-cutting themes
@@ -147,7 +147,7 @@ See [docs/examples.md](docs/examples.md) for more SPARQL query examples.
 ## File Structure
 
 ```
-uk-curriculum-ontology/
+dfe-curriculum-ontology/
 ├── ontology/
 │   ├── curriculum-ontology.ttl           # Core classes and properties
 │   ├── curriculum-constraints.ttl        # SHACL validation shapes
