@@ -10,26 +10,26 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # ======================================================================
-# National Curriculum for England - Science Subject
+# National Curriculum for England - History Subject
 # ======================================================================
 
 # ----------------------------------------------------------------------
 # Ontology Declaration
 # ----------------------------------------------------------------------
 
-<https://w3id.org/uk/curriculum/england/science-subject>
+<https://w3id.org/uk/curriculum/england/history-subject>
   rdf:type owl:Ontology ;
 
-  rdfs:label "National Curriculum for England - Science Subject"@en ;
-  dc:title "National Curriculum for England - Science Subject"@en ;
-  rdfs:comment """Science subject definition, including aims and strands for the 
+  rdfs:label "National Curriculum for England - History Subject"@en ;
+  dc:title "National Curriculum for England - History Subject"@en ;
+  rdfs:comment """History subject definition, including aims and strands for the 
   National Curriculum in England."""@en ;
 
   owl:versionInfo "0.1.0" ;
-  owl:versionIRI <https://w3id.org/uk/curriculum/england/science-subject/0.1.0> ;
-  owl:priorVersion <https://w3id.org/uk/curriculum/england/science-subject/0.0.9> ;
+  owl:versionIRI <https://w3id.org/uk/curriculum/england/history-subject/0.1.0> ;
+  owl:priorVersion <https://w3id.org/uk/curriculum/england/history-subject/0.0.9> ;
   
-  dcterms:description """This file defines the Science subject in the National Curriculum 
+  dcterms:description """This file defines the History subject in the National Curriculum 
   for England, including its aims and strands within the knowledge taxonomy."""@en ;
   dc:creator "Department for Education" ;
   dcterms:created "2025-11-24"^^xsd:date ;
@@ -52,25 +52,25 @@
 eng:knowledge-taxonomy
   a skos:ConceptScheme ;
   skos:prefLabel "National Curriculum for England Knowledge Structure"@en ;
-  skos:hasTopConcept eng:subject-science .
+  skos:hasTopConcept eng:subject-history .
 
 # ----------------------------------------------------------------------
-# Subject: Science
+# Subject
 # ----------------------------------------------------------------------
 
-eng:subject-science
+eng:subject-history
   a skos:Concept, curric:Subject ;
-  skos:prefLabel "Science"@en ;
-  rdfs:label "Science"@en ;
+  skos:prefLabel "History"@en ;
+  rdfs:label "History"@en ;
   skos:inScheme eng:knowledge-taxonomy ;
   skos:topConceptOf eng:knowledge-taxonomy ;
   skos:definition """The systematic study of the natural world through observation, experimentation, 
   and theory, encompassing biology, chemistry, and physics."""@en ;
-  dcterms:description """A high-quality science education provides the foundations for 
+  dcterms:description """A high-quality history education provides the foundations for 
   understanding the world through the specific disciplines of biology, chemistry and 
   physics."""@en ;
-  dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study> ;
-  skos:scopeNote """Science is essential for understanding the natural world and making informed 
+  dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
+  skos:scopeNote """History is essential for understanding the natural world and making informed 
   decisions about scientific developments. It develops critical thinking, analytical skills, and 
   systematic investigation methods that students will use throughout their lives."""@en ;
   curric:hasStrand eng:strand-structure-function-living-organisms ,
@@ -79,20 +79,20 @@ eng:subject-science
   curric:hasAim 
     """Develop scientific knowledge and conceptual understanding through the specific disciplines 
     of biology, chemistry and physics"""@en ,
-    """Develop understanding of the nature, processes and methods of science through different 
-    types of science enquiries that help them to answer scientific questions about the world around 
+    """Develop understanding of the nature, processes and methods of history through different 
+    types of history enquiries that help them to answer scientific questions about the world around 
     them"""@en ,
     """Are equipped with the scientific knowledge required to understand the uses and implications 
-    of science, today and for the future"""@en .
+    of history, today and for the future"""@en .
 
 # ----------------------------------------------------------------------
 # Sub-Subjects
 # ----------------------------------------------------------------------
 
-eng:subsubject-science
+eng:subsubject-history
   a curric:SubSubject ;
-  rdfs:label "Science"@en ;
-  rdfs:comment "Science subject in the National Curriculum for England."@en ;
-  curric:isPartOf eng:subject-science ;
+  rdfs:label "History"@en ;
+  rdfs:comment "History subject in the National Curriculum for England."@en ;
+  curric:isPartOf eng:subject-history ;
   curric:includesStrand eng:strand-structure-function-living-organisms ,
                         eng:strand-material-cycles-and-energy .
