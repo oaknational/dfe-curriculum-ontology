@@ -47,20 +47,56 @@
   owl:imports <https://w3id.org/uk/curriculum/core/> ;
   owl:imports <https://w3id.org/uk/curriculum/england/history-subject> .
 
-  # ----------------------------------------------------------------------
+# ----------------------------------------------------------------------
+# Knowledge Taxonomy
+# ----------------------------------------------------------------------
+
+eng:knowledge-taxonomy
+  a skos:ConceptScheme ;
+  skos:prefLabel "National Curriculum for England Knowledge Structure"@en ;
+  skos:hasTopConcept eng:subject-history .
+  
+# ----------------------------------------------------------------------
+# Disciplines
+# ----------------------------------------------------------------------
+
+eng:discipline-history
+  a skos:Concept, curric:Discipline ;
+  skos:prefLabel "History"@en ;
+  skos:inScheme eng:knowledge-taxonomy ;
+  skos:topConceptOf eng:knowledge-taxonomy ;
+  skos:definition """The national curriculum for history develops knowledge and understanding of 
+  Britain’s past and that of the wider world."""@en ;
+  skos:scopeNote """History helps pupils to understand the complexity of people’s lives, the 
+  process of change, the diversity of societies and relationships between different groups, as well 
+  as their own identity and the challenges of their time. It equips pupils to ask perceptive 
+  questions, think critically, weigh evidence, sift arguments, and develop perspective and 
+  judgement."""@en ;
+  skos:narrower eng:strand-knowledge-of-past ,
+               eng:strand-knowledge-of-history ;
+  skos:inScheme eng:knowledge-taxonomy .
+
+# ----------------------------------------------------------------------
 # Strands
 # ----------------------------------------------------------------------
 
-eng:strand-structure-function-living-organisms
+eng:strand-knowledge-of-past
   a skos:Concept, curric:Strand ;
-  skos:prefLabel "Structure and function of living organisms"@en ;
+  skos:prefLabel "Knowledge of the past"@en ;
   skos:broader eng:subject-history ;
   skos:narrower eng:substrand-cells-organisation ,
                 eng:substrand-skeletal-and-muscular-systems ;
   curric:applicableToSubSubject eng:subsubject-history ;
   skos:inScheme eng:knowledge-taxonomy .
 
-
+eng:strand-knowledge-of-history
+  a skos:Concept, curric:Strand ;
+  skos:prefLabel "Knowledge of history as a discipline"@en ;
+  skos:broader eng:subject-history ;
+  skos:narrower eng:substrand-cells-organisation ,
+                eng:substrand-skeletal-and-muscular-systems ;
+  curric:applicableToSubSubject eng:subsubject-history ;
+  skos:inScheme eng:knowledge-taxonomy .
 
 # ----------------------------------------------------------------------
 # Sub-Strands

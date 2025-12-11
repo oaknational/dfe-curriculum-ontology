@@ -273,30 +273,7 @@ curricshapes:SubjectShape
     sh:message "Subjects must have an rdfs:label." ;
   ] ;
 
-  sh:property [
-    sh:path skos:prefLabel ;
-    sh:datatype rdf:langString ;
-    sh:minCount 1 ;
-    sh:name "preferred label" ;
-    sh:description "Every subject must have at least one skos:prefLabel." ;
-    sh:message "Subjects must have a skos:prefLabel for SKOS taxonomy." ;
-  ] ;
-
-  sh:property [
-    sh:path skos:inScheme ;
-    sh:class skos:ConceptScheme ;
-    sh:minCount 1 ;
-    sh:name "in scheme" ;
-    sh:description "Every subject must be part of at least one concept scheme." ;
-    sh:message "Subjects must specify which concept scheme they belong to." ;
-  ] ;
-
-  sh:property [
-    sh:path curric:hasStrand ;
-    sh:class curric:Strand ;
-    sh:name "has strand" ;
-    sh:description "A subject may have zero or more strands." ;
-  ] ;
+  
 
   sh:property [
     sh:path curric:hasAim ;
@@ -423,6 +400,42 @@ curricshapes:SchemeShape
   ] .
 
 # ----------------------------------------------------------------------
+# Shape: Discipline
+# ----------------------------------------------------------------------
+
+curricshapes:DisciplineShape
+  a sh:NodeShape ;
+  sh:targetClass curric:Discipline ;
+
+  sh:property [
+    sh:path skos:prefLabel ;
+    sh:datatype rdf:langString ;
+    sh:minCount 1 ;
+    sh:name "preferred label" ;
+    sh:description "Every discipline must have at least one skos:prefLabel." ;
+    sh:message "Disciplines must have a skos:prefLabel for SKOS taxonomy." ;
+  ] ;
+
+  sh:property [
+    sh:path skos:inScheme ;
+    sh:class skos:ConceptScheme ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:name "in scheme" ;
+    sh:description "Every discipline must be part of exactly one concept scheme." ;
+    sh:message "Disciplines must specify which concept scheme they belong to." ;
+  ] ;
+
+  sh:property [
+    sh:path skos:narrower ;
+    sh:class curric:Strand ;
+    sh:minCount 1 ;
+    sh:name "narrower" ;
+    sh:description "A discipline must have at least one child strand." ;
+    sh:message "Disciplines must have at least one strand." ;
+  ] .
+
+# ----------------------------------------------------------------------
 # Shape: Strand
 # ----------------------------------------------------------------------
 
@@ -451,19 +464,19 @@ curricshapes:StrandShape
 
   sh:property [
     sh:path skos:broader ;
-    sh:class curric:Subject ;
+    sh:class curric:Discipline ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:name "broader" ;
-    sh:description "Every strand must belong to exactly one subject." ;
-    sh:message "Strands must specify which subject they belong to via skos:broader." ;
+    sh:description "Every strand must belong to exactly one discipline." ;
+    sh:message "Strands must specify which discipline they belong to via skos:broader." ;
   ] ;
 
   sh:property [
-    sh:path curric:applicableToSubSubject ;
+    sh:path curric:isStrandOf ;
     sh:class curric:SubSubject ;
     sh:minCount 1 ;
-    sh:name "applicable to sub-subject" ;
+    sh:name "is strand of" ;
     sh:description "A strand must be applicable to at least one sub-subject." ;
     sh:message "Strands must specify which sub-subject(s) they apply to." ;
   ] ;

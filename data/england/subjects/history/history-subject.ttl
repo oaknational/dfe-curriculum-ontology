@@ -46,45 +46,15 @@
   owl:imports <https://w3id.org/uk/curriculum/core/> .
 
 # ----------------------------------------------------------------------
-# Knowledge Taxonomy
-# ----------------------------------------------------------------------
-
-eng:knowledge-taxonomy
-  a skos:ConceptScheme ;
-  skos:prefLabel "National Curriculum for England Knowledge Structure"@en ;
-  skos:hasTopConcept eng:subject-history .
-
-# ----------------------------------------------------------------------
 # Subject
 # ----------------------------------------------------------------------
 
 eng:subject-history
-  a skos:Concept, curric:Subject ;
-  skos:prefLabel "History"@en ;
+  a curric:Subject ;
   rdfs:label "History"@en ;
-  skos:inScheme eng:knowledge-taxonomy ;
-  skos:topConceptOf eng:knowledge-taxonomy ;
-  skos:definition """The systematic study of the natural world through observation, experimentation, 
-  and theory, encompassing biology, chemistry, and physics."""@en ;
-  dcterms:description """A high-quality history education provides the foundations for 
-  understanding the world through the specific disciplines of biology, chemistry and 
-  physics."""@en ;
-  dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
-  skos:scopeNote """History is essential for understanding the natural world and making informed 
-  decisions about scientific developments. It develops critical thinking, analytical skills, and 
-  systematic investigation methods that students will use throughout their lives."""@en ;
-  curric:hasStrand eng:strand-structure-function-living-organisms ,
-                   eng:strand-material-cycles-and-energy ;
+  rdfs:comment "History subject in the National Curriculum for England."@en ;
+  curric:hasDiscipline eng:discipline-history .
   
-  curric:hasAim 
-    """Develop scientific knowledge and conceptual understanding through the specific disciplines 
-    of biology, chemistry and physics"""@en ,
-    """Develop understanding of the nature, processes and methods of history through different 
-    types of history enquiries that help them to answer scientific questions about the world around 
-    them"""@en ,
-    """Are equipped with the scientific knowledge required to understand the uses and implications 
-    of history, today and for the future"""@en .
-
 # ----------------------------------------------------------------------
 # Sub-Subjects
 # ----------------------------------------------------------------------
@@ -92,7 +62,31 @@ eng:subject-history
 eng:subsubject-history
   a curric:SubSubject ;
   rdfs:label "History"@en ;
-  rdfs:comment "History subject in the National Curriculum for England."@en ;
+  rdfs:comment "History sub-subject in the National Curriculum for England."@en ;
+  dcterms:description """A high-quality history education will help pupils gain a coherent 
+  knowledge and understanding of Britain’s past and that of the wider world."""@en ;
+  dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
   curric:isPartOf eng:subject-history ;
-  curric:includesStrand eng:strand-structure-function-living-organisms ,
-                        eng:strand-material-cycles-and-energy .
+  curric:hasStrand eng:strand-knowledge-of-past ,
+                   eng:strand-knowledge-of-history ;
+  
+  curric:hasAim 
+    """Know and understand the history of these islands as a coherent, chronological narrative, 
+    from the earliest times to the present day: how people’s lives have shaped this nation and how 
+    Britain has influenced and been influenced by the wider world."""@en ,
+    """Know and understand significant aspects of the history of the wider world: the nature of 
+    ancient civilisations; the expansion and dissolution of empires; characteristic features of 
+    past non-European societies; achievements and follies of mankind."""@en ,
+    """Gain and deploy a historically grounded understanding of abstract terms such as ‘empire’, 
+    ‘civilisation’, ‘parliament’ and ‘peasantry’."""@en ,
+    """Understand historical concepts such as continuity and change, cause and consequence, 
+    similarity, difference and significance, and use them to make connections, draw contrasts, 
+    analyse trends, frame historically valid questions and create their own structured accounts, 
+    including written narratives and analyses."""@en ,
+    """Understand the methods of historical enquiry, including how evidence is used rigorously to 
+    make historical claims, and discern how and why contrasting arguments and interpretations of 
+    the past have been constructed."""@en ,
+    """Gain historical perspective by placing their growing knowledge into different contexts: 
+    understanding the connections between local, regional, national and international history; 
+    between cultural, economic, military, political, religious and social history; and between 
+    short- and long-term timescales."""@en .
