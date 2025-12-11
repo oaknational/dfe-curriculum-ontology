@@ -84,7 +84,6 @@ curric:YearGroup
 
 curric:Subject
   rdf:type owl:Class ;
-  rdfs:subClassOf skos:Concept ;
   rdfs:label "Subject"@en ;
   rdfs:comment "Subject (e.g. science, history, physical education)."@en ;
   rdfs:isDefinedBy curric: .
@@ -104,8 +103,16 @@ curric:Scheme
 
 # ----------------------------------------------------------------------
 # Classes: Knowledge Structure
-# (Strand, SubStrand, ContentDescriptor, ContentSubDescriptor, Theme)
+# (Discipline, Strand, SubStrand, ContentDescriptor, 
+# ContentSubDescriptor, Theme)
 # ----------------------------------------------------------------------
+
+curric:Discipline
+  rdf:type owl:Class ;
+  rdfs:subClassOf skos:Concept ;
+  rdfs:label "Discipline"@en ;
+  rdfs:comment "An organisational discipline (e.g. mathematics, english, history)."@en ;
+  rdfs:isDefinedBy curric: .
 
 curric:Strand
   rdf:type owl:Class ;
@@ -180,42 +187,40 @@ curric:isKeyStageOf
   owl:inverseOf curric:hasKeyStage ;
   rdfs:isDefinedBy curric: .
 
+curric:hasDiscipline
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "has discipline"@en ;
+  rdfs:comment "Indicates that a subject includes content from a discipline."@en ;
+  rdfs:domain curric:Subject ;
+  rdfs:range curric:Discipline ;
+  owl:inverseOf curric:isDisciplineOf ;
+  rdfs:isDefinedBy curric: .
+
+curric:isDisciplineOf
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "is discipline of"@en ;
+  rdfs:comment "Indicates that content from a discipline is part of a subject."@en ;
+  rdfs:domain curric:Discipline ;
+  rdfs:range curric:Subject ;
+  owl:inverseOf curric:hasDiscipline ;
+  rdfs:isDefinedBy curric: .
+
 curric:hasStrand
   rdf:type owl:ObjectProperty ;
   rdfs:label "has strand"@en ;
-  rdfs:comment "Indicates that a subject includes content from a strand of knowledge."@en ;
-  rdfs:domain curric:Subject ;
+  rdfs:comment "Indicates that a sub-subject includes content from a strand of knowledge."@en ;
+  rdfs:domain curric:SubSubject ;
   rdfs:range curric:Strand ;
   owl:inverseOf curric:isStrandOf ;
-  rdfs:subPropertyOf skos:narrower ;
   rdfs:isDefinedBy curric: .
 
 curric:isStrandOf
   rdf:type owl:ObjectProperty ;
   rdfs:label "is strand of"@en ;
-  rdfs:comment "Indicates that content from a strand of knowledge is part of a subject."@en ;
-  rdfs:domain curric:Strand ;
-  rdfs:range curric:Subject ;
-  owl:inverseOf curric:hasStrand ;
-  rdfs:subPropertyOf skos:broader ;
-  rdfs:isDefinedBy curric: .
-
-curric:includesStrand
-  rdf:type owl:ObjectProperty ;
-  rdfs:label "includes strand"@en ;
-  rdfs:comment "Indicates that a sub-subject includes content from a strand of knowledge."@en ;
-  rdfs:domain curric:SubSubject ;
-  rdfs:range curric:Strand ;
-  owl:inverseOf curric:applicableToSubSubject ;
-  rdfs:isDefinedBy curric: .
-
-curric:applicableToSubSubject
-  rdf:type owl:ObjectProperty ;
-  rdfs:label "applicable to sub-subject"@en ;
   rdfs:comment "Indicates that content from a strand of knowledge is part of a sub-subject."@en ;
   rdfs:domain curric:Strand ;
   rdfs:range curric:SubSubject ;
-  owl:inverseOf curric:includesStrand ;
+  owl:inverseOf curric:hasStrand ;
   rdfs:isDefinedBy curric: .
 
 curric:hasContent
