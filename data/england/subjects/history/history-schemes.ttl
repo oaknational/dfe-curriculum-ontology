@@ -57,7 +57,7 @@ eng:scheme-history-key-stage-1
   rdfs:comment "History programme of study for key stage 1."@en ;
   curric:isPartOf eng:subsubject-history ;
   curric:hasKeyStage eng:key-stage-1 ;
-  curric:hasContent
+  curric:hasContentDescriptor
     eng:content-descriptor-cells-as-unit-of-living-organism ,
     eng:content-descriptor-functions-of-the-cell-wall .
 
@@ -67,7 +67,7 @@ eng:scheme-history-key-stage-2
   rdfs:comment "History programme of study for key stage 2."@en ;
   curric:isPartOf eng:subsubject-history ;
   curric:hasKeyStage eng:key-stage-2 ;
-  curric:hasContent
+  curric:hasContentDescriptor
     eng:content-descriptor-cells-as-unit-of-living-organism ,
     eng:content-descriptor-functions-of-the-cell-wall .
 
@@ -77,6 +77,6 @@ eng:scheme-history-key-stage-3
   rdfs:comment "History programme of study for key stage 3."@en ;
   curric:isPartOf eng:subsubject-history ;
   curric:hasKeyStage eng:key-stage-3 ;
-  curric:hasContent
+  curric:hasContentDescriptor
     eng:content-descriptor-cells-as-unit-of-living-organism ,
     eng:content-descriptor-functions-of-the-cell-wall .

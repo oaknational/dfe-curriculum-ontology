@@ -11,7 +11,7 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
 # ======================================================================
-# UK Curriculum Ontology - SHACL Constraints 
+# DfE Curriculum Ontology - SHACL Constraints 
 # ======================================================================
 
 # ----------------------------------------------------------------------
@@ -21,9 +21,9 @@
 <https://w3id.org/uk/curriculum/core/shapes>
   rdf:type owl:Ontology ;
 
-  rdfs:label "UK Curriculum Ontology - SHACL Constraints"@en ;
-  dc:title "UK Curriculum Ontology - SHACL Constraints"@en ;
-  rdfs:comment "SHACL validation constraints for UK Curriculum Ontology."@en ;
+  rdfs:label "DfE Curriculum Ontology - SHACL Constraints"@en ;
+  dc:title "DfE Curriculum Ontology - SHACL Constraints"@en ;
+  rdfs:comment "SHACL validation constraints for DfE Curriculum Ontology."@en ;
 
   owl:versionInfo "0.1.0" ;
   owl:versionIRI <https://w3id.org/uk/curriculum/core/shapes/0.1.0> ;
@@ -44,6 +44,18 @@
   vann:preferredNamespaceUri "https://w3id.org/uk/curriculum/core/shapes/" .
 
 # ----------------------------------------------------------------------
+# Changelog
+# ----------------------------------------------------------------------
+
+curricshapes:version-0.1.0
+  dcterms:date "2025-12-03"^^xsd:date ;
+  rdfs:comment "Initial release"@en .
+
+curricshapes:version-0.0.9
+  dcterms:date "2025-11-19"^^xsd:date ;
+  rdfs:comment "Development version"@en .
+
+# ----------------------------------------------------------------------
 # Shape: Phase
 # ----------------------------------------------------------------------
 
@@ -55,9 +67,10 @@ curricshapes:PhaseShape
     sh:path rdfs:label ;
     sh:datatype rdf:langString ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
     sh:name "label" ;
-    sh:description "Every phase must have at least one label." ;
-    sh:message "Phases must have an rdfs:label." ;
+    sh:description "Every phase must have exactly one rdfs:label." ;
+    sh:message "Phases must have exactly one rdfs:label." ;
   ] ;
 
   sh:property [
@@ -116,9 +129,10 @@ curricshapes:KeyStageShape
     sh:path rdfs:label ;
     sh:datatype rdf:langString ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
     sh:name "label" ;
-    sh:description "Every key stage must have at least one label." ;
-    sh:message "Key stages must have an rdfs:label." ;
+    sh:description "Every key stage must have exactly one rdfs:label." ;
+    sh:message "Key stages must have exactly one rdfs:label." ;
   ] ;
 
   sh:property [
@@ -192,9 +206,10 @@ curricshapes:YearGroupShape
     sh:path rdfs:label ;
     sh:datatype rdf:langString ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
     sh:name "label" ;
-    sh:description "Every year group must have at least one label." ;
-    sh:message "Year groups must have an rdfs:label." ;
+    sh:description "Every year group must have exactly one rdfs:label." ;
+    sh:message "Year groups must have exactly one rdfs:label." ;
   ] ;
 
   sh:property [
@@ -268,28 +283,51 @@ curricshapes:SubjectShape
     sh:path rdfs:label ;
     sh:datatype rdf:langString ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
     sh:name "label" ;
-    sh:description "Every subject must have at least one rdfs:label." ;
-    sh:message "Subjects must have an rdfs:label." ;
+    sh:description "Every subject must have exactly one rdfs:label." ;
+    sh:message "Subjects must have exactly one rdfs:label." ;
   ] ;
 
-  
-
   sh:property [
-    sh:path curric:hasAim ;
-    sh:datatype rdf:langString ;
-    sh:name "has aim" ;
-    sh:description "A subject may have zero or more aims." ;
+    sh:path curric:hasDiscipline ;
+    sh:class curric:Discipline ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:name "has discipline" ;
+    sh:description "Every subject must relate to exactly one discipline." ;
+    sh:message "Subjects must specify which disciplines they relate to." ;
   ] ;
 
   sh:sparql [
-    sh:message "Subject is not used in any sub-subject (orphaned)" ;
+    sh:message "Subject label must match its discipline's preferred label" ;
+    sh:select """
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+      
+      SELECT $this WHERE {
+        $this a curric:Subject ;
+              curric:hasDiscipline ?discipline ;
+              rdfs:label ?subjectLabel .
+        
+        ?discipline skos:prefLabel ?disciplineLabel .
+        
+        FILTER (?subjectLabel != ?disciplineLabel)
+      }
+    """ ;
+  ] ;
+
+  sh:sparql [
+    sh:severity sh:Warning ;
+    sh:message "Subject is not used in any sub-subject (WARNING - orphaned)" ;
     sh:select """
       PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
         $this a curric:Subject .
         FILTER NOT EXISTS {
-          ?subsubject curric:isPartOf $this .
+          ?subsubject a curric:SubSubject ;
+                      curric:isPartOf $this .
         }
       }
     """ ;
@@ -307,9 +345,10 @@ curricshapes:SubSubjectShape
     sh:path rdfs:label ;
     sh:datatype rdf:langString ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
     sh:name "label" ;
-    sh:description "Every sub-subject must have at least one label." ;
-    sh:message "Sub-subjects must have an rdfs:label." ;
+    sh:description "Every sub-subject must have exactly one rdfs:label." ;
+    sh:message "Sub-subjects must have exactly one rdfs:label." ;
   ] ;
 
   sh:property [
@@ -323,34 +362,25 @@ curricshapes:SubSubjectShape
   ] ;
 
   sh:property [
-    sh:path curric:includesStrand ;
+    sh:path curric:hasStrand ;
     sh:class curric:Strand ;
-    sh:name "includes strand" ;
-    sh:description "A sub-subject may include zero or more strands." ;
-  ] ;
-
-  # Inverse consistency check
-  sh:sparql [
-    sh:message "includesStrand must have corresponding applicableToSubSubject on the strand" ;
-    sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
-      SELECT $this WHERE {
-        $this curric:includesStrand ?strand .
-        FILTER NOT EXISTS { 
-          ?strand curric:applicableToSubSubject $this 
-        }
-      }
-    """ ;
+    sh:minCount 1 ;
+    sh:severity sh:Warning ;
+    sh:name "has strand" ;
+    sh:description "Every sub-subject should relate to at least one strand." ;
+    sh:message "Sub-subject should relate to at least one strand (WARNING)." ;
   ] ;
 
   sh:sparql [
-    sh:message "Sub-subject is not used in any scheme (orphaned)" ;
+    sh:severity sh:Warning ;
+    sh:message "Sub-subject is not used in any scheme (WARNING - orphaned)" ;
     sh:select """
       PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
         $this a curric:SubSubject .
         FILTER NOT EXISTS {
-          ?scheme curric:isPartOf $this .
+          ?scheme a curric:Scheme ;
+                  curric:isPartOf $this .
         }
       }
     """ ;
@@ -368,9 +398,10 @@ curricshapes:SchemeShape
     sh:path rdfs:label ;
     sh:datatype rdf:langString ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
     sh:name "label" ;
-    sh:description "Every scheme must have at least one label." ;
-    sh:message "Schemes must have an rdfs:label." ;
+    sh:description "Every scheme must have exactly one rdfs:label." ;
+    sh:message "Schemes must have exactly one rdfs:label." ;
   ] ;
 
   sh:property [
@@ -393,10 +424,47 @@ curricshapes:SchemeShape
   ] ;
 
   sh:property [
-    sh:path curric:hasContent ;
+    sh:path curric:hasContentDescriptor ;
     sh:class curric:ContentDescriptor ;
-    sh:name "has content" ;
-    sh:description "A scheme may have zero or more content descriptors." ;
+    sh:minCount 1 ;
+    sh:severity sh:Warning ;
+    sh:name "has content descriptor" ;
+    sh:description "Every scheme should relate to at least one content descriptor." ;
+    sh:message "Scheme should relate to at least one content descriptor (WARNING)." ;
+  ] ;
+
+  sh:sparql [
+    sh:message "Scheme's sub-subjects must all belong to the same subject" ;
+    sh:select """
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
+      SELECT $this WHERE {
+        $this curric:isPartOf ?subsubject1 , ?subsubject2 .
+        
+        ?subsubject1 curric:isPartOf ?subject1 .
+        ?subsubject2 curric:isPartOf ?subject2 .
+        
+        FILTER (?subsubject1 != ?subsubject2)
+        FILTER (?subject1 != ?subject2)
+      }
+    """ ;
+  ] .
+
+# ----------------------------------------------------------------------
+# Shape: ConceptScheme
+# ----------------------------------------------------------------------
+
+curricshapes:ConceptSchemeShape
+  a sh:NodeShape ;
+  sh:targetClass skos:ConceptScheme ;
+  
+  sh:property [
+    sh:path skos:prefLabel ;
+    sh:datatype rdf:langString ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:name "preferred label" ;
+    sh:description "Every concept scheme must have exactly one skos:prefLabel." ;
+    sh:message "Concept schemes must have exactly one skos:prefLabel for SKOS taxonomy." ;
   ] .
 
 # ----------------------------------------------------------------------
@@ -411,9 +479,10 @@ curricshapes:DisciplineShape
     sh:path skos:prefLabel ;
     sh:datatype rdf:langString ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
     sh:name "preferred label" ;
-    sh:description "Every discipline must have at least one skos:prefLabel." ;
-    sh:message "Disciplines must have a skos:prefLabel for SKOS taxonomy." ;
+    sh:description "Every discipline must have exactly one skos:prefLabel." ;
+    sh:message "Disciplines must have exactly one skos:prefLabel for SKOS taxonomy." ;
   ] ;
 
   sh:property [
@@ -447,9 +516,10 @@ curricshapes:StrandShape
     sh:path skos:prefLabel ;
     sh:datatype rdf:langString ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
     sh:name "preferred label" ;
-    sh:description "Every strand must have at least one skos:prefLabel." ;
-    sh:message "Strands must have a skos:prefLabel for SKOS taxonomy." ;
+    sh:description "Every strand must have exactly one skos:prefLabel." ;
+    sh:message "Strands must have exactly one skos:prefLabel for SKOS taxonomy." ;
   ] ;
 
   sh:property [
@@ -473,15 +543,6 @@ curricshapes:StrandShape
   ] ;
 
   sh:property [
-    sh:path curric:isStrandOf ;
-    sh:class curric:SubSubject ;
-    sh:minCount 1 ;
-    sh:name "is strand of" ;
-    sh:description "A strand must be applicable to at least one sub-subject." ;
-    sh:message "Strands must specify which sub-subject(s) they apply to." ;
-  ] ;
-
-  sh:property [
     sh:path skos:narrower ;
     sh:class curric:SubStrand ;
     sh:minCount 1 ;
@@ -490,32 +551,32 @@ curricshapes:StrandShape
     sh:message "Strands must have at least one sub-strand." ;
   ] ;
 
-  # Inverse consistency check
   sh:sparql [
-    sh:message "applicableToSubSubject must have corresponding includesStrand on the sub-subject" ;
+    sh:severity sh:Warning ;
+    sh:message "Strand is not referenced by any sub-subject (WARNING - orphaned)" ;
     sh:select """
       PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
-        $this curric:applicableToSubSubject ?subsubject .
-        FILTER NOT EXISTS { 
-          ?subsubject curric:includesStrand $this 
+        $this a curric:Strand .
+        FILTER NOT EXISTS {
+          ?subsubject a curric:SubSubject ;
+                      curric:hasStrand $this .
         }
       }
     """ ;
   ] ;
 
   sh:sparql [
-    sh:message "Strand is not referenced by any subject or sub-subject (orphaned)" ;
+    sh:severity sh:Warning ;
+    sh:message "Strand is not referenced by any discipline via skos:narrower (WARNING - orphaned)" ;
     sh:select """
       PREFIX curric: <https://w3id.org/uk/curriculum/core/>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       SELECT $this WHERE {
         $this a curric:Strand .
         FILTER NOT EXISTS {
-          {
-            ?subject curric:hasStrand $this .
-          } UNION {
-            ?subsubject curric:includesStrand $this .
-          }
+          ?discipline a curric:Discipline ;
+                      skos:narrower $this .
         }
       }
     """ ;
@@ -533,9 +594,10 @@ curricshapes:SubStrandShape
     sh:path skos:prefLabel ;
     sh:datatype rdf:langString ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
     sh:name "preferred label" ;
-    sh:description "Every sub-strand must have at least one skos:prefLabel." ;
-    sh:message "Sub-strands must have a skos:prefLabel for SKOS taxonomy." ;
+    sh:description "Every sub-strand must have exactly one skos:prefLabel." ;
+    sh:message "Sub-strands must have exactly one skos:prefLabel for SKOS taxonomy." ;
   ] ;
 
   sh:property [
@@ -568,14 +630,16 @@ curricshapes:SubStrandShape
   ] ;
 
   sh:sparql [
-    sh:message "Sub-strand is not referenced by any strand via skos:narrower (orphaned)" ;
+    sh:severity sh:Warning ;
+    sh:message "Sub-strand is not referenced by any strand via skos:narrower (WARNING - orphaned)" ;
     sh:select """
       PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       SELECT $this WHERE {
         $this a curric:SubStrand .
         FILTER NOT EXISTS {
-          ?strand skos:narrower $this .
+          ?strand a curric:Strand ;
+                  skos:narrower $this .
         }
       }
     """ ;
@@ -593,9 +657,10 @@ curricshapes:ContentDescriptorShape
     sh:path skos:prefLabel ;
     sh:datatype rdf:langString ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
     sh:name "preferred label" ;
-    sh:description "Every content descriptor must have at least one skos:prefLabel." ;
-    sh:message "Content descriptors must have a skos:prefLabel for SKOS taxonomy." ;
+    sh:description "Every content descriptor must have exactly one skos:prefLabel." ;
+    sh:message "Content descriptors must have exactly one skos:prefLabel for SKOS taxonomy." ;
   ] ;
 
   sh:property [
@@ -618,26 +683,32 @@ curricshapes:ContentDescriptorShape
     sh:message "Content descriptors must specify which sub-strand they belong to via skos:broader." ;
   ] ;
 
-  sh:property [
-    sh:path skos:narrower ;
-    sh:class curric:ContentSubDescriptor ;
-    sh:name "narrower" ;
-    sh:description "A content descriptor may have zero or more child content sub-descriptors." ;
-  ] ;
-
   sh:sparql [
-    sh:message "Content descriptor is not used in any scheme and not referenced by any sub-strand (orphaned)" ;
+    sh:severity sh:Warning ;
+    sh:message "Content descriptor is not referenced by any sub-strand via skos:narrower (WARNING - orphaned)" ;
     sh:select """
       PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       SELECT $this WHERE {
         $this a curric:ContentDescriptor .
         FILTER NOT EXISTS {
-          {
-            ?scheme curric:hasContent $this .
-          } UNION {
-            ?substrand skos:narrower $this .
-          }
+          ?substrand a curric:SubStrand ;
+                     skos:narrower $this .
+        }
+      }
+    """ ;
+  ] ;
+
+  sh:sparql [
+    sh:severity sh:Warning ;
+    sh:message "Content descriptor is not used in any scheme (WARNING - orphaned)" ;
+    sh:select """
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
+      SELECT $this WHERE {
+        $this a curric:ContentDescriptor .
+        FILTER NOT EXISTS {
+          ?scheme a curric:Scheme ;
+                  curric:hasContentDescriptor $this .
         }
       }
     """ ;
@@ -655,9 +726,10 @@ curricshapes:ContentSubDescriptorShape
     sh:path skos:prefLabel ;
     sh:datatype rdf:langString ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
     sh:name "preferred label" ;
-    sh:description "Every content sub-descriptor must have at least one skos:prefLabel." ;
-    sh:message "Content sub-descriptors must have a skos:prefLabel for SKOS taxonomy." ;
+    sh:description "Every content sub-descriptor must have exactly one skos:prefLabel." ;
+    sh:message "Content sub-descriptors must have exactly one skos:prefLabel for SKOS taxonomy." ;
   ] ;
 
   sh:property [
@@ -695,14 +767,16 @@ curricshapes:ContentSubDescriptorShape
   ] ;
 
   sh:sparql [
-    sh:message "Content sub-descriptor is not referenced by any content descriptor via skos:narrower (orphaned)" ;
+    sh:severity sh:Warning ;
+    sh:message "Content sub-descriptor is not referenced by any content descriptor via skos:narrower (WARNING - orphaned)" ;
     sh:select """
       PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       SELECT $this WHERE {
         $this a curric:ContentSubDescriptor .
         FILTER NOT EXISTS {
-          ?descriptor skos:narrower $this .
+          ?descriptor a curric:ContentDescriptor ;
+                      skos:narrower $this .
         }
       }
     """ ;
@@ -720,9 +794,10 @@ curricshapes:ThemeShape
     sh:path skos:prefLabel ;
     sh:datatype rdf:langString ;
     sh:minCount 1 ;
+    sh:maxCount 1 ;
     sh:name "preferred label" ;
-    sh:description "Every theme must have at least one skos:prefLabel." ;
-    sh:message "Themes must have a skos:prefLabel for SKOS taxonomy." ;
+    sh:description "Every theme must have exactly one skos:prefLabel." ;
+    sh:message "Themes must have exactly one skos:prefLabel for SKOS taxonomy." ;
   ] ;
 
   sh:property [
@@ -745,7 +820,8 @@ curricshapes:ThemeShape
   ] ;
 
   sh:sparql [
-    sh:message "Theme is not related to any content (orphaned)" ;
+    sh:severity sh:Warning ;
+    sh:message "Theme is not related to any content (WARNING - orphaned)" ;
     sh:select """
       PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -753,9 +829,11 @@ curricshapes:ThemeShape
         $this a curric:Theme .
         FILTER NOT EXISTS {
           {
-            ?content skos:related $this .
+            ?content a curric:ContentDescriptor ;
+                     skos:related $this .
           } UNION {
             $this skos:related ?content .
+            ?content a curric:ContentDescriptor .
           }
         }
       }

@@ -22,7 +22,7 @@
 
   rdfs:label "National Curriculum for England - History Knowledge Taxonomy"@en ;
   dc:title "National Curriculum for England - History Knowledge Taxonomy"@en ;
-  rdfs:comment """History knowledge taxonomy defining the hierarchical organization of scientific 
+  rdfs:comment """History knowledge taxonomy defining the hierarchical organization of historical 
   content from strands through to content sub-descriptors."""@en ;
 
   owl:versionInfo "0.1.0" ;
@@ -54,7 +54,7 @@
 eng:knowledge-taxonomy
   a skos:ConceptScheme ;
   skos:prefLabel "National Curriculum for England Knowledge Structure"@en ;
-  skos:hasTopConcept eng:subject-history .
+  skos:hasTopConcept eng:discipline-history .
   
 # ----------------------------------------------------------------------
 # Disciplines
@@ -63,7 +63,6 @@ eng:knowledge-taxonomy
 eng:discipline-history
   a skos:Concept, curric:Discipline ;
   skos:prefLabel "History"@en ;
-  skos:inScheme eng:knowledge-taxonomy ;
   skos:topConceptOf eng:knowledge-taxonomy ;
   skos:definition """The national curriculum for history develops knowledge and understanding of 
   Britain’s past and that of the wider world."""@en ;
@@ -83,19 +82,17 @@ eng:discipline-history
 eng:strand-knowledge-of-past
   a skos:Concept, curric:Strand ;
   skos:prefLabel "Knowledge of the past"@en ;
-  skos:broader eng:subject-history ;
+  skos:broader eng:discipline-history ;
   skos:narrower eng:substrand-cells-organisation ,
                 eng:substrand-skeletal-and-muscular-systems ;
-  curric:applicableToSubSubject eng:subsubject-history ;
   skos:inScheme eng:knowledge-taxonomy .
 
 eng:strand-knowledge-of-history
   a skos:Concept, curric:Strand ;
   skos:prefLabel "Knowledge of history as a discipline"@en ;
-  skos:broader eng:subject-history ;
+  skos:broader eng:discipline-history ;
   skos:narrower eng:substrand-cells-organisation ,
                 eng:substrand-skeletal-and-muscular-systems ;
-  curric:applicableToSubSubject eng:subsubject-history ;
   skos:inScheme eng:knowledge-taxonomy .
 
 # ----------------------------------------------------------------------

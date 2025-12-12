@@ -10,7 +10,7 @@
 @prefix schema: <http://schema.org/> .
 
 # ======================================================================
-# UK Curriculum Ontology
+# DfE Curriculum Ontology
 # ======================================================================
 
 # ----------------------------------------------------------------------
@@ -20,19 +20,17 @@
 <https://w3id.org/uk/curriculum/core/curriculum-ontology>
   rdf:type owl:Ontology ;
 
-  rdfs:label "UK Curriculum Ontology"@en ;
-  dc:title "UK Curriculum Ontology"@en ;
+  rdfs:label "DfE Curriculum Ontology"@en ;
+  dc:title "DfE Curriculum Ontology"@en ;
   rdfs:comment """Core vocabulary for describing curriculum structures, content organization, and 
-  educational programmes in the UK."""@en ;
+  educational programmes."""@en ;
   
   owl:versionInfo "0.1.0" ;
   owl:versionIRI <https://w3id.org/uk/curriculum/core/curriculum-ontology/0.1.0> ;
   owl:priorVersion <https://w3id.org/uk/curriculum/core/curriculum-ontology/0.0.9> ;
   
   dcterms:description """This ontology defines the foundational classes and properties for 
-  representing educational curriculum structures. While it is currently used to describe the 
-  National Curriculum for England, it is designed to be reusable across the UK, including Wales, 
-  Scotland, and Northern Ireland."""@en ;
+  representing educational curriculum structures."""@en ;
   dcterms:creator "Department for Education" ;
   dcterms:created "2025-11-19"^^xsd:date ;
   dcterms:modified "2025-12-03"^^xsd:date ;
@@ -56,7 +54,7 @@ curric:version-0.1.0
   rdfs:comment "Initial release"@en .
 
 curric:version-0.0.9
-  dcterms:date "2025-12-03"^^xsd:date ;
+  dcterms:date "2025-11-19"^^xsd:date ;
   rdfs:comment "Development version"@en .
 
 # ----------------------------------------------------------------------
@@ -67,7 +65,7 @@ curric:version-0.0.9
 curric:Phase 
   rdf:type owl:Class ;
   rdfs:label "Phase"@en ;
-  rdfs:comment "A phase of study in the UK education system."@en ;
+  rdfs:comment "A phase of study in the education system."@en ;
   rdfs:isDefinedBy curric: .
     
 curric:KeyStage 
@@ -97,8 +95,7 @@ curric:SubSubject
 curric:Scheme
   rdf:type owl:Class ;
   rdfs:label "Scheme"@en ;
-  rdfs:comment """A scheme that defines curriculum content for a subject across one or more 
-  year groups."""@en ;
+  rdfs:comment """A scheme that defines curriculum content for a sub-subject and a key stage."""@en ;
   rdfs:isDefinedBy curric: .
 
 # ----------------------------------------------------------------------
@@ -152,7 +149,7 @@ curric:Theme
 # ----------------------------------------------------------------------
 # Object Properties
 # (hasPart, isPartOf, hasKeyStage, isKeyStageOf, hasStrand, isStrandOf, 
-# includesStrand, applicableToSubSubject, hasContent, isContentOf)
+# includesStrand, applicableToSubSubject, hasContentDescriptor, isContentOf)
 # ----------------------------------------------------------------------
 
 curric:hasPart
@@ -223,22 +220,22 @@ curric:isStrandOf
   owl:inverseOf curric:hasStrand ;
   rdfs:isDefinedBy curric: .
 
-curric:hasContent
+curric:hasContentDescriptor
   rdf:type owl:ObjectProperty ;
-  rdfs:label "has content"@en ;
+  rdfs:label "has content descriptor"@en ;
   rdfs:comment "Indicates that a scheme includes a specific content descriptor."@en ;
   rdfs:domain curric:Scheme ;
   rdfs:range curric:ContentDescriptor ;
-  owl:inverseOf curric:isContentOf ;
+  owl:inverseOf curric:isContentDescriptorOf ;
   rdfs:isDefinedBy curric: .
 
-curric:isContentOf
+curric:isContentDescriptorOf
   rdf:type owl:ObjectProperty ;
-  rdfs:label "is content of"@en ;
+  rdfs:label "is content descriptor of"@en ;
   rdfs:comment "Indicates that a content descriptor is included in a specific scheme."@en ;
   rdfs:domain curric:ContentDescriptor ;
   rdfs:range curric:Scheme ;
-  owl:inverseOf curric:hasContent ;
+  owl:inverseOf curric:hasContentDescriptor ;
   rdfs:isDefinedBy curric: .
 
 # ----------------------------------------------------------------------
@@ -266,7 +263,7 @@ curric:hasAim
   rdf:type owl:DatatypeProperty ;
   rdfs:label "has aim"@en ;
   rdfs:comment "A specific educational aim for this subject as stated in the National Curriculum."@en ;
-  rdfs:domain curric:Subject ;
+  rdfs:domain [ owl:unionOf (curric:Subject curric:SubSubject) ] ;
   rdfs:range rdf:langString ;
   rdfs:isDefinedBy curric: .
 
