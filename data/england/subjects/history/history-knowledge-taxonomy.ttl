@@ -72,7 +72,7 @@ eng:discipline-history
   questions, think critically, weigh evidence, sift arguments, and develop perspective and 
   judgement."""@en ;
   skos:narrower eng:strand-knowledge-of-past ,
-               eng:strand-knowledge-of-history ;
+                eng:strand-knowledge-of-history ;
   skos:inScheme eng:knowledge-taxonomy .
 
 # ----------------------------------------------------------------------
