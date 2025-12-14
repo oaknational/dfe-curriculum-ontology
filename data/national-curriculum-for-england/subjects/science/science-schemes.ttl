@@ -48,7 +48,7 @@
   owl:imports <https://w3id.org/uk/curriculum/england/science-knowledge-taxonomy> .
 
 # ----------------------------------------------------------------------
-# Schemes
+# Schemes 
 # ----------------------------------------------------------------------
 
 eng:scheme-science-key-stage-3
@@ -58,8 +58,9 @@ eng:scheme-science-key-stage-3
   curric:isPartOf eng:subsubject-science ;
   curric:hasKeyStage eng:key-stage-3 ;
   curric:hasContentDescriptor
-    eng:content-descriptor-cells-as-unit-of-living-organism ,
-    eng:content-descriptor-functions-of-the-cell-wall .
+    eng:content-descriptor-observe-seasonal-changes ,
+    eng:content-descriptor-biomechanics ,
+    eng:content-descriptor-function-of-muscles .
 
 eng:scheme-combined-science-key-stage-4
   a curric:Scheme ;
