@@ -90,7 +90,7 @@ jobs:
         echo "Running SHACL validation..."
         pyshacl \
           --shacl ontology/dfe-curriculum-constraints.ttl \
-          --ont-graph dfe-ontology/curriculum-ontology.ttl \
+          --ont-graph ontology/dfe-curriculum-ontology.ttl \
           --inference rdfs \
           --abort \
           --format human \
