@@ -58,8 +58,20 @@ eng:scheme-history-key-stage-1
   curric:isPartOf eng:subsubject-history ;
   curric:hasKeyStage eng:key-stage-1 ;
   curric:hasContentDescriptor
-    eng:content-descriptor-cells-as-unit-of-living-organism ,
-    eng:content-descriptor-functions-of-the-cell-wall .
+    eng:content-descriptor-narratives-analyses-accounts ,
+    eng:content-descriptor-narratives-analyses-accounts-consequence ,
+    eng:content-descriptor-narratives-analyses-accounts-change-and-continuity ,
+    eng:content-descriptor-narratives-analyses-accounts-similarity-and-difference ,
+    eng:content-descriptor-narratives-analyses-accounts-historical-significance ,
+    eng:content-descriptor-narratives-analyses-accounts-sources-and-evidence ,
+    eng:content-descriptor-narratives-analyses-accounts-historical-interpretations ,
+    eng:content-descriptor-historians-investigate-the-past ,
+    eng:content-descriptor-historians-construct-arguments ,
+    eng:content-descriptor-abstract-terms-historically-grounded ,
+    eng:content-descriptor-changes-within-living-memory ,
+    eng:content-descriptor-events-beyond-living-memory ,
+    eng:content-descriptor-lives-of-significant-individuals ,
+    eng:content-descriptor-significant-historical-events-own-locality .
 
 eng:scheme-history-key-stage-2
   a curric:Scheme ;
@@ -68,8 +80,25 @@ eng:scheme-history-key-stage-2
   curric:isPartOf eng:subsubject-history ;
   curric:hasKeyStage eng:key-stage-2 ;
   curric:hasContentDescriptor
-    eng:content-descriptor-cells-as-unit-of-living-organism ,
-    eng:content-descriptor-functions-of-the-cell-wall .
+    eng:content-descriptor-narratives-analyses-accounts ,
+    eng:content-descriptor-narratives-analyses-accounts-consequence ,
+    eng:content-descriptor-narratives-analyses-accounts-change-and-continuity ,
+    eng:content-descriptor-narratives-analyses-accounts-similarity-and-difference ,
+    eng:content-descriptor-narratives-analyses-accounts-historical-significance ,
+    eng:content-descriptor-narratives-analyses-accounts-sources-and-evidence ,
+    eng:content-descriptor-narratives-analyses-accounts-historical-interpretations ,
+    eng:content-descriptor-historians-investigate-the-past ,
+    eng:content-descriptor-historians-construct-arguments ,
+    eng:content-descriptor-abstract-terms-historically-grounded ,
+    eng:content-descriptor-changes-in-britain-stone-age-to-iron-age ,
+    eng:content-descriptor-roman-empire-impact-on-britain ,
+    eng:content-descriptor-settlement-by-anglo-saxons-and-scots ,
+    eng:content-descriptor-viking-and-anglo-saxon-struggle ,
+    eng:content-descriptor-local-history-study ,
+    eng:content-descriptor-aspect-british-history-beyond-1066 ,
+    eng:content-descriptor-earliest-civilizations ,
+    eng:content-descriptor-ancient-greece ,
+    eng:content-descriptor-non-european-society .
 
 eng:scheme-history-key-stage-3
   a curric:Scheme ;
@@ -78,5 +107,20 @@ eng:scheme-history-key-stage-3
   curric:isPartOf eng:subsubject-history ;
   curric:hasKeyStage eng:key-stage-3 ;
   curric:hasContentDescriptor
-    eng:content-descriptor-cells-as-unit-of-living-organism ,
-    eng:content-descriptor-functions-of-the-cell-wall .
+    eng:content-descriptor-narratives-analyses-accounts ,
+    eng:content-descriptor-narratives-analyses-accounts-consequence ,
+    eng:content-descriptor-narratives-analyses-accounts-change-and-continuity ,
+    eng:content-descriptor-narratives-analyses-accounts-similarity-and-difference ,
+    eng:content-descriptor-narratives-analyses-accounts-historical-significance ,
+    eng:content-descriptor-narratives-analyses-accounts-sources-and-evidence ,
+    eng:content-descriptor-narratives-analyses-accounts-historical-interpretations ,
+    eng:content-descriptor-historians-investigate-the-past ,
+    eng:content-descriptor-historians-construct-arguments ,
+    eng:content-descriptor-abstract-terms-historically-grounded ,
+    eng:content-descriptor-local-history-study ,
+    eng:content-descriptor-church-state-society-1066-1509 ,
+    eng:content-descriptor-church-state-society-1509-1745 ,
+    eng:content-descriptor-ideas-power-industry-empire-1745-1901 ,
+    eng:content-descriptor-challenges-britain-europe-world-1901-present ,
+    eng:content-descriptor-aspect-british-history-before-1066 ,
+    eng:content-descriptor-significant-society-or-issue .
