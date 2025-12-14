@@ -46,36 +46,31 @@
   owl:imports <https://w3id.org/uk/curriculum/core/> .
 
 # ----------------------------------------------------------------------
-# Knowledge Taxonomy
-# ----------------------------------------------------------------------
-
-eng:knowledge-taxonomy
-  a skos:ConceptScheme ;
-  skos:prefLabel "National Curriculum for England Knowledge Structure"@en ;
-  skos:hasTopConcept eng:subject-science .
-
-# ----------------------------------------------------------------------
 # Subject: Science
 # ----------------------------------------------------------------------
 
 eng:subject-science
-  a skos:Concept, curric:Subject ;
-  skos:prefLabel "Science"@en ;
+  a curric:Subject ;
   rdfs:label "Science"@en ;
-  skos:inScheme eng:knowledge-taxonomy ;
-  skos:topConceptOf eng:knowledge-taxonomy ;
-  skos:definition """The systematic study of the natural world through observation, experimentation, 
-  and theory, encompassing biology, chemistry, and physics."""@en ;
+  rdfs:comment "Science subject in the National Curriculum for England."@en ;
+  curric:hasDiscipline eng:discipline-science .
+
+# ----------------------------------------------------------------------
+# Sub-Subjects 
+# ----------------------------------------------------------------------
+
+eng:subsubject-science
+  a curric:SubSubject ;
+  rdfs:label "Science"@en ;
+  rdfs:comment "Science sub-subject in the National Curriculum for England."@en ;
   dcterms:description """A high-quality science education provides the foundations for 
   understanding the world through the specific disciplines of biology, chemistry and 
   physics."""@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study> ;
-  skos:scopeNote """Science is essential for understanding the natural world and making informed 
-  decisions about scientific developments. It develops critical thinking, analytical skills, and 
-  systematic investigation methods that students will use throughout their lives."""@en ;
+  curric:isPartOf eng:subject-science ;
   curric:hasStrand eng:strand-structure-function-living-organisms ,
                    eng:strand-material-cycles-and-energy ;
-  
+
   curric:hasAim 
     """Develop scientific knowledge and conceptual understanding through the specific disciplines 
     of biology, chemistry and physics"""@en ,
@@ -84,15 +79,3 @@ eng:subject-science
     them"""@en ,
     """Are equipped with the scientific knowledge required to understand the uses and implications 
     of science, today and for the future"""@en .
-
-# ----------------------------------------------------------------------
-# Sub-Subjects
-# ----------------------------------------------------------------------
-
-eng:subsubject-science
-  a curric:SubSubject ;
-  rdfs:label "Science"@en ;
-  rdfs:comment "Science subject in the National Curriculum for England."@en ;
-  curric:isPartOf eng:subject-science ;
-  curric:includesStrand eng:strand-structure-function-living-organisms ,
-                        eng:strand-material-cycles-and-energy .

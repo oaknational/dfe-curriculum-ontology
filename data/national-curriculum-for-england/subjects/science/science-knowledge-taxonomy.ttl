@@ -47,26 +47,49 @@
   owl:imports <https://w3id.org/uk/curriculum/core/> ;
   owl:imports <https://w3id.org/uk/curriculum/england/science-subject> .
 
-  # ----------------------------------------------------------------------
-# Strands
+# ----------------------------------------------------------------------
+# Knowledge Taxonomy
+# ----------------------------------------------------------------------
+
+eng:knowledge-taxonomy
+  a skos:ConceptScheme ;
+  skos:prefLabel "National Curriculum for England Knowledge Structure"@en ;
+  skos:hasTopConcept eng:discipline-science .
+  
+# ----------------------------------------------------------------------
+# Disciplines
+# ----------------------------------------------------------------------
+
+eng:discipline-science
+  a skos:Concept, curric:Discipline ;
+  skos:prefLabel "Science"@en ;
+  skos:topConceptOf eng:knowledge-taxonomy ;
+  skos:definition """The systematic study of the natural world through observation, experimentation, 
+  and theory, encompassing biology, chemistry, and physics."""@en ;
+  skos:scopeNote """Science is essential for understanding the natural world and making informed 
+  decisions about scientific developments. It develops critical thinking, analytical skills, and 
+  systematic investigation methods that students will use throughout their lives."""@en ;
+  skos:narrower eng:strand-structure-function-living-organisms ,
+                eng:strand-material-cycles-and-energy ;
+  skos:inScheme eng:knowledge-taxonomy .
+
+# ----------------------------------------------------------------------
+# Strands 
 # ----------------------------------------------------------------------
 
 eng:strand-structure-function-living-organisms
   a skos:Concept, curric:Strand ;
   skos:prefLabel "Structure and function of living organisms"@en ;
-  skos:broader eng:subject-science ;
+  skos:broader eng:discipline-science ;
   skos:narrower eng:substrand-cells-organisation ,
                 eng:substrand-skeletal-and-muscular-systems ;
-  curric:applicableToSubSubject eng:subsubject-science ;
   skos:inScheme eng:knowledge-taxonomy .
 
 eng:strand-material-cycles-and-energy
   a skos:Concept, curric:Strand ;
   skos:prefLabel "Material cycles and energy"@en ;
-  skos:broader eng:subject-science ;
+  skos:broader eng:discipline-science ;
   skos:narrower eng:substrand-seasonal-changes ;
-
-  curric:applicableToSubSubject eng:subsubject-science ;
   skos:inScheme eng:knowledge-taxonomy .
 
 # ----------------------------------------------------------------------
