@@ -292,7 +292,7 @@ eng:content-descriptor-local-history-study
 eng:content-descriptor-aspect-british-history-beyond-1066
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """About a study of an aspect or theme in British history that extends pupils’ 
-  chronological knowledge beyond 1066."@en ;
+  chronological knowledge beyond 1066."""@en ;
   skos:broader eng:substrand-history-of-diverse-britain ;
   skos:inScheme eng:knowledge-taxonomy .
 
