@@ -202,6 +202,21 @@ sparql --data=data/england/*.ttl --query=your-query.rq
 
 See [docs/examples.md](docs/examples.md) for query patterns.
 
+## Deployment
+
+### Production SPARQL Endpoint
+
+A public SPARQL endpoint is available at:
+`https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql`
+
+### Deploy Your Own Instance
+
+```bash
+./deployment/deploy.sh
+```
+
+See [deployment/DEPLOY.md](deployment/DEPLOY.md) for detailed deployment instructions, monitoring, and troubleshooting.
+
 ## Versioning
 
 This ontology follows [Semantic Versioning](https://semver.org/):

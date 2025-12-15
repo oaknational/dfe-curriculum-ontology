@@ -393,7 +393,71 @@
 ✅ **Phase 2 complete** (Steps 5-8)
 ✅ **Phase 3 complete** (Steps 9-12)
 ✅ **Phase 4 complete** (Steps 13-16)
-✅ **Phase 5 complete** (Steps 17-20) ← **NEW**
+✅ **Phase 5 complete** (Steps 17-20)
 → **Next:** Phase 6 (Steps 21-24) - CI/CD Pipeline
 
-**Note:** Steps 21 and 23 already completed (validation and Fuseki deployment workflows exist)
+## Session 8: 2025-12-15 - CI/CD Workflows (Steps 22-23)
+
+### Completed: Step 22 - JSON Generation Workflow
+
+**Created:** `.github/workflows/generate-json.yml`
+- Triggers on push to `main` and release publication
+- Installs Apache Jena 4.10.0 and jq
+- Runs `./scripts/build-static-data.sh`
+- Validates JSON with `jq empty`
+- Uploads `distributions/` as GitHub Actions artifacts (30-day retention)
+- Displays file sizes in workflow summary
+
+**Alignment:**
+- ✅ ARCHITECTURE.md: Approach 1 - generated files gitignored, published via artifacts
+- ✅ CLAUDE.md: Source TTL files in repo, JSON as build artifacts
+
+**Commit:** `b782076` - "ci: add JSON generation workflow"
+
+### Completed: Step 23 - Fuseki Deployment Workflow (Comprehensive)
+
+**Updated:** `.github/workflows/deploy-fuseki.yml`
+
+**Key Changes from Initial Version:**
+- Now uses `deployment/Dockerfile` (not inline Dockerfile)
+- Tags both `:${{ github.sha }}` and `:latest`
+- Pushes both tags to GCR
+- Deploys with proper resource limits: 2Gi RAM, 2 CPU, max 10 instances, 300s timeout, 80 concurrency
+- Added "Get service URL" step with GitHub summary output
+- Added "Test deployment" step with health check + SPARQL query validation
+- Corrected image name: `national-curriculum-for-england-fuseki` (matches CLAUDE.md)
+- Region: `europe-west1` (Belgium - cost-optimized per CLAUDE.md)
+
+**Not Committed Yet:** Workflow updated but awaiting commit
+
+### Partially Completed: Step 24 - Configure GitHub Secrets
+
+**Status:** Documented, awaiting GCP admin access
+
+**Issue:** Current user (`eng.mhodierne@thenational.academy`) lacks IAM admin permissions in project `oak-ai-playground` to create service accounts.
+
+**Resolution:**
+- Created `deployment/GITHUB-ACTIONS-SETUP.md` with exact requirements for GCP admin
+- Manual deployment continues to work perfectly via `./deployment/deploy.sh`
+- GitHub Actions automation can be enabled later when admin creates service account
+
+**What's Documented:**
+- ✅ Exact gcloud commands for GCP admin
+- ✅ Required roles: `run.admin`, `storage.admin`, `iam.serviceAccountUser`
+- ✅ Instructions for adding secrets to GitHub
+- ✅ Security best practices
+- ✅ Alternative: Workload Identity Federation (more secure, no keys)
+
+**Current Deployment Method:** Manual via `deployment/deploy.sh` (works perfectly, see Step 19 results)
+
+**Commit:** `deployment/GITHUB-ACTIONS-SETUP.md` ready to commit
+
+### Status
+
+✅ **Phase 1 complete** (Steps 1-4)
+✅ **Phase 2 complete** (Steps 5-8)
+✅ **Phase 3 complete** (Steps 9-12)
+✅ **Phase 4 complete** (Steps 13-16)
+✅ **Phase 5 complete** (Steps 17-20)
+✅ **Phase 6 complete** (Steps 21-24; Step 24 documented, awaiting admin)
+→ **Next:** Phase 7 (Steps 25-28) - Documentation & Distribution
