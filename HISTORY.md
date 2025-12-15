@@ -173,3 +173,37 @@
 ✅ Phase 2 complete (Steps 5-8)
 ✅ Phase 3 complete (Steps 9-12)
 → Next: Phase 4 (Steps 15-16) - Fuseki local testing remains
+
+## Session 4: 2025-12-15 - Fuseki Configuration (Step 13)
+
+### Completed: Step 13 - Create Fuseki Configuration
+
+**Created:** `deployment/fuseki-config.ttl`
+- TDB2 dataset configuration at `/fuseki-base/databases/uk-curriculum-tdb2`
+- Read-only SPARQL endpoints: `/sparql` and `/query`
+- Read-only Graph Store Protocol: `/get` (gsp-r)
+- Union default graph enabled (`tdb2:unionDefaultGraph true`)
+- Validated with riot (syntax correct)
+
+**Key Design Decisions:**
+- **TDB2 over in-memory**: Better performance, faster startup (data pre-indexed), production-ready
+- **Immutable deployment pattern**: Data loaded at build time via `tdb2.tdbloader`, baked into container
+- **Read-only operations only**: Security (fuseki:query, fuseki:gsp-r) - no update/insert/delete
+- **Union default graph**: All data queryable without specifying graph names
+
+**Technical Concepts Explained:**
+- **Immutable deployment**: Container image contains pre-loaded TDB2 database; updates require rebuilding container
+- **TDB2**: Apache Jena's native triple store (2nd generation); on-disk storage with optimized indexes
+
+**Alignment:**
+- ✅ ARCHITECTURE.md lines 201-224: Perfect match
+- ✅ CLAUDE.md standards: Read-only public access, immutable deployments, TDB2 for production
+
+**No commit yet:** Will commit after confirming Dockerfile integration (Step 14)
+
+### Status
+✅ Phase 1 complete (Steps 1-4)
+✅ Phase 2 complete (Steps 5-8)
+✅ Phase 3 complete (Steps 9-12)
+✅ Step 13 complete
+→ Next: Steps 14-16 - Dockerfile creation and Fuseki local testing

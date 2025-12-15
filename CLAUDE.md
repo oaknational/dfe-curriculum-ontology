@@ -247,13 +247,14 @@ The repository follows "Approach 1" from the implementation plan:
 
 ### Fuseki Container Configuration
 
-The Dockerfile uses in-memory storage (`ja:MemoryModel`) with pre-loaded TTL files. This means:
-- Data is baked into the container at build time
-- Fast startup (no loading phase)
-- Immutable deployments
-- To update data, rebuild and redeploy the container
+The Dockerfile uses **TDB2 storage** (`tdb2:DatasetTDB2`) with data pre-loaded at build time via `tdb2.tdbloader`:
+- **Data location**: `/fuseki-base/databases/uk-curriculum-tdb2` (baked into container)
+- **Union default graph**: All data queryable without graph names
+- **Read-only endpoints**: SPARQL query (`/sparql`, `/query`) and Graph Store Protocol (`/get`)
+- **Fast startup**: TDB2 indexes pre-built (no loading phase)
+- **Immutable deployments**: To update data, rebuild and redeploy the container
 
-**Note:** The current Dockerfile hardcodes specific filenames that may not match all TTL files in the ontology directory.
+**Configuration file**: `deployment/fuseki-config.ttl`
 
 ### File Name Inconsistencies
 
