@@ -1,0 +1,17 @@
+PREFIX curric: <https://w3id.org/uk/curriculum/core/>
+PREFIX eng: <https://w3id.org/uk/curriculum/england/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+
+SELECT ?subjectId ?label ?description
+WHERE {
+  ?subject a curric:Subject ;
+           rdfs:label ?label .
+
+  OPTIONAL {
+    ?subject rdfs:comment ?description .
+  }
+
+  BIND(STRAFTER(STR(?subject), "england/") AS ?subjectId)
+}
+ORDER BY ?label
