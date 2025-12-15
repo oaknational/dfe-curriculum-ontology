@@ -70,7 +70,7 @@ Each to-do task should be numbered sequentially, and include:
 
 Then refresh your memory by checking `HISTORY.md`. Review `ARCHITECTURE.md` to understand what we are building.
 
-We are working through `IMPLEMENTATION-PLAN.md` and are on Step 22.
+We are working through `IMPLEMENTATION-PLAN.md` and are on Step 24.
 
 **Before implementing anything:**
 
@@ -86,84 +86,71 @@ As you implement, explain:
 
 Now, here is the next task to complete:
 
-### Step 22: Create JSON Generation Workflow
+### Step 24: Configure GitHub Secrets
 
-**Goal:** Generate JSON files and publish as artifacts
+**Goal:** Set up secrets for GCP authentication
 
 **Actions:**
+
+**Manual steps in GitHub:**
+
+1. **Create GCP Service Account:**
 ```bash
-cat > .github/workflows/generate-json.yml <<'EOF'
-name: Generate Static JSON Files
+# In terminal
+export PROJECT_ID=$(gcloud config get-value project)
 
-on:
-  push:
-    branches: [ main ]
-  release:
-    types: [ published ]
+# Create service account
+gcloud iam service-accounts create github-actions \
+    --display-name="GitHub Actions"
 
-jobs:
-  generate:
-    runs-on: ubuntu-latest
+# Grant permissions
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:github-actions@${PROJECT_ID}.iam.gserviceaccount.com" \
+    --role="roles/run.admin"
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:github-actions@${PROJECT_ID}.iam.gserviceaccount.com" \
+    --role="roles/storage.admin"
 
-      - name: Install Apache Jena
-        run: |
-          wget -q https://dlcdn.apache.org/jena/binaries/apache-jena-4.10.0.tar.gz
-          tar xzf apache-jena-4.10.0.tar.gz
-          echo "$PWD/apache-jena-4.10.0/bin" >> $GITHUB_PATH
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+    --member="serviceAccount:github-actions@${PROJECT_ID}.iam.gserviceaccount.com" \
+    --role="roles/iam.serviceAccountUser"
 
-      - name: Install jq (for JSON validation)
-        run: sudo apt-get update && sudo apt-get install -y jq
+# Create key
+gcloud iam service-accounts keys create ~/gcp-key.json \
+    --iam-account=github-actions@${PROJECT_ID}.iam.gserviceaccount.com
 
-      - name: Generate JSON files
-        run: ./scripts/build-static-data.sh
+# Display key (copy for next step)
+cat ~/gcp-key.json
+```
 
-      - name: Validate JSON output
-        run: |
-          echo "Validating generated JSON files..."
-          for file in distributions/**/*.json; do
-            echo "Checking $file..."
-            jq empty "$file" && echo "  ✓ Valid"
-          done
+2. **Add secrets to GitHub:**
+   - Go to: https://github.com/YOUR-ORG/uk-curriculum-ontology/settings/secrets/actions
+   - Click "New repository secret"
+   - Add `GCP_SA_KEY`: Paste contents of ~/gcp-key.json
+   - Add `GCP_PROJECT_ID`: Your GCP project ID
 
-      - name: Upload JSON artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: curriculum-json-${{ github.sha }}
-          path: distributions/
-          retention-days: 30
-
-      - name: Display summary
-        run: |
-          echo "### Generated Files" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-          find distributions -name "*.json" -exec ls -lh {} \; >> $GITHUB_STEP_SUMMARY
-          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
-EOF
+3. **Clean up local key:**
+```bash
+rm ~/gcp-key.json
 ```
 
 **Test:**
 ```bash
-# Commit and push
-git add .github/workflows/generate-json.yml
-git commit -m "ci: add JSON generation workflow"
+# Push code to trigger workflow
 git push origin main
 
-# Check GitHub Actions
-# Should see JSON files uploaded as artifacts
+# Or manually trigger deploy-fuseki workflow from GitHub Actions UI
+# Actions tab → Deploy Fuseki to Cloud Run → Run workflow
 ```
 
 **Success Criteria:**
-- ✅ Workflow generates JSON files
-- ✅ Files are uploaded as artifacts
-- ✅ Can download artifacts from GitHub Actions
-- ✅ Summary shows file sizes
+- ✅ Service account created
+- ✅ Secrets added to GitHub
+- ✅ Workflow can authenticate with GCP
+- ✅ Deployment succeeds
 
-**Commit:** Already committed in test step
+**Commit:** Not needed (GitHub configuration)
 
 ```
 
