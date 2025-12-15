@@ -215,7 +215,7 @@
 **Created:** `deployment/Dockerfile`
 - Base: `stain/jena-fuseki:latest` (Fuseki 5.1.0)
 - Data loaded at build time using `java -cp fuseki-server.jar tdb2.tdbloader`
-- Database location: `/data/nc-england-tdb2` (outside `/fuseki` VOLUME)
+- Database location: `/data/national-curriculum-for-england-tdb2` (outside `/fuseki` VOLUME)
 - 1,374 triples loaded into TDB2 with proper indexing
 - Excludes `versions/` directories via `.dockerignore`
 
@@ -243,23 +243,22 @@
 - Triple count: 1,367
 - Subjects found: 2 (History, Science)
 - Container status: healthy
-- SPARQL endpoint working: `http://localhost:3030/nc-england/sparql`
+- SPARQL endpoint working: `http://localhost:3030/national-curriculum-for-england/sparql`
 
-**Image:** `nc-england-fuseki:local` (193MB with pre-loaded TDB2 data)
+**Image:** `national-curriculum-for-england-fuseki:local` (193MB with pre-loaded TDB2 data)
 
-### Naming Convention Change
+### Naming Convention Decision
 
-**Rationale:** "dfe-curriculum" too generic; DfE has multiple curricula
+**Rationale:** Match directory structure; DfE cannot use "uk-curriculum" (jurisdictional); use official name
 
-**Before:** `dfe-curriculum-*`
-**After:** `nc-england-*` (National Curriculum for England)
+**Service naming:** `national-curriculum-for-england`
 
 **Changes:**
-- Docker image: `nc-england-fuseki:local`
-- Fuseki service: `nc-england`
-- Database: `/data/nc-england-tdb2`
-- Cloud Run service: `nc-england-sparql`
-- Endpoints: `/nc-england/sparql`, `/nc-england/query`, `/nc-england/get`
+- Docker image: `national-curriculum-for-england-fuseki:local`
+- Fuseki service: `national-curriculum-for-england`
+- Database: `/data/national-curriculum-for-england-tdb2`
+- Cloud Run service: `national-curriculum-for-england-sparql`
+- Endpoints: `/national-curriculum-for-england/sparql`, `/national-curriculum-for-england/query`, `/national-curriculum-for-england/get`
 
 **Updated files:**
 - `deployment/Dockerfile`
@@ -270,5 +269,27 @@
 ✅ Phase 1 complete (Steps 1-4)
 ✅ Phase 2 complete (Steps 5-8)
 ✅ Phase 3 complete (Steps 9-12)
-✅ Phase 4 complete (Steps 13-15)
-→ Next: Step 16 - Deploy to Cloud Run
+✅ Phase 4 complete (Steps 13-16)
+→ Next: Phase 5 - Google Cloud Setup (Steps 17-20)
+
+## Session 6: 2025-12-15 - SPARQL Query Testing (Step 16)
+
+### Completed: Step 16 - Test SPARQL Queries Against Local Fuseki
+
+**Test Results:**
+- Triple count: 1,367 (matches expected)
+- Subjects query: 2 subjects (History, Science) - 457ms
+- Science KS3 query: 3 content descriptors - 176ms
+- Full curriculum query: 34 content descriptors - 1.352s
+
+**Key Technical Fix:**
+- Used `curl --data-binary @file.sparql` instead of `--data "$(cat file)"` to handle SPARQL comments (`#`) correctly
+
+**Performance:**
+- All queries well under 1-second target (except most complex at 1.3s)
+- Container logs show no errors, all 200 OK responses
+- Service endpoint: `http://localhost:3030/national-curriculum-for-england/sparql`
+
+**Naming Update:** Changed from `nc-england` to `national-curriculum-for-england` for consistency with directory structure and DfE requirements
+
+**No commit:** Testing only (container stopped and removed)

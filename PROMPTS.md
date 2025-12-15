@@ -70,7 +70,7 @@ Each to-do task should be numbered sequentially, and include:
 
 Then refresh your memory by checking `HISTORY.md`. Review `ARCHITECTURE.md` to understand what we are building.
 
-We are working through `IMPLEMENTATION-PLAN.md` and are on Step 14.
+We are working through `IMPLEMENTATION-PLAN.md` and are on Step 17.
 
 **Before implementing anything:**
 
@@ -86,81 +86,58 @@ As you implement, explain:
 
 Now, here is the next task to complete:
 
-### Step 14: Create Dockerfile ✅ **COMPLETED**
+### Step 17: Set Up Google Cloud Project
 
-**Goal:** Create Docker image that loads all curriculum data
+**Goal:** Create and configure GCP project for Cloud Run
 
 **Actions:**
 ```bash
-cat > deployment/Dockerfile <<'EOF'
-# Use official Jena Fuseki image
-FROM stain/jena-fuseki:4.10.0
+# 1. Login to Google Cloud
+gcloud auth login
 
-# Metadata
-LABEL maintainer="Department for Education"
-LABEL description="UK Curriculum Ontology SPARQL Endpoint"
-LABEL version="0.1.0"
+# 2. List projects (or create new one)
+gcloud projects list
 
-# Create staging directory for data files
-RUN mkdir -p /staging
+# 3. Set project (replace with your project ID)
+export PROJECT_ID="your-gcp-project-id"
+gcloud config set project $PROJECT_ID
 
-# Copy ontology files
-COPY ontology/dfe-curriculum-ontology.ttl /staging/
-COPY ontology/dfe-curriculum-constraints.ttl /staging/
+# 4. Enable required APIs
+echo "Enabling Cloud Run API..."
+gcloud services enable run.googleapis.com
 
-# Copy programme structure
-COPY data/national-curriculum-for-england/programme-structure.ttl /staging/
+echo "Enabling Container Registry API..."
+gcloud services enable containerregistry.googleapis.com
 
-# Copy themes (if exists)
-COPY data/national-curriculum-for-england/themes.ttl /staging/ 2>/dev/null || true
+echo "Enabling Cloud Build API..."
+gcloud services enable cloudbuild.googleapis.com
 
-# Copy all subject data
-COPY data/national-curriculum-for-england/subjects/ /staging/subjects/
+# 5. Set region
+export REGION="europe-west2"
+gcloud config set run/region $REGION
 
-# Load all data into TDB2 database (at build time)
-RUN mkdir -p /fuseki-base/databases && \
-    /jena-fuseki/tdb2.tdbloader \
-    --loc=/fuseki-base/databases/uk-curriculum-tdb2 \
-    /staging/*.ttl \
-    /staging/subjects/**/*.ttl && \
-    echo "Loaded $(find /staging -name '*.ttl' | wc -l) TTL files into TDB2"
-
-# Copy Fuseki configuration
-COPY deployment/fuseki-config.ttl /fuseki-base/configuration/config.ttl
-
-# Expose Fuseki port
-EXPOSE 3030
-
-# Health check
-HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
-    CMD curl -f http://localhost:3030/$/ping || exit 1
-
-# Start Fuseki with our configuration
-CMD ["/jena-fuseki/fuseki-server", "--config=/fuseki-base/configuration/config.ttl"]
-EOF
+# 6. Verify setup
+gcloud config list
 ```
 
 **Test:**
 ```bash
-# Validate Dockerfile syntax
-docker build --no-cache --progress=plain -f deployment/Dockerfile -t test-fuseki . --dry-run 2>&1 || true
+# Verify APIs are enabled
+gcloud services list --enabled | grep -E "(run|container|build)"
 
-# Check file
-cat deployment/Dockerfile
+# Should show:
+# - run.googleapis.com
+# - containerregistry.googleapis.com
+# - cloudbuild.googleapis.com
 ```
 
 **Success Criteria:**
-- ✅ Dockerfile exists
-- ✅ Contains all copy commands for data
-- ✅ Uses tdb2.tdbloader to load data
-- ✅ Includes health check
+- ✅ GCP project is selected
+- ✅ All required APIs are enabled
+- ✅ Region is set to europe-west2
+- ✅ No authentication errors
 
-**Commit:**
-```bash
-git add deployment/Dockerfile
-git commit -m "feat: add Fuseki Dockerfile"
-
-
+**Commit:** Not needed (cloud config only)
 
 ```
 
