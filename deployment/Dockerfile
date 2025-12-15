@@ -1,50 +1,56 @@
-# deployment/Dockerfile
-
+# Use official Jena Fuseki image
+# Note: Using latest stable release (5.1.0 as of Dec 2024)
 FROM stain/jena-fuseki:latest
 
 # Metadata
-LABEL maintainer="Oak National Academy"
+LABEL maintainer="Department for Education"
 LABEL description="UK Curriculum Ontology SPARQL Endpoint"
+LABEL version="0.1.0"
 
-# Copy ontology data files
-COPY ontology/*.ttl /fuseki-base/databases/uk-curriculum/
+# Create staging directory for data files (use /tmp for write permissions)
+RUN mkdir -p /tmp/staging
 
-# Create Fuseki configuration
-RUN mkdir -p /fuseki-base/configuration && \
-    cat > /fuseki-base/configuration/uk-curriculum.ttl <<'EOF'
-@prefix fuseki: <http://jena.apache.org/fuseki#> .
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix ja: <http://jena.hpl.hp.com/2005/11/Assembler#> .
+# Copy ontology files
+COPY ontology/dfe-curriculum-ontology.ttl /tmp/staging/
+COPY ontology/dfe-curriculum-constraints.ttl /tmp/staging/
 
-<#service> a fuseki:Service ;
-    fuseki:name "uk-curriculum" ;
-    fuseki:endpoint [ 
-        fuseki:operation fuseki:query ; 
-        fuseki:name "query" 
-    ] ;
-    fuseki:endpoint [ 
-        fuseki:operation fuseki:query ; 
-        fuseki:name "sparql" 
-    ] ;
-    fuseki:dataset <#dataset> .
+# Copy programme structure
+COPY data/national-curriculum-for-england/programme-structure.ttl /tmp/staging/
 
-<#dataset> a ja:RDFDataset ;
-    ja:defaultGraph <#graph> .
+# Copy themes
+COPY data/national-curriculum-for-england/themes.ttl /tmp/staging/
 
-<#graph> a ja:MemoryModel ;
-    ja:content <file:///fuseki-base/databases/uk-curriculum/core.ttl> ;
-    ja:content <file:///fuseki-base/databases/uk-curriculum/subjects.ttl> ;
-    ja:content <file:///fuseki-base/databases/uk-curriculum/keystages.ttl> ;
-    ja:content <file:///fuseki-base/databases/uk-curriculum/threads.ttl> .
-EOF
+# Copy all subject data
+COPY data/national-curriculum-for-england/subjects/ /tmp/staging/subjects/
+
+# Load all data into TDB2 database (at build time)
+# Note: versions/ subdirectories excluded via .dockerignore
+# Note: Using /data instead of /fuseki-base because /fuseki is a VOLUME
+USER root
+RUN mkdir -p /data/nc-england-tdb2 /fuseki-base/configuration && \
+    java -cp /jena-fuseki/fuseki-server.jar tdb2.tdbloader \
+    --verbose \
+    --loc=/data/nc-england-tdb2 \
+    /tmp/staging/*.ttl \
+    /tmp/staging/subjects/*/*.ttl && \
+    echo "Loaded $(find /tmp/staging -name '*.ttl' | wc -l) TTL files into TDB2" && \
+    echo "Database files:" && ls -lh /data/nc-england-tdb2/Data-0001/ | head -10
+
+# Copy Fuseki configuration (as root to ensure it's copied)
+COPY deployment/fuseki-config.ttl /fuseki-base/configuration/config.ttl
+
+# Fix permissions for fuseki user
+RUN chown -R 9008:9008 /data/nc-england-tdb2 /fuseki-base/configuration /fuseki
+
+# Switch back to fuseki user
+USER 9008
 
 # Expose Fuseki port
 EXPOSE 3030
 
-# Health check for Cloud Run
+# Health check
 HEALTHCHECK --interval=30s --timeout=3s --start-period=40s --retries=3 \
     CMD curl -f http://localhost:3030/$/ping || exit 1
 
-# Start Fuseki with configuration
-CMD ["/jena-fuseki/fuseki-server", "--config=/fuseki-base/configuration/uk-curriculum.ttl"]
+# Start Fuseki with our configuration
+CMD ["/jena-fuseki/fuseki-server", "--config=/fuseki-base/configuration/config.ttl"]

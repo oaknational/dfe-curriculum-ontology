@@ -4,10 +4,10 @@ set -e
 # Configuration
 PROJECT_ID="${GCP_PROJECT_ID:-oak-national-academy}"
 REGION="${GCP_REGION:-europe-west2}"
-SERVICE_NAME="uk-curriculum-sparql"
-IMAGE_NAME="gcr.io/${PROJECT_ID}/fuseki-uk-curriculum"
+SERVICE_NAME="nc-england-sparql"
+IMAGE_NAME="gcr.io/${PROJECT_ID}/fuseki-nc-england"
 
-echo "🚀 Deploying UK Curriculum Fuseki to Google Cloud Run..."
+echo "🚀 Deploying National Curriculum for England Fuseki to Google Cloud Run..."
 
 # Validate TTL files locally
 echo "📋 Validating TTL files..."
@@ -29,7 +29,7 @@ cat > deployment/build/Dockerfile <<'EOF'
 FROM stain/jena-fuseki:latest
 
 # Copy ontology data
-COPY data/*.ttl /fuseki-base/databases/uk-curriculum/
+COPY data/*.ttl /fuseki-base/databases/nc-england/
 
 # Create dataset configuration
 RUN mkdir -p /fuseki-base/configuration
@@ -39,7 +39,7 @@ RUN echo '@prefix fuseki: <http://jena.apache.org/fuseki#> . \
 @prefix ja: <http://jena.hpl.hp.com/2005/11/Assembler#> . \
 \
 <#service> a fuseki:Service ; \
-    fuseki:name "uk-curriculum" ; \
+    fuseki:name "nc-england" ; \
     fuseki:endpoint [ fuseki:operation fuseki:query ; fuseki:name "query" ] ; \
     fuseki:endpoint [ fuseki:operation fuseki:query ; fuseki:name "sparql" ] ; \
     fuseki:dataset <#dataset> . \
@@ -48,16 +48,16 @@ RUN echo '@prefix fuseki: <http://jena.apache.org/fuseki#> . \
     ja:defaultGraph <#graph> . \
 \
 <#graph> a ja:MemoryModel ; \
-    ja:content <file:///fuseki-base/databases/uk-curriculum/core.ttl> ; \
-    ja:content <file:///fuseki-base/databases/uk-curriculum/subjects.ttl> ; \
-    ja:content <file:///fuseki-base/databases/uk-curriculum/keystages.ttl> .' \
-    > /fuseki-base/configuration/uk-curriculum.ttl
+    ja:content <file:///fuseki-base/databases/nc-england/core.ttl> ; \
+    ja:content <file:///fuseki-base/databases/nc-england/subjects.ttl> ; \
+    ja:content <file:///fuseki-base/databases/nc-england/keystages.ttl> .' \
+    > /fuseki-base/configuration/nc-england.ttl
 
 # Expose port
 EXPOSE 3030
 
 # Start Fuseki with configuration
-CMD ["/jena-fuseki/fuseki-server", "--config=/fuseki-base/configuration/uk-curriculum.ttl"]
+CMD ["/jena-fuseki/fuseki-server", "--config=/fuseki-base/configuration/nc-england.ttl"]
 EOF
 
 # Build Docker image
@@ -103,18 +103,18 @@ TEST_QUERY="SELECT (COUNT(*) as ?count) WHERE { ?s ?p ?o }"
 RESPONSE=$(curl -s -X POST \
     -H "Content-Type: application/sparql-query" \
     -d "${TEST_QUERY}" \
-    "${SERVICE_URL}/uk-curriculum/query" || echo "FAILED")
+    "${SERVICE_URL}/nc-england/query" || echo "FAILED")
 
 if [[ "$RESPONSE" == *"count"* ]]; then
     echo "✅ Deployment successful!"
     echo ""
-    echo "🔗 SPARQL Endpoint: ${SERVICE_URL}/uk-curriculum/query"
+    echo "🔗 SPARQL Endpoint: ${SERVICE_URL}/nc-england/query"
     echo "🌐 Fuseki UI: ${SERVICE_URL}"
     echo ""
     echo "📝 Example query:"
     echo "curl -X POST -H \"Content-Type: application/sparql-query\" \\"
     echo "  -d \"SELECT * WHERE { ?s ?p ?o } LIMIT 10\" \\"
-    echo "  \"${SERVICE_URL}/uk-curriculum/query\""
+    echo "  \"${SERVICE_URL}/nc-england/query\""
 else
     echo "❌ Deployment verification failed. Response: ${RESPONSE}"
     exit 1

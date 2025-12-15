@@ -207,3 +207,68 @@
 ✅ Phase 3 complete (Steps 9-12)
 ✅ Step 13 complete
 → Next: Steps 14-16 - Dockerfile creation and Fuseki local testing
+
+## Session 5: 2025-12-15 - Fuseki Docker Build & Testing (Steps 14-15)
+
+### Completed: Step 14 - Create Dockerfile
+
+**Created:** `deployment/Dockerfile`
+- Base: `stain/jena-fuseki:latest` (Fuseki 5.1.0)
+- Data loaded at build time using `java -cp fuseki-server.jar tdb2.tdbloader`
+- Database location: `/data/nc-england-tdb2` (outside `/fuseki` VOLUME)
+- 1,374 triples loaded into TDB2 with proper indexing
+- Excludes `versions/` directories via `.dockerignore`
+
+**Created:** `.dockerignore`
+- Excludes `**/versions/` (archived TTL files)
+- Excludes build artifacts, docs, .git
+
+**Key Technical Fixes:**
+1. **TDB2 loader**: Used `tdb2.tdbloader` class (not TDB1's `tdbloader` script)
+2. **Volume issue**: `/fuseki` is a VOLUME in base image; data must be in `/data/` to persist
+3. **Permissions**: Run as root during build, chown to user 9008, switch back
+4. **File exclusion**: `.dockerignore` prevents loading archived versions
+
+**Commit:** `2f632ea` - "feat: create Fuseki TDB2 configuration with read-only endpoints"
+
+### Completed: Step 15 - Build and Test Fuseki Locally
+
+**Critical Bug Fix:** Removed `tdb2:unionDefaultGraph true` from fuseki-config.ttl
+- **Root cause**: This property was preventing Fuseki from reading the TDB2 dataset
+- **Resolution**: Removed the property; queries immediately returned data
+- **Result**: 1,367 triples accessible via SPARQL
+
+**Test Results:**
+- Health check: 200 OK
+- Triple count: 1,367
+- Subjects found: 2 (History, Science)
+- Container status: healthy
+- SPARQL endpoint working: `http://localhost:3030/nc-england/sparql`
+
+**Image:** `nc-england-fuseki:local` (193MB with pre-loaded TDB2 data)
+
+### Naming Convention Change
+
+**Rationale:** "dfe-curriculum" too generic; DfE has multiple curricula
+
+**Before:** `dfe-curriculum-*`
+**After:** `nc-england-*` (National Curriculum for England)
+
+**Changes:**
+- Docker image: `nc-england-fuseki:local`
+- Fuseki service: `nc-england`
+- Database: `/data/nc-england-tdb2`
+- Cloud Run service: `nc-england-sparql`
+- Endpoints: `/nc-england/sparql`, `/nc-england/query`, `/nc-england/get`
+
+**Updated files:**
+- `deployment/Dockerfile`
+- `deployment/fuseki-config.ttl`
+- `deployment/deploy.sh`
+
+### Status
+✅ Phase 1 complete (Steps 1-4)
+✅ Phase 2 complete (Steps 5-8)
+✅ Phase 3 complete (Steps 9-12)
+✅ Phase 4 complete (Steps 13-15)
+→ Next: Step 16 - Deploy to Cloud Run
