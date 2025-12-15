@@ -1,0 +1,35 @@
+PREFIX curric: <https://w3id.org/uk/curriculum/core/>
+PREFIX eng: <https://w3id.org/uk/curriculum/england/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?contentId ?label ?definition ?strandLabel ?type
+WHERE {
+  # Find Science KS3 scheme
+  ?scheme a curric:Scheme ;
+          curric:isPartOf eng:subsubject-science ;
+          curric:hasKeyStage eng:key-stage-3 ;
+          curric:hasContentDescriptor ?content .
+
+  # Get content details
+  ?content a ?type ;
+           skos:prefLabel ?label .
+
+  OPTIONAL {
+    ?content skos:definition ?definition .
+  }
+
+  # Get strand (traverse: content -> substrand -> strand)
+  OPTIONAL {
+    ?content skos:broader ?substrand .
+    ?substrand skos:broader ?strand .
+    ?strand a curric:Strand ;
+            skos:prefLabel ?strandLabel .
+  }
+
+  BIND(STRAFTER(STR(?content), "england/") AS ?contentId)
+
+  # Filter to only content types (not structural classes)
+  FILTER(?type IN (curric:ContentDescriptor, curric:ContentSubDescriptor))
+}
+ORDER BY ?strandLabel ?label
