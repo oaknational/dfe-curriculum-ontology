@@ -2,6 +2,26 @@
 
 This guide covers deploying the National Curriculum for England SPARQL endpoint to Google Cloud Run.
 
+## Quick Start (TL;DR)
+
+**Just want to deploy?**
+
+```bash
+./deployment/deploy.sh
+```
+
+That's it! The script will:
+- ✅ Validate your data
+- ✅ Build the Docker image
+- ✅ Push to Google Container Registry
+- ✅ Deploy to Cloud Run
+- ✅ Test the deployment
+- ✅ Show you the service URL
+
+**For detailed step-by-step instructions, troubleshooting, and monitoring, see the sections below.**
+
+---
+
 ## Prerequisites
 
 Before deploying, ensure you have:

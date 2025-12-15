@@ -263,21 +263,44 @@ When adding a new subject (e.g., Mathematics):
 1. `syntax-check`: Validates Turtle syntax with rdflib
 2. `shacl-validation`: Runs SHACL validation with pyshacl
 
-### Deployment Workflow (`.github/workflows/deploy-fuseki.yml`)
+### JSON Generation Workflow (`.github/workflows/generate-json.yml`)
+
+**Triggers:**
+- Push to `main` branch
+- GitHub releases (published)
+
+**Process:**
+1. Installs Apache Jena 4.10.0 and jq
+2. Runs `./scripts/build-static-data.sh` to generate JSON files
+3. Validates JSON syntax with `jq empty`
+4. Uploads `distributions/` as GitHub Actions artifacts (30-day retention)
+5. Displays file sizes in workflow summary
+
+**Output:** JSON files available as downloadable artifacts for consumption by static websites or other applications
+
+### Fuseki Deployment Workflow (`.github/workflows/deploy-fuseki.yml`)
 
 **Triggers:**
 - GitHub releases (published)
 - Manual dispatch
 
 **Process:**
-1. Builds Docker container with all TTL files
-2. Pushes to Google Container Registry
-3. Deploys to Cloud Run in europe-west2
-4. Service runs on port 3030
+1. Builds Docker container using `deployment/Dockerfile` (includes TDB2 pre-loading)
+2. Tags as both `:latest` and `:${{ github.sha }}`
+3. Pushes both tags to Google Container Registry
+4. Deploys to Cloud Run in `europe-west1` with resource limits (2Gi RAM, 2 CPU)
+5. Gets service URL and displays in workflow summary
+6. Tests deployment (health check + SPARQL query validation)
 
 **Required Secrets:**
 - `GCP_SA_KEY`: Service account key JSON
 - `GCP_PROJECT_ID`: GCP project ID
+
+**Setup Status:** ⚠️ Secrets not yet configured - requires GCP admin access. See `deployment/GITHUB-ACTIONS-SETUP.md` for setup instructions.
+
+**Current Deployment Method:** Manual via `./deployment/deploy.sh` (fully functional)
+
+**Deployment:** Service `national-curriculum-for-england-sparql` runs on port 3030
 
 ## Important Architectural Decisions
 
