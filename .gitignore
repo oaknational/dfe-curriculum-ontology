@@ -85,3 +85,9 @@ __pycache__/
 coverage/
 .coverage
 *.cover
+
+# Generated JSON files (Approach 1: ignore generated files)
+distributions/
+
+# Local testing
+fuseki-data/
