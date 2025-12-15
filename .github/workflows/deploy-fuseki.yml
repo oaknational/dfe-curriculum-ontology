@@ -2,44 +2,87 @@ name: Deploy Fuseki to Cloud Run
 
 on:
   release:
-    types: [published]
-  workflow_dispatch:
+    types: [ published ]
+  workflow_dispatch:  # Allow manual trigger
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      
+
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
           service_account_key: ${{ secrets.GCP_SA_KEY }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
-      
-      - name: Build Fuseki container with data
+
+      - name: Configure Docker for GCR
+        run: gcloud auth configure-docker
+
+      - name: Build Docker image
         run: |
-          # Create Dockerfile that includes data
-          cat > Dockerfile <<EOF
-          FROM stain/jena-fuseki:latest
-          COPY ontology/*.ttl /fuseki/data/
-          COPY deployment/fuseki-config.ttl /fuseki/config.ttl
-          EOF
-          
-          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/fuseki:${{ github.sha }} .
-      
-      - name: Push to Container Registry
+          docker build \
+            -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/national-curriculum-for-england-fuseki:${{ github.sha }} \
+            -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/national-curriculum-for-england-fuseki:latest \
+            -f deployment/Dockerfile \
+            .
+
+      - name: Push Docker image
         run: |
-          gcloud auth configure-docker
-          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/fuseki:${{ github.sha }}
-      
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/national-curriculum-for-england-fuseki:${{ github.sha }}
+          docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/national-curriculum-for-england-fuseki:latest
+
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy uk-curriculum-sparql \
-            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/fuseki:${{ github.sha }} \
-            --platform managed \
-            --region europe-west2 \
+          gcloud run deploy national-curriculum-for-england-sparql \
+            --image=gcr.io/${{ secrets.GCP_PROJECT_ID }}/national-curriculum-for-england-fuseki:${{ github.sha }} \
+            --platform=managed \
+            --region=europe-west1 \
             --allow-unauthenticated \
-            --port 3030
+            --port=3030 \
+            --memory=2Gi \
+            --cpu=2 \
+            --max-instances=10 \
+            --timeout=300 \
+            --concurrency=80
+
+      - name: Get service URL
+        id: service-url
+        run: |
+          URL=$(gcloud run services describe national-curriculum-for-england-sparql \
+            --region=europe-west1 \
+            --format='value(status.url)')
+          echo "url=$URL" >> $GITHUB_OUTPUT
+          echo "### Deployment Successful! 🚀" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**SPARQL Endpoint:** $URL/national-curriculum-for-england/sparql" >> $GITHUB_STEP_SUMMARY
+
+      - name: Test deployment
+        run: |
+          URL="${{ steps.service-url.outputs.url }}"
+          echo "Testing deployment at $URL..."
+
+          # Wait for service to be ready
+          sleep 10
+
+          # Test health endpoint
+          curl -f ${URL}/$/ping || exit 1
+
+          # Test SPARQL query
+          COUNT=$(curl -s -X POST \
+            -H "Content-Type: application/sparql-query" \
+            -H "Accept: application/json" \
+            --data "SELECT (COUNT(*) as ?count) WHERE { ?s ?p ?o }" \
+            ${URL}/national-curriculum-for-england/sparql | jq -r '.results.bindings[0].count.value')
+
+          echo "Triple count: $COUNT"
+
+          if [ "$COUNT" -gt "0" ]; then
+            echo "✅ Deployment test passed!"
+          else
+            echo "❌ Deployment test failed - no triples found"
+            exit 1
+          fi
