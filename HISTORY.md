@@ -293,3 +293,107 @@
 **Naming Update:** Changed from `nc-england` to `national-curriculum-for-england` for consistency with directory structure and DfE requirements
 
 **No commit:** Testing only (container stopped and removed)
+
+## Session 7: 2025-12-15 - Google Cloud Deployment (Steps 17-20)
+
+### Completed: Step 17 - Set Up Google Cloud Project
+
+**Configuration:**
+- Project: `oak-ai-playground`
+- Account: `eng.mhodierne@thenational.academy`
+- Region: `europe-west1` (Belgium - cost-optimized, not europe-west2)
+
+**APIs Enabled:**
+- ✅ Cloud Run API (`run.googleapis.com`)
+- ✅ Container Registry API (`containerregistry.googleapis.com`)
+- ✅ Cloud Build API (`cloudbuild.googleapis.com`)
+
+**Key Decision:**
+- Selected `europe-west1` over `europe-west2` for lower costs with minimal performance impact
+
+**No commit:** Cloud configuration only
+
+### Completed: Step 18 - Configure Docker for GCR
+
+**Setup:**
+- Docker credential helper configured with `gcloud`
+- Authentication to `gcr.io` and `eu.gcr.io` registries
+- Credential helpers already registered (pre-existing setup)
+
+**Verification:**
+- ✅ Docker config includes GCR credential helpers
+- ✅ gcloud authentication working
+- ✅ Ready to push images to `gcr.io/oak-ai-playground/`
+
+**No commit:** Local Docker configuration
+
+### Completed: Step 19 - Manual Deployment Test
+
+**Deployment Summary:**
+- **Service:** `national-curriculum-for-england-sparql`
+- **Image:** `gcr.io/oak-ai-playground/national-curriculum-for-england-fuseki:latest`
+- **Region:** `europe-west1` (Belgium)
+- **URL:** `https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app`
+
+**Build Details:**
+- 10 TTL files loaded into TDB2
+- 1,380 triples loaded at build time
+- Image size: ~200MB with pre-loaded data
+- Build time: ~9 seconds (cached layers)
+
+**Cloud Run Configuration:**
+- Memory: 2GB RAM
+- CPU: 2 vCPU
+- Port: 3030
+- Auto-scaling: 0-10 instances
+- Timeout: 300s (5 minutes)
+- Concurrency: 80 requests/container
+- Access: Public (no authentication)
+
+**Test Results:**
+- ✅ Health check: 200 OK
+- ✅ Triple count: 1,373 (query excludes SHACL constraints)
+- ✅ Subjects query: History, Science
+- ✅ Query latency: < 1 second
+
+**SPARQL Endpoint:** `https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql`
+
+**No commit:** Deployment test only
+
+### Completed: Step 20 - Document Deployment
+
+**Created/Updated:**
+- `deployment/DEPLOY.md` - Comprehensive deployment guide (new)
+- `deployment/deploy.sh` - Automated deployment script (updated)
+
+**Documentation Includes:**
+- Step-by-step manual deployment instructions
+- Testing procedures (health, triple count, subjects query)
+- Monitoring and logging commands
+- Rollback procedures
+- Cost estimates ($10-150/month based on usage)
+- Custom domain setup guide
+- Troubleshooting section
+- Security considerations
+
+**Script Features:**
+- 8-step automated deployment with validation
+- Color-coded output for clarity
+- Error handling with meaningful messages
+- Automatic testing after deployment
+- Environment variable configuration
+
+**Files staged:** `deployment/DEPLOY.md`, `deployment/deploy.sh`
+
+**Pending commit:** Documentation ready for commit
+
+### Status
+
+✅ **Phase 1 complete** (Steps 1-4)
+✅ **Phase 2 complete** (Steps 5-8)
+✅ **Phase 3 complete** (Steps 9-12)
+✅ **Phase 4 complete** (Steps 13-16)
+✅ **Phase 5 complete** (Steps 17-20) ← **NEW**
+→ **Next:** Phase 6 (Steps 21-24) - CI/CD Pipeline
+
+**Note:** Steps 21 and 23 already completed (validation and Fuseki deployment workflows exist)

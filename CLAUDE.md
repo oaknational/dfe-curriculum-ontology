@@ -21,9 +21,13 @@ This is a semantic web ontology for the UK Curriculum, specifically providing co
 **Service:** `national-curriculum-for-england`
 - **Why:** Matches directory structure; DfE requirement to be specific; aligns with official name
 - **Applied to:** Docker images, Fuseki service name, database paths, Cloud Run service
-- **Examples:**
-  - Image: `national-curriculum-for-england-fuseki:local`
-  - Service: `/national-curriculum-for-england/sparql`
+- **Production Deployment:**
+  - GCP Project: `oak-ai-playground`
+  - Region: `europe-west1` (Belgium - cost-optimized over europe-west2)
+  - Image: `gcr.io/oak-ai-playground/national-curriculum-for-england-fuseki:latest`
+  - Service: `national-curriculum-for-england-sparql`
+  - URL: `https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app`
+  - SPARQL Endpoint: `/national-curriculum-for-england/sparql`
   - Database: `/data/national-curriculum-for-england-tdb2`
 
 ## Repository Structure
@@ -156,14 +160,31 @@ python3 -c "from rdflib import Graph; g = Graph(); g.parse('path/to/file.ttl', f
 ```bash
 docker build -t fuseki-local -f deployment/Dockerfile .
 docker run -p 3030:3030 fuseki-local
-# Access at: http://localhost:3030
+# Access at: http://localhost:3030/national-curriculum-for-england/sparql
 ```
 
 **Deploy to Cloud Run:**
 ```bash
-cd deployment
-./deploy.sh
+./deployment/deploy.sh
+# Automatically builds, pushes to GCR, deploys, and tests
 ```
+
+**Manual deployment steps (see deployment/DEPLOY.md for full guide):**
+```bash
+export PROJECT_ID="oak-ai-playground"
+export REGION="europe-west1"
+export IMAGE="gcr.io/${PROJECT_ID}/national-curriculum-for-england-fuseki"
+
+# Build, push, deploy
+docker build -t ${IMAGE}:latest -f deployment/Dockerfile .
+docker push ${IMAGE}:latest
+gcloud run deploy national-curriculum-for-england-sparql \
+  --image=${IMAGE}:latest \
+  --region=${REGION} \
+  --memory=2Gi --cpu=2 --port=3030
+```
+
+**Production endpoint:** `https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql`
 
 ## Validation Details
 

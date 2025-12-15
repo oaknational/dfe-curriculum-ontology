@@ -70,7 +70,7 @@ Each to-do task should be numbered sequentially, and include:
 
 Then refresh your memory by checking `HISTORY.md`. Review `ARCHITECTURE.md` to understand what we are building.
 
-We are working through `IMPLEMENTATION-PLAN.md` and are on Step 17.
+We are working through `IMPLEMENTATION-PLAN.md` and are on Step 22.
 
 **Before implementing anything:**
 
@@ -86,58 +86,84 @@ As you implement, explain:
 
 Now, here is the next task to complete:
 
-### Step 17: Set Up Google Cloud Project
+### Step 22: Create JSON Generation Workflow
 
-**Goal:** Create and configure GCP project for Cloud Run
+**Goal:** Generate JSON files and publish as artifacts
 
 **Actions:**
 ```bash
-# 1. Login to Google Cloud
-gcloud auth login
+cat > .github/workflows/generate-json.yml <<'EOF'
+name: Generate Static JSON Files
 
-# 2. List projects (or create new one)
-gcloud projects list
+on:
+  push:
+    branches: [ main ]
+  release:
+    types: [ published ]
 
-# 3. Set project (replace with your project ID)
-export PROJECT_ID="your-gcp-project-id"
-gcloud config set project $PROJECT_ID
+jobs:
+  generate:
+    runs-on: ubuntu-latest
 
-# 4. Enable required APIs
-echo "Enabling Cloud Run API..."
-gcloud services enable run.googleapis.com
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-echo "Enabling Container Registry API..."
-gcloud services enable containerregistry.googleapis.com
+      - name: Install Apache Jena
+        run: |
+          wget -q https://dlcdn.apache.org/jena/binaries/apache-jena-4.10.0.tar.gz
+          tar xzf apache-jena-4.10.0.tar.gz
+          echo "$PWD/apache-jena-4.10.0/bin" >> $GITHUB_PATH
 
-echo "Enabling Cloud Build API..."
-gcloud services enable cloudbuild.googleapis.com
+      - name: Install jq (for JSON validation)
+        run: sudo apt-get update && sudo apt-get install -y jq
 
-# 5. Set region
-export REGION="europe-west2"
-gcloud config set run/region $REGION
+      - name: Generate JSON files
+        run: ./scripts/build-static-data.sh
 
-# 6. Verify setup
-gcloud config list
+      - name: Validate JSON output
+        run: |
+          echo "Validating generated JSON files..."
+          for file in distributions/**/*.json; do
+            echo "Checking $file..."
+            jq empty "$file" && echo "  ✓ Valid"
+          done
+
+      - name: Upload JSON artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: curriculum-json-${{ github.sha }}
+          path: distributions/
+          retention-days: 30
+
+      - name: Display summary
+        run: |
+          echo "### Generated Files" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+          find distributions -name "*.json" -exec ls -lh {} \; >> $GITHUB_STEP_SUMMARY
+          echo "\`\`\`" >> $GITHUB_STEP_SUMMARY
+EOF
 ```
 
 **Test:**
 ```bash
-# Verify APIs are enabled
-gcloud services list --enabled | grep -E "(run|container|build)"
+# Commit and push
+git add .github/workflows/generate-json.yml
+git commit -m "ci: add JSON generation workflow"
+git push origin main
 
-# Should show:
-# - run.googleapis.com
-# - containerregistry.googleapis.com
-# - cloudbuild.googleapis.com
+# Check GitHub Actions
+# Should see JSON files uploaded as artifacts
 ```
 
 **Success Criteria:**
-- ✅ GCP project is selected
-- ✅ All required APIs are enabled
-- ✅ Region is set to europe-west2
-- ✅ No authentication errors
+- ✅ Workflow generates JSON files
+- ✅ Files are uploaded as artifacts
+- ✅ Can download artifacts from GitHub Actions
+- ✅ Summary shows file sizes
 
-**Commit:** Not needed (cloud config only)
+**Commit:** Already committed in test step
 
 ```
 
