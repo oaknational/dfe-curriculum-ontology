@@ -18,13 +18,13 @@ This is a semantic web ontology for the UK Curriculum, specifically providing co
 
 ## Naming Convention
 
-**Service:** `nc-england` (National Curriculum for England)
-- **Why:** "dfe-curriculum" too generic; DfE has multiple curricula
+**Service:** `national-curriculum-for-england`
+- **Why:** Matches directory structure; DfE requirement to be specific; aligns with official name
 - **Applied to:** Docker images, Fuseki service name, database paths, Cloud Run service
 - **Examples:**
-  - Image: `nc-england-fuseki:local`
-  - Service: `/nc-england/sparql`
-  - Database: `/data/nc-england-tdb2`
+  - Image: `national-curriculum-for-england-fuseki:local`
+  - Service: `/national-curriculum-for-england/sparql`
+  - Database: `/data/national-curriculum-for-england-tdb2`
 
 ## Repository Structure
 
@@ -107,6 +107,18 @@ This command:
 1. Runs `python3 scripts/merge_ttls.py` to merge all TTL files from `ontology/` and `data/`
 2. Runs SHACL validation using pyshacl
 3. Outputs human-readable validation results
+
+### Testing SPARQL Queries
+
+**Test queries against local Fuseki:**
+```bash
+# Use --data-binary with file references to handle comments in SPARQL
+curl -X POST \
+  -H "Content-Type: application/sparql-query" \
+  -H "Accept: application/json" \
+  --data-binary @queries/your-query.sparql \
+  http://localhost:3030/national-curriculum-for-england/sparql | jq .
+```
 
 ### Working with TTL Files
 
@@ -259,7 +271,7 @@ The repository follows "Approach 1" from the implementation plan:
 ### Fuseki Container Configuration
 
 The Dockerfile uses **TDB2 storage** (`tdb2:DatasetTDB2`) with data pre-loaded at build time:
-- **Data location**: `/data/nc-england-tdb2` (outside `/fuseki` VOLUME, baked into container)
+- **Data location**: `/data/national-curriculum-for-england-tdb2` (outside `/fuseki` VOLUME, baked into container)
 - **Loader**: `java -cp fuseki-server.jar tdb2.tdbloader` (TDB2, not TDB1)
 - **Read-only endpoints**: SPARQL query (`/sparql`, `/query`) and Graph Store Protocol (`/get`)
 - **Fast startup**: TDB2 indexes pre-built (no loading phase)

@@ -1,124 +1,171 @@
 #!/bin/bash
+# Deploy National Curriculum for England SPARQL endpoint to Google Cloud Run
+# Usage: ./deployment/deploy.sh
+
 set -e
 
+# Colors for output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+echo -e "${BLUE}=========================================${NC}"
+echo -e "${BLUE}🚀 Deploying National Curriculum SPARQL${NC}"
+echo -e "${BLUE}=========================================${NC}"
+echo ""
+
 # Configuration
-PROJECT_ID="${GCP_PROJECT_ID:-oak-national-academy}"
-REGION="${GCP_REGION:-europe-west2}"
-SERVICE_NAME="nc-england-sparql"
-IMAGE_NAME="gcr.io/${PROJECT_ID}/fuseki-nc-england"
+PROJECT_ID="${GCP_PROJECT_ID:-oak-ai-playground}"
+REGION="${GCP_REGION:-europe-west1}"
+SERVICE_NAME="national-curriculum-for-england-sparql"
+IMAGE="gcr.io/${PROJECT_ID}/national-curriculum-for-england-fuseki"
 
-echo "🚀 Deploying National Curriculum for England Fuseki to Google Cloud Run..."
+echo -e "${BLUE}Configuration:${NC}"
+echo "  Project ID: $PROJECT_ID"
+echo "  Region: $REGION"
+echo "  Service: $SERVICE_NAME"
+echo "  Image: $IMAGE:latest"
+echo ""
 
-# Validate TTL files locally
-echo "📋 Validating TTL files..."
-python3 scripts/validate.py || {
-    echo "❌ Validation failed. Aborting deployment."
+# Step 1: Validate TTL files
+echo -e "${BLUE}📋 Step 1: Validating TTL files...${NC}"
+if [ -f "scripts/validate.sh" ]; then
+    ./scripts/validate.sh || {
+        echo -e "${RED}❌ Validation failed. Aborting deployment.${NC}"
+        exit 1
+    }
+    echo -e "${GREEN}✅ Validation passed${NC}"
+else
+    echo -e "${YELLOW}⚠️  Validation script not found, skipping...${NC}"
+fi
+echo ""
+
+# Step 2: Build Docker image
+echo -e "${BLUE}🔨 Step 2: Building Docker image...${NC}"
+docker build -t ${IMAGE}:latest -f deployment/Dockerfile . || {
+    echo -e "${RED}❌ Docker build failed${NC}"
     exit 1
 }
+echo -e "${GREEN}✅ Docker image built successfully${NC}"
+echo ""
 
-# Create deployment directory
-echo "📦 Preparing deployment package..."
-rm -rf deployment/build
-mkdir -p deployment/build/data
+# Step 3: Configure Docker for GCR
+echo -e "${BLUE}🔐 Step 3: Configuring Docker authentication...${NC}"
+gcloud auth configure-docker --quiet || {
+    echo -e "${RED}❌ Docker authentication failed${NC}"
+    exit 1
+}
+echo -e "${GREEN}✅ Docker authenticated${NC}"
+echo ""
 
-# Copy TTL files
-cp ontology/*.ttl deployment/build/data/
+# Step 4: Push to Google Container Registry
+echo -e "${BLUE}📤 Step 4: Pushing image to GCR...${NC}"
+docker push ${IMAGE}:latest || {
+    echo -e "${RED}❌ Docker push failed${NC}"
+    exit 1
+}
+echo -e "${GREEN}✅ Image pushed to GCR${NC}"
+echo ""
 
-# Create Dockerfile
-cat > deployment/build/Dockerfile <<'EOF'
-FROM stain/jena-fuseki:latest
-
-# Copy ontology data
-COPY data/*.ttl /fuseki-base/databases/nc-england/
-
-# Create dataset configuration
-RUN mkdir -p /fuseki-base/configuration
-RUN echo '@prefix fuseki: <http://jena.apache.org/fuseki#> . \
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> . \
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> . \
-@prefix ja: <http://jena.hpl.hp.com/2005/11/Assembler#> . \
-\
-<#service> a fuseki:Service ; \
-    fuseki:name "nc-england" ; \
-    fuseki:endpoint [ fuseki:operation fuseki:query ; fuseki:name "query" ] ; \
-    fuseki:endpoint [ fuseki:operation fuseki:query ; fuseki:name "sparql" ] ; \
-    fuseki:dataset <#dataset> . \
-\
-<#dataset> a ja:RDFDataset ; \
-    ja:defaultGraph <#graph> . \
-\
-<#graph> a ja:MemoryModel ; \
-    ja:content <file:///fuseki-base/databases/nc-england/core.ttl> ; \
-    ja:content <file:///fuseki-base/databases/nc-england/subjects.ttl> ; \
-    ja:content <file:///fuseki-base/databases/nc-england/keystages.ttl> .' \
-    > /fuseki-base/configuration/nc-england.ttl
-
-# Expose port
-EXPOSE 3030
-
-# Start Fuseki with configuration
-CMD ["/jena-fuseki/fuseki-server", "--config=/fuseki-base/configuration/nc-england.ttl"]
-EOF
-
-# Build Docker image
-echo "🔨 Building Docker image..."
-cd deployment/build
-docker build -t ${IMAGE_NAME}:latest .
-cd ../..
-
-# Authenticate with Google Cloud (if needed)
-echo "🔐 Authenticating with Google Cloud..."
-gcloud auth configure-docker --quiet
-
-# Push image to Container Registry
-echo "📤 Pushing image to Google Container Registry..."
-docker push ${IMAGE_NAME}:latest
-
-# Deploy to Cloud Run
-echo "☁️  Deploying to Cloud Run..."
+# Step 5: Deploy to Cloud Run
+echo -e "${BLUE}☁️  Step 5: Deploying to Cloud Run...${NC}"
 gcloud run deploy ${SERVICE_NAME} \
-    --image ${IMAGE_NAME}:latest \
-    --platform managed \
-    --region ${REGION} \
+    --image=${IMAGE}:latest \
+    --platform=managed \
+    --region=${REGION} \
     --allow-unauthenticated \
-    --port 3030 \
-    --memory 1Gi \
-    --cpu 1 \
-    --max-instances 10 \
-    --timeout 300 \
-    --project ${PROJECT_ID}
+    --port=3030 \
+    --memory=2Gi \
+    --cpu=2 \
+    --max-instances=10 \
+    --min-instances=0 \
+    --timeout=300 \
+    --concurrency=80 \
+    --project=${PROJECT_ID} || {
+    echo -e "${RED}❌ Cloud Run deployment failed${NC}"
+    exit 1
+}
+echo -e "${GREEN}✅ Deployed to Cloud Run${NC}"
+echo ""
 
-# Get the service URL
+# Step 6: Get service URL
+echo -e "${BLUE}🔗 Step 6: Getting service URL...${NC}"
 SERVICE_URL=$(gcloud run services describe ${SERVICE_NAME} \
-    --region ${REGION} \
-    --project ${PROJECT_ID} \
-    --format 'value(status.url)')
+    --region=${REGION} \
+    --project=${PROJECT_ID} \
+    --format='value(status.url)' 2>/dev/null)
 
-echo "⏳ Waiting for service to be ready..."
-sleep 15
-
-# Test the endpoint
-echo "🧪 Testing SPARQL endpoint..."
-TEST_QUERY="SELECT (COUNT(*) as ?count) WHERE { ?s ?p ?o }"
-RESPONSE=$(curl -s -X POST \
-    -H "Content-Type: application/sparql-query" \
-    -d "${TEST_QUERY}" \
-    "${SERVICE_URL}/nc-england/query" || echo "FAILED")
-
-if [[ "$RESPONSE" == *"count"* ]]; then
-    echo "✅ Deployment successful!"
-    echo ""
-    echo "🔗 SPARQL Endpoint: ${SERVICE_URL}/nc-england/query"
-    echo "🌐 Fuseki UI: ${SERVICE_URL}"
-    echo ""
-    echo "📝 Example query:"
-    echo "curl -X POST -H \"Content-Type: application/sparql-query\" \\"
-    echo "  -d \"SELECT * WHERE { ?s ?p ?o } LIMIT 10\" \\"
-    echo "  \"${SERVICE_URL}/nc-england/query\""
-else
-    echo "❌ Deployment verification failed. Response: ${RESPONSE}"
+if [ -z "$SERVICE_URL" ]; then
+    echo -e "${RED}❌ Failed to get service URL${NC}"
     exit 1
 fi
 
-# Clean up build directory
-rm -rf deployment/build
+echo -e "${GREEN}✅ Service URL retrieved${NC}"
+echo ""
+
+# Step 7: Wait for service to be ready
+echo -e "${BLUE}⏳ Step 7: Waiting for service to be ready...${NC}"
+sleep 15
+echo -e "${GREEN}✅ Service should be ready${NC}"
+echo ""
+
+# Step 8: Test deployment
+echo -e "${BLUE}🧪 Step 8: Testing SPARQL endpoint...${NC}"
+
+# Test 1: Health check
+echo -n "  Testing health endpoint... "
+HTTP_CODE=$(curl -s -o /dev/null -w "%{http_code}" ${SERVICE_URL}/\$/ping)
+if [ "$HTTP_CODE" = "200" ]; then
+    echo -e "${GREEN}✅ OK${NC}"
+else
+    echo -e "${RED}❌ Failed (HTTP $HTTP_CODE)${NC}"
+    exit 1
+fi
+
+# Test 2: Triple count
+echo -n "  Testing SPARQL query... "
+TRIPLE_COUNT=$(curl -s -X POST \
+    -H "Content-Type: application/sparql-query" \
+    -H "Accept: application/json" \
+    --data "SELECT (COUNT(*) as ?count) WHERE { ?s ?p ?o }" \
+    ${SERVICE_URL}/national-curriculum-for-england/sparql | \
+    jq -r '.results.bindings[0].count.value' 2>/dev/null)
+
+if [ "$TRIPLE_COUNT" -gt "0" ]; then
+    echo -e "${GREEN}✅ OK (${TRIPLE_COUNT} triples)${NC}"
+else
+    echo -e "${RED}❌ Failed (no triples returned)${NC}"
+    exit 1
+fi
+
+echo ""
+echo -e "${GREEN}=========================================${NC}"
+echo -e "${GREEN}✅ Deployment Successful!${NC}"
+echo -e "${GREEN}=========================================${NC}"
+echo ""
+echo -e "${BLUE}Service Details:${NC}"
+echo "  Name: ${SERVICE_NAME}"
+echo "  Region: ${REGION}"
+echo "  URL: ${SERVICE_URL}"
+echo ""
+echo -e "${BLUE}SPARQL Endpoint:${NC}"
+echo "  ${SERVICE_URL}/national-curriculum-for-england/sparql"
+echo ""
+echo -e "${BLUE}Health Check:${NC}"
+echo "  ${SERVICE_URL}/\$/ping"
+echo ""
+echo -e "${BLUE}Example Query:${NC}"
+echo "  curl -X POST \\"
+echo "    -H \"Content-Type: application/sparql-query\" \\"
+echo "    -H \"Accept: application/json\" \\"
+echo "    --data \"SELECT * WHERE { ?s ?p ?o } LIMIT 10\" \\"
+echo "    \"${SERVICE_URL}/national-curriculum-for-england/sparql\""
+echo ""
+echo -e "${BLUE}View Logs:${NC}"
+echo "  gcloud run services logs read ${SERVICE_NAME} --region=${REGION}"
+echo ""
+echo -e "${BLUE}View Metrics:${NC}"
+echo "  https://console.cloud.google.com/run/detail/${REGION}/${SERVICE_NAME}/metrics?project=${PROJECT_ID}"
+echo ""

@@ -64,7 +64,12 @@ eng:subsubject-history
   rdfs:label "History"@en ;
   rdfs:comment "History sub-subject in the National Curriculum for England."@en ;
   dcterms:description """A high-quality history education will help pupils gain a coherent 
-  knowledge and understanding of Britain’s past and that of the wider world."""@en ;
+  knowledge and understanding of Britain’s past and that of the wider world. It should inspire 
+  pupils’ curiosity to know more about the past. Teaching should equip pupils to ask perceptive 
+  questions, think critically, weigh evidence, sift arguments, and develop perspective and 
+  judgement. History helps pupils to understand the complexity of people’s lives, the process of 
+  change, the diversity of societies and relationships between different groups, as well as their 
+  own identity and the challenges of their time."""@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
   curric:isPartOf eng:subject-history ;
   curric:hasStrand eng:strand-knowledge-of-past ,

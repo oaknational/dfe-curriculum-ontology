@@ -55,6 +55,18 @@ eng:scheme-history-key-stage-1
   a curric:Scheme ;
   rdfs:label "History Key Stage 1"@en ;
   rdfs:comment "History programme of study for key stage 1."@en ;
+  dcterms:description """Pupils should develop an awareness of the past, using common words and 
+  phrases relating to the passing of time. They should know where the people and events they study 
+  fit within a chronological framework and identify similarities and differences between ways of 
+  life in different periods. They should use a wide vocabulary of everyday historical terms. They 
+  should ask and answer questions, choosing and using parts of stories and other sources to show 
+  that they know and understand key features of events. They should understand some of the ways in 
+  which we find out about the past and identify different ways in which it is represented.
+  
+  In planning to ensure the progression described above through teaching about the people, events 
+  and changes outlined below, teachers are often introducing pupils to historical periods that they 
+  will study more fully at key stages 2 and 3."""@en ;
+  dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
   curric:isPartOf eng:subsubject-history ;
   curric:hasKeyStage eng:key-stage-1 ;
   curric:hasContentDescriptor
@@ -77,6 +89,20 @@ eng:scheme-history-key-stage-2
   a curric:Scheme ;
   rdfs:label "History Key Stage 2"@en ;
   rdfs:comment "History programme of study for key stage 2."@en ;
+  dcterms:description """Pupils should continue to develop a chronologically secure knowledge and 
+  understanding of British, local and world history, establishing clear narratives within and 
+  across the periods they study. They should note connections, contrasts and trends over time and 
+  develop the appropriate use of historical terms. They should regularly address and sometimes 
+  devise historically valid questions about change, cause, similarity and difference, and 
+  significance. They should construct informed responses that involve thoughtful selection and 
+  organisation of relevant historical information. They should understand how our knowledge of the 
+  past is constructed from a range of sources.
+  
+  In planning to ensure the progression described above through teaching the British, local and 
+  world history outlined below, teachers should combine overview and depth studies to help pupils 
+  understand both the long arc of development and the complexity of specific aspects of the 
+  content."""@en ;
+  dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
   curric:isPartOf eng:subsubject-history ;
   curric:hasKeyStage eng:key-stage-2 ;
   curric:hasContentDescriptor
@@ -104,6 +130,21 @@ eng:scheme-history-key-stage-3
   a curric:Scheme ;
   rdfs:label "History Key Stage 3"@en ;
   rdfs:comment "History programme of study for key stage 3."@en ;
+  dcterms:description """Pupils should extend and deepen their chronologically secure knowledge and 
+  understanding of British, local and world history, so that it provides a well-informed context 
+  for wider learning. Pupils should identify significant events, make connections, draw contrasts, 
+  and analyse trends within periods and over long arcs of time. They should use historical terms 
+  and concepts in increasingly sophisticated ways. They should pursue historically valid enquiries 
+  including some they have framed themselves, and create relevant, structured and evidentially 
+  supported accounts in response. They should understand how different types of historical sources 
+  are used rigorously to make historical claims and discern how and why contrasting arguments and 
+  interpretations of the past have been constructed.
+  
+  In planning to ensure the progression described above through teaching the British, local 
+  and world history outlined below, teachers should combine overview and depth studies to help 
+  pupils understand both the long arc of development and the complexity of specific aspects of the 
+  content."""@en ;
+  dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
   curric:isPartOf eng:subsubject-history ;
   curric:hasKeyStage eng:key-stage-3 ;
   curric:hasContentDescriptor

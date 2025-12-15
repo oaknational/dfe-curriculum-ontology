@@ -27,20 +27,20 @@ COPY data/national-curriculum-for-england/subjects/ /tmp/staging/subjects/
 # Note: versions/ subdirectories excluded via .dockerignore
 # Note: Using /data instead of /fuseki-base because /fuseki is a VOLUME
 USER root
-RUN mkdir -p /data/nc-england-tdb2 /fuseki-base/configuration && \
+RUN mkdir -p /data/national-curriculum-for-england-tdb2 /fuseki-base/configuration && \
     java -cp /jena-fuseki/fuseki-server.jar tdb2.tdbloader \
     --verbose \
-    --loc=/data/nc-england-tdb2 \
+    --loc=/data/national-curriculum-for-england-tdb2 \
     /tmp/staging/*.ttl \
     /tmp/staging/subjects/*/*.ttl && \
     echo "Loaded $(find /tmp/staging -name '*.ttl' | wc -l) TTL files into TDB2" && \
-    echo "Database files:" && ls -lh /data/nc-england-tdb2/Data-0001/ | head -10
+    echo "Database files:" && ls -lh /data/national-curriculum-for-england-tdb2/Data-0001/ | head -10
 
 # Copy Fuseki configuration (as root to ensure it's copied)
 COPY deployment/fuseki-config.ttl /fuseki-base/configuration/config.ttl
 
 # Fix permissions for fuseki user
-RUN chown -R 9008:9008 /data/nc-england-tdb2 /fuseki-base/configuration /fuseki
+RUN chown -R 9008:9008 /data/national-curriculum-for-england-tdb2 /fuseki-base/configuration /fuseki
 
 # Switch back to fuseki user
 USER 9008
