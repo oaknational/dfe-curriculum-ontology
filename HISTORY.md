@@ -116,4 +116,60 @@
 ### Status
 ✅ Phase 1 complete (Steps 1-4)
 ✅ Phase 2 complete (Steps 5-8)
-→ Ready for Phase 3: JSON Generation (Step 9)
+✅ Phase 3 complete (Steps 9-12)
+
+## Session 3: 2025-12-15 - JSON Generation (Steps 9-12)
+
+### Completed: Step 9 - Create JSON Generation Script
+
+**Created:** `scripts/build-static-data.sh`
+- Automated pipeline using Apache Jena `arq` command
+- Dynamically collects all TTL files from `ontology/` and `data/`
+- Executes 3 SPARQL queries: subjects-index, science-ks3, full-curriculum
+- Generates 3 JSON files (36K total) in `distributions/`
+- Colored output with progress indicators and statistics
+
+**Commit:** `d392604` - "feat: add JSON generation script"
+
+### Completed: Step 10 - Verify JSON Output
+
+**Validation Results:**
+- All JSON files syntactically valid (Python json.tool)
+- Data integrity verified: 2 subjects, 3 Science KS3 items, 34 total curriculum items
+- Distribution: History (29 items), Science (5 items)
+- File sizes reasonable: 27.4 KB total (well under 1MB target)
+- `distributions/` properly gitignored
+- SPARQL JSON format compliance confirmed
+
+**No commit:** Generated files are gitignored
+
+### Completed: Step 11 - Test JSON Generation in CI Environment
+
+**CI Simulation:**
+- Fresh clone to `/tmp/test-build` (clean environment)
+- Build script executed successfully without modifications
+- Output identical to original (byte-for-byte verification with `diff`)
+- Portability confirmed: no absolute paths, no external file dependencies
+- CI-ready: only external dependency is Apache Jena
+
+**Key Finding:** Build is deterministic and reproducible
+
+**No commit:** Testing only
+
+### Completed: Step 12 - Document Build Process
+
+**Created:** `BUILD.md` (257 lines)
+- Prerequisites and Apache Jena installation (macOS/Linux)
+- Quick start guide and expected output
+- Manual SPARQL query execution examples
+- Troubleshooting section (PATH issues, Java warnings, empty output)
+- CI/CD integration notes
+- Development workflow guidance
+
+**Commit:** `f5739e9` - "docs: add build instructions"
+
+### Status
+✅ Phase 1 complete (Steps 1-4)
+✅ Phase 2 complete (Steps 5-8)
+✅ Phase 3 complete (Steps 9-12)
+→ Next: Phase 4 (Steps 15-16) - Fuseki local testing remains
