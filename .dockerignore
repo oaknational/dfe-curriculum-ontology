@@ -1,0 +1,20 @@
+# Exclude archived versions from Docker build context
+**/versions/
+
+# Exclude generated files
+distributions/
+
+# Exclude development files
+.git/
+.github/
+.DS_Store
+*.log
+
+# Exclude documentation that's not needed in container
+*.md
+!deployment/*.md
+
+# Exclude build artifacts
+.venv/
+__pycache__/
+*.pyc

@@ -10,10 +10,21 @@ This is a semantic web ontology for the UK Curriculum, specifically providing co
 - RDF 1.1 / OWL 2 / SKOS for ontology structure
 - Turtle (.ttl) format for all data files
 - SHACL for validation constraints
-- Apache Jena Fuseki for SPARQL endpoints
+- Apache Jena Fuseki 5.1.0 for SPARQL endpoints
+- Apache Jena TDB2 for persistent RDF storage
 - Python (rdflib, pyshacl) for validation tooling
 - Docker for containerization
 - Google Cloud Run for deployment
+
+## Naming Convention
+
+**Service:** `nc-england` (National Curriculum for England)
+- **Why:** "dfe-curriculum" too generic; DfE has multiple curricula
+- **Applied to:** Docker images, Fuseki service name, database paths, Cloud Run service
+- **Examples:**
+  - Image: `nc-england-fuseki:local`
+  - Service: `/nc-england/sparql`
+  - Database: `/data/nc-england-tdb2`
 
 ## Repository Structure
 
@@ -247,14 +258,19 @@ The repository follows "Approach 1" from the implementation plan:
 
 ### Fuseki Container Configuration
 
-The Dockerfile uses **TDB2 storage** (`tdb2:DatasetTDB2`) with data pre-loaded at build time via `tdb2.tdbloader`:
-- **Data location**: `/fuseki-base/databases/uk-curriculum-tdb2` (baked into container)
-- **Union default graph**: All data queryable without graph names
+The Dockerfile uses **TDB2 storage** (`tdb2:DatasetTDB2`) with data pre-loaded at build time:
+- **Data location**: `/data/nc-england-tdb2` (outside `/fuseki` VOLUME, baked into container)
+- **Loader**: `java -cp fuseki-server.jar tdb2.tdbloader` (TDB2, not TDB1)
 - **Read-only endpoints**: SPARQL query (`/sparql`, `/query`) and Graph Store Protocol (`/get`)
 - **Fast startup**: TDB2 indexes pre-built (no loading phase)
 - **Immutable deployments**: To update data, rebuild and redeploy the container
 
 **Configuration file**: `deployment/fuseki-config.ttl`
+
+**Critical Notes:**
+- Do NOT use `tdb2:unionDefaultGraph true` - prevents dataset from being readable
+- Data must be in `/data/` not `/fuseki-base/` (which is a VOLUME and won't persist)
+- Use `.dockerignore` to exclude `**/versions/` (archived TTL files)
 
 ### File Name Inconsistencies
 
