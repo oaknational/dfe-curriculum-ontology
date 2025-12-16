@@ -251,7 +251,6 @@ See `.github/workflows/generate-json.yml` for the CI workflow configuration.
 ## Support
 
 For questions or issues:
-- Review `CLAUDE.md` for project-specific guidance
-- Check `IMPLEMENTATION-PLAN.md` for implementation details
-- See `ARCHITECTURE.md` for system architecture
+- Review `../../CLAUDE.md` for project-specific guidance
+- See [architecture.md](architecture.md) for system architecture
 - Open an issue on GitHub

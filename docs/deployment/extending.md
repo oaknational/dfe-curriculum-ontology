@@ -509,7 +509,7 @@ Load all files together and test:
 ## Getting Help
 
 - Review existing files for patterns
-- Check [docs/model.md](model.md) for class and property definitions
-- See [docs/examples.md](examples.md) for query patterns
-- Consult [docs/validation.md](validation.md) for constraint details
+- Check [../user-guide/data-model.md](../user-guide/data-model.md) for class and property definitions
+- See [../user-guide/sparql-examples.md](../user-guide/sparql-examples.md) for query patterns
+- Consult [../user-guide/validation.md](../user-guide/validation.md) for constraint details
 - Refer to W3C specifications: [RDF](https://www.w3.org/TR/rdf11-primer/), [OWL](https://www.w3.org/TR/owl2-overview/), [SKOS](https://www.w3.org/TR/skos-reference/), [SHACL](https://www.w3.org/TR/shacl/)
