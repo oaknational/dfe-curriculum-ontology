@@ -83,6 +83,7 @@ gcloud run deploy ${SERVICE_NAME} \
     --min-instances=0 \
     --timeout=300 \
     --concurrency=80 \
+    --set-env-vars ADMIN_PASSWORD=fuseki-admin-2024 \
     --project=${PROJECT_ID} || {
     echo -e "${RED}❌ Cloud Run deployment failed${NC}"
     exit 1

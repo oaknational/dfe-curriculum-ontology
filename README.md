@@ -217,32 +217,35 @@ A public SPARQL endpoint is available at:
 
 See [docs/deployment/deploying.md](docs/deployment/deploying.md) for detailed deployment instructions, monitoring, and troubleshooting.
 
-## Using the Data
+## Three Ways to Access the Data
 
-### Option 1: Download JSON Files
+### 1. URI Dereferencing (Get Specific Resources)
 
-Pre-generated JSON files are available from GitHub Releases:
+Fetch individual curriculum resources in different RDF formats using SPARQL DESCRIBE:
 
 ```bash
-# Download latest release artifacts
-# Visit: https://github.com/oaknational/uk-curriculum-ontology/releases/latest
-
-# Download full curriculum dataset
-curl -L https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/curriculum-full.json
-
-# Download subjects index
-curl -L https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/subjects-index.json
+# Get Science subject as JSON-LD
+curl -X POST \
+  -H "Content-Type: application/sparql-query" \
+  -H "Accept: application/ld+json" \
+  --data "DESCRIBE <https://w3id.org/uk/curriculum/england/subject-science>" \
+  https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql
 ```
 
-### Option 2: SPARQL Endpoint
+**Supported formats:**
+- `Accept: text/turtle` - Turtle (`.ttl`)
+- `Accept: application/ld+json` - JSON-LD (`.jsonld`)
+- `Accept: application/rdf+xml` - RDF/XML (`.rdf`)
 
-Query the live SPARQL endpoint:
+### 2. SPARQL Queries (Custom Queries)
+
+Execute custom SPARQL queries for complex data retrieval:
 
 ```bash
 curl -X POST \
     -H "Content-Type: application/sparql-query" \
-    -H "Accept: application/json" \
-    --data "SELECT * WHERE { ?s ?p ?o } LIMIT 10" \
+    -H "Accept: application/sparql-results+json" \
+    --data "SELECT ?subject ?label WHERE { ?subject a <https://w3id.org/uk/curriculum/core/Subject> ; <http://www.w3.org/2000/01/rdf-schema#label> ?label }" \
     https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql
 ```
 
@@ -250,18 +253,44 @@ curl -X POST \
 
 See [docs/user-guide/sparql-examples.md](docs/user-guide/sparql-examples.md) for query examples.
 
-### Option 3: Build from Source
+### 3. Bulk Downloads (Pre-Generated Files)
+
+Download complete datasets from GitHub Releases in three RDF formats:
 
 ```bash
-# Clone repository
-git clone https://github.com/oaknational/uk-curriculum-ontology.git
-cd uk-curriculum-ontology
+# Download subjects index as Turtle
+curl -L -O https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/index.ttl
 
-# Generate JSON files
-./scripts/build-static-data.sh
+# Download Science KS3 as JSON-LD
+curl -L -O https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/science-ks3.jsonld
 
-# Output: distributions/**/*.json
+# Download full curriculum as RDF/XML
+curl -L -O https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/curriculum-full.rdf
 ```
+
+**Available datasets:**
+- `index.*` - All subjects
+- `science-ks3.*` - Science Key Stage 3 content
+- `curriculum-full.*` - Complete curriculum
+
+**All formats:**
+- `.ttl` (Turtle) - Compact, human-readable
+- `.jsonld` (JSON-LD) - JSON-based RDF for web apps
+- `.rdf` (RDF/XML) - XML-based RDF for legacy tools
+
+---
+
+### Which Access Method Should I Use?
+
+| Use Case | Recommended Method |
+|----------|-------------------|
+| **Web application** fetching specific resources | URI Dereferencing (SPARQL DESCRIBE) with JSON-LD |
+| **Complex queries** across the curriculum | SPARQL Queries |
+| **Initial data load** for application | Bulk Downloads |
+| **Offline analysis** or research | Bulk Downloads (Turtle format) |
+| **Legacy RDF tools** | Bulk Downloads (RDF/XML format) |
+
+> **📘 See:** [Content Negotiation Guide](docs/user-guide/content-negotiation.md) for detailed examples
 
 ## For Developers
 
@@ -283,50 +312,20 @@ See [docs/deployment/architecture.md](docs/deployment/architecture.md) for compl
 
 ## Data Access
 
-### Static JSON Files
+This ontology provides three complementary ways to access curriculum data:
 
-Pre-generated JSON files are available from GitHub Releases. These follow SPARQL JSON Results Format:
+### 1. **URI Dereferencing** - Fetch specific resources with content negotiation
+Get RDF data about individual curriculum resources (subjects, key stages, content descriptors) in Turtle, JSON-LD, or RDF/XML format.
 
-```json
-{
-  "results": {
-    "bindings": [
-      {
-        "contentId": { "type": "literal", "value": "..." },
-        "label": { "type": "literal", "value": "..." },
-        "definition": { "type": "literal", "value": "..." }
-      }
-    ]
-  }
-}
-```
+### 2. **SPARQL Endpoint** - Execute custom queries
+Run SPARQL queries for complex data retrieval and discovery across the entire curriculum.
 
-### SPARQL Endpoint
+### 3. **Bulk Downloads** - Pre-generated RDF files
+Download complete datasets from GitHub Releases in three RDF formats for offline use, analysis, or loading into your own triple store.
 
-Query the curriculum using SPARQL.
+**📖 See the "Three Ways to Access the Data" section below for detailed examples.**
 
 **Endpoint:** `https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql`
-
-**Query:**
-```sparql
-PREFIX curric: <https://w3id.org/uk/curriculum/core/>
-PREFIX eng: <https://w3id.org/uk/curriculum/england/>
-PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-
-SELECT * WHERE {
-  ?subject a curric:Subject ;
-           rdfs:label ?label .
-}
-```
-
-**Example (curl):**
-```bash
-curl -X POST \
-    -H "Content-Type: application/sparql-query" \
-    -H "Accept: application/json" \
-    --data-binary @query.sparql \
-    https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql
-```
 
 ## Versioning
 
