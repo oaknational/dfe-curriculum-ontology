@@ -1,38 +1,125 @@
-# API Examples
+# Data Access Examples
 
-This guide shows how to access curriculum data using the SPARQL endpoint and pre-generated JSON files.
+This guide shows the three ways to access curriculum data:
+1. **URI Dereferencing** - Get RDF about specific resources
+2. **SPARQL Queries** - Execute custom queries
+3. **Bulk Downloads** - Download pre-generated RDF files
 
-## Downloading Static JSON Files
+> **📘 See also:** [Content Negotiation Guide](content-negotiation.md) for detailed information about format selection.
 
-Pre-generated JSON files are available from GitHub Releases. These are static files, not an API.
+---
 
-### Get All Subjects
+## 1. URI Dereferencing (SPARQL DESCRIBE)
 
+Get all data about a specific curriculum resource in different RDF formats.
+
+**Endpoint:** `https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql`
+
+### Get Subject in Different Formats
+
+**Turtle:**
 ```bash
-curl https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/subjects-index.json | jq .
+curl -X POST \
+  -H "Content-Type: application/sparql-query" \
+  -H "Accept: text/turtle" \
+  --data "DESCRIBE <https://w3id.org/uk/curriculum/england/subject-science>" \
+  https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql
 ```
 
-### Get Science KS3 Content
-
+**JSON-LD:**
 ```bash
-curl https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/science-ks3.json | jq .
+curl -X POST \
+  -H "Content-Type: application/sparql-query" \
+  -H "Accept: application/ld+json" \
+  --data "DESCRIBE <https://w3id.org/uk/curriculum/england/subject-science>" \
+  https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql
 ```
 
-### Search All Content (Client-Side)
+**RDF/XML:**
+```bash
+curl -X POST \
+  -H "Content-Type: application/sparql-query" \
+  -H "Accept: application/rdf+xml" \
+  --data "DESCRIBE <https://w3id.org/uk/curriculum/england/subject-science>" \
+  https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql
+```
 
+---
+
+## 2. SPARQL Queries
+
+Execute custom queries to find specific curriculum data.
+
+---
+
+## 3. Bulk Downloads
+
+Download pre-generated RDF files from GitHub Releases. All datasets available in three formats:
+- `.ttl` (Turtle) - Compact, human-readable
+- `.jsonld` (JSON-LD) - JSON-based RDF for web apps
+- `.rdf` (RDF/XML) - Legacy XML format
+
+### Download Subjects Index
+
+```bash
+# As Turtle
+curl -L -O https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/index.ttl
+
+# As JSON-LD
+curl -L -O https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/index.jsonld
+
+# As RDF/XML
+curl -L -O https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/index.rdf
+```
+
+### Download Science KS3 Content
+
+```bash
+# As Turtle
+curl -L -O https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/science-ks3.ttl
+
+# As JSON-LD
+curl -L -O https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/science-ks3.jsonld
+```
+
+### Download Full Curriculum
+
+```bash
+# As Turtle (most compact)
+curl -L -O https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/curriculum-full.ttl
+
+# As JSON-LD
+curl -L -O https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/curriculum-full.jsonld
+```
+
+### Load into Application
+
+**Python with rdflib:**
+```python
+from rdflib import Graph
+
+# Download and parse Turtle file
+g = Graph()
+g.parse("https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/curriculum-full.ttl", format="turtle")
+
+# Query the graph
+for subj, pred, obj in g.triples((None, RDFS.label, None)):
+    print(f"{subj}: {obj}")
+```
+
+**JavaScript with JSON-LD:**
 ```javascript
-// Download full dataset
-const response = await fetch('https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/curriculum-full.json');
+// Download JSON-LD file
+const response = await fetch('https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/index.jsonld');
 const data = await response.json();
 
-// Search for "cells"
-const results = data.results.bindings.filter(item =>
-  item.label.value.toLowerCase().includes('cells') ||
-  (item.definition && item.definition.value.toLowerCase().includes('cells'))
-);
-
-console.log(results);
+// Access RDF data
+data['@graph'].forEach(item => {
+  console.log(item['rdfs:label']['@value']);
+});
 ```
+
+---
 
 ## Querying the SPARQL Endpoint
 
