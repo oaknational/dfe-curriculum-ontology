@@ -217,6 +217,122 @@ A public SPARQL endpoint is available at:
 
 See [deployment/DEPLOY.md](deployment/DEPLOY.md) for detailed deployment instructions, monitoring, and troubleshooting.
 
+## Using the Data
+
+### Option 1: Download JSON Files
+
+Pre-generated JSON files are available from GitHub Releases:
+
+```bash
+# Download latest release artifacts
+# Visit: https://github.com/oaknational/uk-curriculum-ontology/releases/latest
+
+# Download full curriculum dataset
+curl -L https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/curriculum-full.json
+
+# Download subjects index
+curl -L https://github.com/oaknational/uk-curriculum-ontology/releases/latest/download/subjects-index.json
+```
+
+### Option 2: SPARQL Endpoint
+
+Query the live SPARQL endpoint:
+
+```bash
+curl -X POST \
+    -H "Content-Type: application/sparql-query" \
+    -H "Accept: application/json" \
+    --data "SELECT * WHERE { ?s ?p ?o } LIMIT 10" \
+    https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql
+```
+
+**Endpoint:** `https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql`
+
+See [docs/examples.md](docs/examples.md) for query examples.
+
+### Option 3: Build from Source
+
+```bash
+# Clone repository
+git clone https://github.com/oaknational/uk-curriculum-ontology.git
+cd uk-curriculum-ontology
+
+# Generate JSON files
+./scripts/build-static-data.sh
+
+# Output: distributions/**/*.json
+```
+
+## For Developers
+
+### Building
+
+See [BUILD.md](BUILD.md) for build instructions.
+
+### Deployment
+
+See [deployment/DEPLOY.md](deployment/DEPLOY.md) for deployment guide.
+
+### Releases
+
+See [RELEASE.md](RELEASE.md) for release process.
+
+### Architecture
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for complete architecture documentation.
+
+## API Documentation
+
+### JSON API
+
+Generated JSON files follow SPARQL JSON Results Format:
+
+```json
+{
+  "results": {
+    "bindings": [
+      {
+        "contentId": { "type": "literal", "value": "..." },
+        "label": { "type": "literal", "value": "..." },
+        "definition": { "type": "literal", "value": "..." }
+      }
+    ]
+  }
+}
+```
+
+### SPARQL API
+
+**Endpoint:** `https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql`
+
+**Query:**
+```sparql
+PREFIX curric: <https://w3id.org/uk/curriculum/core/>
+PREFIX eng: <https://w3id.org/uk/curriculum/england/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT * WHERE {
+  ?subject a curric:Subject ;
+           rdfs:label ?label .
+}
+```
+
+**Example (curl):**
+```bash
+curl -X POST \
+    -H "Content-Type: application/sparql-query" \
+    -H "Accept: application/json" \
+    --data-binary @query.sparql \
+    https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql
+```
+
+## Cost
+
+**Monthly Operating Cost:** ~$10-30
+- Static JSON hosting: Free (GitHub Releases)
+- SPARQL endpoint: $10-30 (Google Cloud Run, scales to zero)
+- Minimal cost with low usage due to automatic scaling
+
 ## Versioning
 
 This ontology follows [Semantic Versioning](https://semver.org/):
@@ -249,9 +365,11 @@ This work is made available under the [Open Government Licence v3.0](http://www.
 
 Crown Copyright (c) 2025
 
-## Contributing
+## Support
 
-For questions, suggestions, or contributions, please contact the Department for Education.
+For questions or issues:
+- Open an issue: https://github.com/oaknational/uk-curriculum-ontology/issues
+- Email: curriculum@education.gov.uk
 
 ## Related Resources
 
