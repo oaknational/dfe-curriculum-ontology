@@ -61,6 +61,17 @@ jobs:
           path: distributions/
           retention-days: 30
 
+      - name: Upload files to release
+        if: github.event_name == 'release'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "Uploading distribution files to release ${{ github.event.release.tag_name }}"
+          gh release upload ${{ github.event.release.tag_name }} \
+            distributions/curriculum-full.* \
+            distributions/subjects/*.* \
+            --clobber
+
       - name: Display summary
         run: |
           echo "### Generated RDF Distribution Files" >> $GITHUB_STEP_SUMMARY
