@@ -70,7 +70,7 @@ Each to-do task should be numbered sequentially, and include:
 
 Then refresh your memory by checking `HISTORY.md`. Review `ARCHITECTURE.md` to understand what we are building.
 
-We are working through `IMPLEMENTATION-PLAN.md` and are on Step 24.
+We are working through `IMPLEMENTATION-PLAN.md` and are on Step 25.
 
 **Before implementing anything:**
 
@@ -86,71 +86,120 @@ As you implement, explain:
 
 Now, here is the next task to complete:
 
-### Step 24: Configure GitHub Secrets
+### Step 25: Create Release Strategy Document
 
-**Goal:** Set up secrets for GCP authentication
+**Goal:** Document how to publish releases
 
 **Actions:**
-
-**Manual steps in GitHub:**
-
-1. **Create GCP Service Account:**
 ```bash
-# In terminal
-export PROJECT_ID=$(gcloud config get-value project)
+cat > RELEASE.md <<'EOF'
+# Release Process
 
-# Create service account
-gcloud iam service-accounts create github-actions \
-    --display-name="GitHub Actions"
+## Versioning
 
-# Grant permissions
-gcloud projects add-iam-policy-binding $PROJECT_ID \
-    --member="serviceAccount:github-actions@${PROJECT_ID}.iam.gserviceaccount.com" \
-    --role="roles/run.admin"
+We follow [Semantic Versioning](https://semver.org/):
+- **Major (1.0.0)**: Breaking changes to ontology structure
+- **Minor (0.1.0)**: New subjects, properties, or data (backward compatible)
+- **Patch (0.0.1)**: Bug fixes, corrections (backward compatible)
 
-gcloud projects add-iam-policy-binding $PROJECT_ID \
-    --member="serviceAccount:github-actions@${PROJECT_ID}.iam.gserviceaccount.com" \
-    --role="roles/storage.admin"
+Current version: **0.1.0**
 
-gcloud projects add-iam-policy-binding $PROJECT_ID \
-    --member="serviceAccount:github-actions@${PROJECT_ID}.iam.gserviceaccount.com" \
-    --role="roles/iam.serviceAccountUser"
+## Creating a Release
 
-# Create key
-gcloud iam service-accounts keys create ~/gcp-key.json \
-    --iam-account=github-actions@${PROJECT_ID}.iam.gserviceaccount.com
+### 1. Update Version
 
-# Display key (copy for next step)
-cat ~/gcp-key.json
+Update version in:
+- `ontology/dfe-curriculum-ontology.ttl` (owl:versionInfo)
+- `CHANGELOG.md`
+
+### 2. Test Locally
+
+```bash
+# Validate data
+./scripts/validate.sh
+
+# Generate JSON
+./scripts/build-static-data.sh
+
+# Test Fuseki locally
+docker build -t fuseki-test -f deployment/Dockerfile .
+docker run -p 3030:3030 fuseki-test
+# Test queries...
+docker stop fuseki-test
 ```
 
-2. **Add secrets to GitHub:**
-   - Go to: https://github.com/YOUR-ORG/uk-curriculum-ontology/settings/secrets/actions
-   - Click "New repository secret"
-   - Add `GCP_SA_KEY`: Paste contents of ~/gcp-key.json
-   - Add `GCP_PROJECT_ID`: Your GCP project ID
+### 3. Commit and Tag
 
-3. **Clean up local key:**
 ```bash
-rm ~/gcp-key.json
-```
-
-**Test:**
-```bash
-# Push code to trigger workflow
+git add .
+git commit -m "chore: bump version to 0.1.0"
+git tag -a v0.1.0 -m "Release version 0.1.0"
 git push origin main
+git push origin v0.1.0
+```
 
-# Or manually trigger deploy-fuseki workflow from GitHub Actions UI
-# Actions tab → Deploy Fuseki to Cloud Run → Run workflow
+### 4. Create GitHub Release
+
+1. Go to: https://github.com/YOUR-ORG/uk-curriculum-ontology/releases/new
+2. Select tag: v0.1.0
+3. Title: "Version 0.1.0"
+4. Description: Copy from CHANGELOG.md
+5. Click "Publish release"
+
+### 5. Automated Deployment
+
+Creating a GitHub Release triggers:
+- ✅ JSON generation workflow (generates distributions)
+- ✅ Fuseki deployment workflow (deploys to Cloud Run)
+
+### 6. Verify Deployment
+
+```bash
+# Get service URL
+SERVICE_URL=$(gcloud run services describe uk-curriculum-sparql \
+    --region=europe-west2 \
+    --format='value(status.url)')
+
+# Test SPARQL endpoint
+curl -X POST \
+    -H "Content-Type: application/sparql-query" \
+    -H "Accept: application/json" \
+    --data "SELECT (COUNT(*) as ?count) WHERE { ?s ?p ?o }" \
+    ${SERVICE_URL}/uk-curriculum/sparql
+
+# Should return updated triple count
+```
+
+## Hotfix Process
+
+For urgent fixes:
+
+```bash
+# Create hotfix branch
+git checkout -b hotfix/0.1.1
+
+# Make fixes
+# Test thoroughly
+
+# Commit and release
+git commit -m "fix: urgent fix description"
+git checkout main
+git merge hotfix/0.1.1
+git tag v0.1.1
+git push origin main --tags
+```
+EOF
 ```
 
 **Success Criteria:**
-- ✅ Service account created
-- ✅ Secrets added to GitHub
-- ✅ Workflow can authenticate with GCP
-- ✅ Deployment succeeds
+- ✅ Clear release process documented
+- ✅ Versioning strategy defined
+- ✅ Automated deployment explained
 
-**Commit:** Not needed (GitHub configuration)
+**Commit:**
+```bash
+git add RELEASE.md
+git commit -m "docs: add release process documentation"
 
 ```
 
