@@ -4,7 +4,7 @@
 set -e
 
 echo "=========================================="
-echo "🏗️  Building Static JSON API"
+echo "🏗️  Building Static JSON Files"
 echo "=========================================="
 echo ""
 
