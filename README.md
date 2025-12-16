@@ -142,7 +142,7 @@ SELECT ?content ?label WHERE {
 }
 ```
 
-See [docs/examples.md](docs/examples.md) for more SPARQL query examples.
+See [docs/user-guide/sparql-examples.md](docs/user-guide/sparql-examples.md) for more SPARQL query examples.
 
 ## File Structure
 
@@ -191,7 +191,7 @@ tdb2.tdbloader --loc=/path/to/database ontology/*.ttl data/**/*.ttl
 ./tools/validate.sh data/england/subjects/science/*.ttl
 ```
 
-See [docs/validation.md](docs/validation.md) for validation details.
+See [docs/user-guide/validation.md](docs/user-guide/validation.md) for validation details.
 
 ### Query with SPARQL
 
@@ -200,7 +200,7 @@ See [docs/validation.md](docs/validation.md) for validation details.
 sparql --data=data/england/*.ttl --query=your-query.rq
 ```
 
-See [docs/examples.md](docs/examples.md) for query patterns.
+See [docs/user-guide/sparql-examples.md](docs/user-guide/sparql-examples.md) for query patterns.
 
 ## Deployment
 
@@ -215,7 +215,7 @@ A public SPARQL endpoint is available at:
 ./deployment/deploy.sh
 ```
 
-See [deployment/DEPLOY.md](deployment/DEPLOY.md) for detailed deployment instructions, monitoring, and troubleshooting.
+See [docs/deployment/deploying.md](docs/deployment/deploying.md) for detailed deployment instructions, monitoring, and troubleshooting.
 
 ## Using the Data
 
@@ -248,7 +248,7 @@ curl -X POST \
 
 **Endpoint:** `https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql`
 
-See [docs/examples.md](docs/examples.md) for query examples.
+See [docs/user-guide/sparql-examples.md](docs/user-guide/sparql-examples.md) for query examples.
 
 ### Option 3: Build from Source
 
@@ -267,19 +267,19 @@ cd uk-curriculum-ontology
 
 ### Building
 
-See [BUILD.md](BUILD.md) for build instructions.
+See [docs/deployment/building.md](docs/deployment/building.md) for build instructions.
 
 ### Deployment
 
-See [deployment/DEPLOY.md](deployment/DEPLOY.md) for deployment guide.
+See [docs/deployment/deploying.md](docs/deployment/deploying.md) for deployment guide.
 
 ### Releases
 
-See [RELEASE.md](RELEASE.md) for release process.
+See [docs/deployment/releasing.md](docs/deployment/releasing.md) for release process.
 
 ### Architecture
 
-See [ARCHITECTURE.md](ARCHITECTURE.md) for complete architecture documentation.
+See [docs/deployment/architecture.md](docs/deployment/architecture.md) for complete architecture documentation.
 
 ## API Documentation
 
@@ -347,10 +347,20 @@ Each version is preserved in `versions/` directories with dated IRIs. See [CHANG
 
 ## Documentation
 
-- [Conceptual Model](docs/model.md) - Detailed class and property descriptions
-- [SPARQL Examples](docs/examples.md) - Practical query patterns
-- [Validation Guide](docs/validation.md) - SHACL constraints and validation
-- [Extension Guide](docs/extending.md) - How to add new content
+### User Guide
+
+- [Data Model](docs/user-guide/data-model.md) - Curriculum structure and concepts
+- [SPARQL Examples](docs/user-guide/sparql-examples.md) - Query patterns and examples
+- [API Examples](docs/user-guide/api-examples.md) - REST API and JSON usage
+- [Validation Guide](docs/user-guide/validation.md) - Data validation
+
+### Deployment Guide
+
+- [Architecture](docs/deployment/architecture.md) - System architecture
+- [Building](docs/deployment/building.md) - Build process
+- [Deploying](docs/deployment/deploying.md) - Cloud deployment
+- [Releasing](docs/deployment/releasing.md) - Release process
+- [Extending](docs/deployment/extending.md) - Adding content
 
 ## License
 

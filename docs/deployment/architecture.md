@@ -1,4 +1,4 @@
-# UK Curriculum Ontology - Architecture Documentation
+#DfE Curriculum Ontology - Architecture Documentation
 
 **Version:** 1.0
 **Date:** 2025-12-15
@@ -1688,7 +1688,7 @@ gcloud monitoring uptime-checks create \
 
 ### Example SPARQL Queries
 
-See `docs/examples.md` for comprehensive query examples.
+See `../user-guide/sparql-examples.md` for comprehensive query examples.
 
 ### JSON Schema
 

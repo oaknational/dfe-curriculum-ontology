@@ -34,7 +34,7 @@ Before deploying, ensure you have:
   - Container Registry API (`containerregistry.googleapis.com`)
   - Cloud Build API (`cloudbuild.googleapis.com`)
 
-See [Step 17 in IMPLEMENTATION-PLAN.md](../IMPLEMENTATION-PLAN.md#step-17-set-up-google-cloud-project) for detailed setup instructions.
+For detailed GCP setup instructions, see the [Google Cloud Documentation](https://cloud.google.com/run/docs/setup).
 
 ---
 
@@ -400,7 +400,7 @@ gcloud run services update ${SERVICE_NAME} \
 
 ## Architecture Alignment
 
-This deployment follows the architecture defined in [ARCHITECTURE.md](../ARCHITECTURE.md):
+This deployment follows the architecture defined in [architecture.md](architecture.md):
 
 - ✅ **Immutable deployments**: Data baked into container at build time
 - ✅ **TDB2 storage**: High-performance indexed triple store
@@ -413,10 +413,9 @@ This deployment follows the architecture defined in [ARCHITECTURE.md](../ARCHITE
 
 ## Related Documentation
 
-- [ARCHITECTURE.md](../ARCHITECTURE.md) - Complete system architecture
-- [IMPLEMENTATION-PLAN.md](../IMPLEMENTATION-PLAN.md) - Implementation steps
-- [BUILD.md](../BUILD.md) - Build instructions
-- [CLAUDE.md](../CLAUDE.md) - Project standards and conventions
+- [architecture.md](architecture.md) - Complete system architecture
+- [building.md](building.md) - Build instructions
+- [../../CLAUDE.md](../../CLAUDE.md) - Project standards and conventions
 
 ---
 

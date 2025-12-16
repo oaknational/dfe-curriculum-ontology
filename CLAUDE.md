@@ -172,7 +172,7 @@ docker run -p 3030:3030 fuseki-local
 # Automatically builds, pushes to GCR, deploys, and tests
 ```
 
-**Manual deployment steps (see deployment/DEPLOY.md for full guide):**
+**Manual deployment steps (see docs/deployment/deploying.md for full guide):**
 ```bash
 export PROJECT_ID="oak-ai-playground"
 export REGION="europe-west1"
@@ -412,16 +412,13 @@ Use `--format human` in pyshacl for readable error messages (already default in 
 - `scripts/validate.sh` - Local validation script
 - `scripts/merge_ttls.py` - TTL file merger with import checking
 - `deployment/Dockerfile` - Fuseki container definition
-- `ARCHITECTURE.md` - Complete architecture documentation
-- `IMPLEMENTATION-PLAN.md` - Detailed implementation steps
+- `docs/deployment/architecture.md` - Complete architecture documentation
 - `README.md` - User-facing documentation
 
 ## Additional Documentation
 
-- See `ARCHITECTURE.md` for complete system architecture
-- See `IMPLEMENTATION-PLAN.md` for 28-step implementation guide
-- See `docs/` directory for:
-  - `model.md` - Conceptual model details
-  - `examples.md` - SPARQL query examples
-  - `validation.md` - Validation guide
-  - `extending.md` - How to extend the ontology
+### User Guide
+- See `docs/user-guide/` for data model, SPARQL examples, API usage, and validation
+
+### Deployment Guide
+- See `docs/deployment/` for architecture, building, deploying, releasing, and extending
