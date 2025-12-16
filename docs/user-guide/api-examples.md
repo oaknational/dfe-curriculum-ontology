@@ -1,6 +1,10 @@
 # API Examples
 
-## Using JSON API
+This guide shows how to access curriculum data using the SPARQL endpoint and pre-generated JSON files.
+
+## Downloading Static JSON Files
+
+Pre-generated JSON files are available from GitHub Releases. These are static files, not an API.
 
 ### Get All Subjects
 
@@ -30,7 +34,9 @@ const results = data.results.bindings.filter(item =>
 console.log(results);
 ```
 
-## Using SPARQL API
+## Querying the SPARQL Endpoint
+
+The curriculum data is queryable via a SPARQL HTTP endpoint.
 
 **Endpoint:** `https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql`
 

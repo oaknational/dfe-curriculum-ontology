@@ -42,7 +42,7 @@ riot --version
 
 ### Quick Start
 
-Generate static JSON API files from RDF data:
+Generate static JSON files from RDF data:
 
 ```bash
 ./scripts/build-static-data.sh
@@ -71,7 +71,7 @@ The build script performs the following steps:
 
 ```
 ==========================================
-🏗️  Building Static JSON API
+🏗️  Building Static JSON Files
 ==========================================
 
 📦 Collecting data files...

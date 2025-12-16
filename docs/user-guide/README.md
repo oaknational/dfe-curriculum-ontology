@@ -6,7 +6,7 @@ Documentation for consuming and querying the National Curriculum for England ont
 
 - **[Data Model](data-model.md)** - Understand the curriculum structure (Phases, Key Stages, Subjects, Content Descriptors)
 - **[SPARQL Examples](sparql-examples.md)** - Query the curriculum with SPARQL
-- **[API Examples](api-examples.md)** - Use the REST API and JSON downloads
+- **[API Examples](api-examples.md)** - SPARQL queries and static JSON downloads
 - **[Validation](validation.md)** - Validate your queries and data
 
 ## Quick Start

@@ -281,11 +281,11 @@ See [docs/deployment/releasing.md](docs/deployment/releasing.md) for release pro
 
 See [docs/deployment/architecture.md](docs/deployment/architecture.md) for complete architecture documentation.
 
-## API Documentation
+## Data Access
 
-### JSON API
+### Static JSON Files
 
-Generated JSON files follow SPARQL JSON Results Format:
+Pre-generated JSON files are available from GitHub Releases. These follow SPARQL JSON Results Format:
 
 ```json
 {
@@ -301,7 +301,9 @@ Generated JSON files follow SPARQL JSON Results Format:
 }
 ```
 
-### SPARQL API
+### SPARQL Endpoint
+
+Query the curriculum using SPARQL.
 
 **Endpoint:** `https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql`
 
@@ -351,7 +353,7 @@ Each version is preserved in `versions/` directories with dated IRIs. See [CHANG
 
 - [Data Model](docs/user-guide/data-model.md) - Curriculum structure and concepts
 - [SPARQL Examples](docs/user-guide/sparql-examples.md) - Query patterns and examples
-- [API Examples](docs/user-guide/api-examples.md) - REST API and JSON usage
+- [API Examples](docs/user-guide/api-examples.md) - SPARQL queries and JSON downloads
 - [Validation Guide](docs/user-guide/validation.md) - Data validation
 
 ### Deployment Guide

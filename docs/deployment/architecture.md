@@ -176,7 +176,7 @@ static-site/
 **Key Features:**
 - Pre-rendered HTML pages (SEO-friendly)
 - Client-side hydration for interactivity
-- Static JSON API for dynamic content loading
+- Static JSON files for dynamic content loading
 - Client-side search using full dataset
 - Progressive enhancement (works without JavaScript for basic browsing)
 
