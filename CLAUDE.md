@@ -1,65 +1,231 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+This file provides guidance to Claude Code when working with this repository.
 
 ## Project Overview
 
-This is a semantic web ontology for the UK Curriculum, specifically providing comprehensive coverage of the National Curriculum for England. It uses RDF/OWL standards with SHACL validation and provides both TTL files for semantic web usage and a deployable Fuseki SPARQL endpoint.
+A semantic web ontology for the National Curriculum for England, providing:
+- RDF/OWL ontology with SHACL validation
+- SPARQL endpoint for querying curriculum data
+- Static JSON files for web applications
+- Comprehensive data model for Phases, Key Stages, Subjects, and Content Descriptors
 
-**Core Technologies:**
-- RDF 1.1 / OWL 2 / SKOS for ontology structure
-- Turtle (.ttl) format for all data files
-- SHACL for validation constraints
-- Apache Jena Fuseki 5.1.0 for SPARQL endpoints
-- Apache Jena TDB2 for persistent RDF storage
-- Python (rdflib, pyshacl) for validation tooling
-- Docker for containerization
-- Google Cloud Run for deployment
+**Technologies:**
+- RDF 1.1 / OWL 2 / SKOS
+- Turtle (.ttl) format
+- SHACL validation
+- Apache Jena (4.10.0+) - validation and JSON generation
+- Apache Jena Fuseki (5.1.0) - SPARQL endpoint
+- TDB2 - persistent RDF storage
+- Python (rdflib, pyshacl) - validation
+- Docker - containerization
+- Google Cloud Run - deployment
 
-## Naming Convention
+**Current Version:** 0.1.0
 
-**Service:** `national-curriculum-for-england`
-- **Why:** Matches directory structure; DfE requirement to be specific; aligns with official name
-- **Applied to:** Docker images, Fuseki service name, database paths, Cloud Run service
-- **Production Deployment:**
-  - GCP Project: `oak-ai-playground`
-  - Region: `europe-west1` (Belgium - cost-optimized over europe-west2)
-  - Image: `gcr.io/oak-ai-playground/national-curriculum-for-england-fuseki:latest`
-  - Service: `national-curriculum-for-england-sparql`
-  - URL: `https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app`
-  - SPARQL Endpoint: `/national-curriculum-for-england/sparql`
-  - Database: `/data/national-curriculum-for-england-tdb2`
+## Naming Conventions
+
+**Service Name:** `national-curriculum-for-england`
+- Matches directory structure
+- Specific to England (DfE requirement)
+- Used consistently across: Docker images, Fuseki datasets, database paths, Cloud Run services
+
+**Production Deployment:**
+- GCP Project: `oak-ai-playground`
+- Region: `europe-west1` (Belgium)
+- Image: `gcr.io/oak-ai-playground/national-curriculum-for-england-fuseki:latest`
+- Service: `national-curriculum-for-england-sparql`
+- URL: `https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app`
+- SPARQL Endpoint: `/national-curriculum-for-england/sparql`
+- Database: `/data/national-curriculum-for-england-tdb2`
 
 ## Repository Structure
 
 ```
 uk-curriculum-ontology/
-├── ontology/                              # Core ontology definitions
-│   ├── dfe-curriculum-ontology.ttl       # Classes and properties
+├── README.md                          # Main entry point
+├── CHANGELOG.md                       # Version history
+├── CLAUDE.md                          # This file
+│
+├── ontology/
+│   ├── dfe-curriculum-ontology.ttl       # Core classes and properties
 │   ├── dfe-curriculum-constraints.ttl    # SHACL validation shapes
-│   └── versions/                          # Versioned releases
-├── data/national-curriculum-for-england/  # Curriculum data
+│   └── versions/                          # Archived versions
+│
+├── data/national-curriculum-for-england/
 │   ├── programme-structure.ttl            # Phases, Key Stages, Year Groups
-│   └── subjects/                          # Subject-specific content
+│   ├── themes.ttl                         # Cross-cutting themes
+│   └── subjects/                          # Subject data
 │       ├── science/
-│       ├── history/
-│       └── ...
+│       │   ├── science-subject.ttl
+│       │   ├── science-knowledge-taxonomy.ttl
+│       │   └── science-schemes.ttl
+│       └── history/
+│
+├── queries/
+│   ├── subjects-index.sparql              # List all subjects
+│   ├── science-ks3.sparql                 # Science KS3 content
+│   └── full-curriculum.sparql             # Complete dataset
+│
 ├── scripts/
-│   ├── validate.sh                        # Local validation (matches CI)
-│   └── merge_ttls.py                      # Merge TTL files for validation
+│   ├── validate.sh                        # SHACL validation
+│   ├── merge_ttls.py                      # Merge TTL files
+│   └── build-static-data.sh               # Generate JSON files
+│
 ├── deployment/
 │   ├── Dockerfile                         # Fuseki container
 │   ├── fuseki-config.ttl                  # Fuseki configuration
-│   └── deploy.sh                          # Deployment script
-├── .github/workflows/
-│   ├── validate-ontology.yml              # CI validation
-│   └── deploy-fuseki.yml                  # CD to Cloud Run
-└── docs/                                   # Documentation
+│   └── deploy.sh                          # Cloud Run deployment
+│
+├── docs/
+│   ├── user-guide/
+│   │   ├── README.md
+│   │   ├── data-model.md                  # Curriculum structure
+│   │   ├── sparql-examples.md             # Query examples
+│   │   ├── api-examples.md                # SPARQL endpoint usage
+│   │   └── validation.md                  # Validation guide
+│   │
+│   └── deployment/
+│       ├── README.md
+│       ├── architecture.md                # System architecture
+│       ├── building.md                    # Build process
+│       ├── deploying.md                   # Cloud deployment
+│       ├── releasing.md                   # Release process
+│       ├── extending.md                   # Adding content
+│       └── github-actions.md              # CI/CD setup
+│
+└── distributions/                         # Generated (gitignored)
+    ├── subjects/
+    │   ├── index.json
+    │   └── science-ks3.json
+    └── curriculum-full.json
 ```
+
+## Environment Setup
+
+### Apache Jena Installation (macOS)
+
+```bash
+# Download from https://archive.apache.org/dist/jena/binaries/apache-jena-4.10.0.tar.gz
+tar -xzf apache-jena-4.10.0.tar.gz
+sudo mv apache-jena-4.10.0 /usr/local/
+
+# Add to both zshenv (non-interactive) and zshrc (interactive)
+echo 'export PATH="/usr/local/apache-jena-4.10.0/bin:$PATH"' >> ~/.zshenv
+echo 'export PATH="/usr/local/apache-jena-4.10.0/bin:$PATH"' >> ~/.zshrc
+source ~/.zshenv
+```
+
+**Why both files?**
+- `~/.zshenv` - Loaded by ALL zsh sessions (scripts, automation)
+- `~/.zshrc` - Loaded by interactive sessions (your terminal)
+
+### Python Environment
+
+Virtual environment at `.venv/`:
+```bash
+.venv/bin/python --version  # Python 3.12+
+.venv/bin/pyshacl --version # pyshacl 0.30.1
+```
+
+## Common Commands
+
+### Validation
+
+```bash
+./scripts/validate.sh
+```
+
+This command:
+1. Merges all TTL files from `ontology/` and `data/`
+2. Runs SHACL validation with pyshacl
+3. Outputs human-readable results
+
+**Critical:** Uses correct file paths:
+- `ontology/dfe-curriculum-ontology.ttl` (NOT `curriculum-ontology.ttl`)
+- `ontology/dfe-curriculum-constraints.ttl` (NOT `curriculum-constraints.ttl`)
+
+### Generate JSON Files
+
+```bash
+./scripts/build-static-data.sh
+```
+
+Creates `distributions/` with:
+- `subjects/index.json` - All subjects
+- `subjects/science-ks3.json` - Science KS3 content
+- `curriculum-full.json` - Complete curriculum
+
+**Output:** ~36KB in 3 files (gitignored)
+
+### Build and Test Fuseki Locally
+
+```bash
+docker build -t fuseki-local -f deployment/Dockerfile .
+docker run -p 3030:3030 fuseki-local
+
+# Test
+curl http://localhost:3030/$/ping
+curl -X POST \
+  -H "Content-Type: application/sparql-query" \
+  -H "Accept: application/json" \
+  --data "SELECT (COUNT(*) as ?count) WHERE { ?s ?p ?o }" \
+  http://localhost:3030/national-curriculum-for-england/sparql | jq .
+```
+
+### Deploy to Cloud Run
+
+```bash
+./deployment/deploy.sh
+```
+
+Automatically builds, pushes to GCR, deploys to Cloud Run, and tests.
+
+## RDF Property Patterns (CRITICAL)
+
+Different entity types use different property patterns:
+
+### Subject Entities
+Classes: `curric:Subject`, `curric:SubSubject`, `curric:Scheme`
+
+**Properties:**
+- Label: `rdfs:label` (required)
+- Description: `rdfs:comment` (optional)
+
+**Example:**
+```sparql
+PREFIX curric: <https://w3id.org/uk/curriculum/core/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+SELECT ?subject ?label WHERE {
+  ?subject a curric:Subject ;
+           rdfs:label ?label .
+}
+```
+
+### SKOS Concepts
+Classes: `curric:Discipline`, `curric:Strand`, `curric:SubStrand`, `curric:ContentDescriptor`, `curric:ContentSubDescriptor`
+
+**Properties:**
+- Label: `skos:prefLabel` (required)
+- Description: `skos:definition` (optional)
+
+**Example:**
+```sparql
+PREFIX curric: <https://w3id.org/uk/curriculum/core/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+SELECT ?descriptor ?label WHERE {
+  ?descriptor a curric:ContentDescriptor ;
+              skos:prefLabel ?label .
+}
+```
+
+**Why this matters:** Using the wrong property pattern will cause queries to fail. SHACL constraints enforce these patterns.
 
 ## Data Architecture
 
-The ontology is organized into three main hierarchies:
+The ontology has three main hierarchies:
 
 1. **Temporal Hierarchy**: Phase → KeyStage → YearGroup (age-based progression)
 2. **Programme Hierarchy**: Subject → SubSubject → Scheme (how subjects are organized)
@@ -67,358 +233,149 @@ The ontology is organized into three main hierarchies:
 
 A **Scheme** connects temporal and knowledge hierarchies by specifying which content descriptors are taught at which key stage.
 
-## Environment Setup
+## Deployment Architecture
 
-### Apache Jena Installation
+### Fuseki Container
 
-**macOS (Manual Installation Recommended):**
+- **Storage:** TDB2 (`tdb2:DatasetTDB2`)
+- **Data location:** `/data/national-curriculum-for-england-tdb2` (baked into image, outside VOLUME)
+- **Loader:** `java -cp fuseki-server.jar tdb2.tdbloader` (TDB2, not TDB1)
+- **Endpoints:** Read-only SPARQL (`/sparql`, `/query`) and Graph Store Protocol (`/get`)
+- **Updates:** Rebuild and redeploy container (immutable deployments)
+
+**Configuration:** `deployment/fuseki-config.ttl`
+
+**Critical Notes:**
+- DO NOT use `tdb2:unionDefaultGraph true` - prevents dataset from being readable
+- Data must be in `/data/` not `/fuseki-base/` (which is a VOLUME)
+- Use `.dockerignore` to exclude `**/versions/` directories
+
+### GitHub Actions Workflows
+
+**Validation** (`.github/workflows/validate-ontology.yml`):
+- Triggers: Push to main/develop, PRs to main, manual
+- Jobs: Syntax check + SHACL validation
+
+**JSON Generation** (`.github/workflows/generate-json.yml`):
+- Triggers: Push to main, releases
+- Output: Artifacts (30-day retention)
+
+**Fuseki Deployment** (`.github/workflows/deploy-fuseki.yml`):
+- Triggers: Releases, manual
+- Process: Build → Push to GCR → Deploy to Cloud Run → Test
+- **Status:** Requires GCP secrets (see `docs/deployment/github-actions.md`)
+
+## Terminology (IMPORTANT)
+
+**Correct terminology:**
+- "SPARQL endpoint" (NOT "REST API")
+- "Static JSON files" (NOT "JSON API")
+- "Pre-generated JSON downloads" (NOT "static API")
+
+**What this project has:**
+1. SPARQL HTTP endpoint (SPARQL Protocol)
+2. Pre-generated static JSON files (downloads from GitHub Releases)
+3. Graph Store Protocol (read-only)
+
+**What this project does NOT have:**
+- REST API (no resource-based endpoints like `/api/subjects`)
+
+## File Naming
+
+**Ontology files:**
+- `dfe-curriculum-ontology.ttl` (NOT `curriculum-ontology.ttl`)
+- `dfe-curriculum-constraints.ttl` (NOT `curriculum-constraints.ttl`)
+
+**Subject files pattern:**
+- `{subject}-subject.ttl` - Subject and SubSubject definitions
+- `{subject}-knowledge-taxonomy.ttl` - Strands, SubStrands, ContentDescriptors
+- `{subject}-schemes.ttl` - Schemes linking content to key stages
+
+## Adding New Subjects
+
+1. Create directory: `data/national-curriculum-for-england/subjects/{subject}/`
+2. Create files:
+   - `{subject}-subject.ttl`
+   - `{subject}-knowledge-taxonomy.ttl`
+   - `{subject}-schemes.ttl`
+3. Follow patterns from existing subjects (science, history)
+4. Validate: `./scripts/validate.sh`
+
+## Troubleshooting
+
+### arq/riot commands not found
+
+Check PATH:
 ```bash
-# Download pre-built binaries
-cd ~/Downloads
-# Download from: https://archive.apache.org/dist/jena/binaries/apache-jena-4.10.0.tar.gz
-tar -xzf apache-jena-4.10.0.tar.gz
-sudo mv apache-jena-4.10.0 /usr/local/
-echo 'export PATH="/usr/local/apache-jena-4.10.0/bin:$PATH"' >> ~/.zshenv
-echo 'export PATH="/usr/local/apache-jena-4.10.0/bin:$PATH"' >> ~/.zshrc
-source ~/.zshenv
+which arq
+# Should return: /usr/local/apache-jena-4.10.0/bin/arq
+
+# If not found, check installation
+ls /usr/local/apache-jena-4.10.0/bin/
+
+# Re-export PATH (for current session)
+export PATH="/usr/local/apache-jena-4.10.0/bin:$PATH"
 ```
 
-**Note:** Added to both `~/.zshenv` (for non-interactive shells) and `~/.zshrc` (for interactive shells).
+### Validation fails
 
-**Why manual installation?**
-- Homebrew requires full Xcode installation (~12GB)
-- Manual installation avoids this dependency
-- Pre-built binaries work identically
+1. Check file paths use `dfe-` prefix
+2. Check Python version (requires 3.11+)
+3. Run merge script separately: `python3 scripts/merge_ttls.py`
+4. Check SHACL constraints in `dfe-curriculum-constraints.ttl`
 
-### Python Environment
+### Docker build fails
 
-Project uses Python 3.12+ with virtual environment at `.venv/`:
-```bash
-# Virtual environment already configured with:
-# - pyshacl 0.30.1
-# - rdflib 7.5.0
-.venv/bin/python --version
-.venv/bin/pyshacl --version
-```
+1. Check Dockerfile references correct filenames
+2. Verify all TTL files parse: `riot --validate file.ttl`
+3. Check `.dockerignore` excludes `**/versions/`
 
-## Common Commands
+### Queries return no results
 
-### Validation
+1. Check property patterns (rdfs:label vs skos:prefLabel)
+2. Verify correct URIs (e.g., `eng:subject-science` not `eng:science`)
+3. Test with simple COUNT query first
 
-**Local validation (matches CI exactly):**
-```bash
-./scripts/validate.sh
-```
+## Key Documentation
 
-This command:
-1. Runs `python3 scripts/merge_ttls.py` to merge all TTL files from `ontology/` and `data/`
-2. Runs SHACL validation using pyshacl
-3. Outputs human-readable validation results
+- **README.md** - Main entry point, user-facing
+- **docs/user-guide/** - For data consumers
+  - data-model.md - Curriculum structure
+  - sparql-examples.md - Query patterns
+  - api-examples.md - SPARQL endpoint usage
+- **docs/deployment/** - For DfE staff/operators
+  - architecture.md - System architecture
+  - building.md - Build process
+  - deploying.md - Cloud deployment
+  - releasing.md - Release process
+  - extending.md - Adding content
 
-### Testing SPARQL Queries
+## Standards
 
-**Test queries against local Fuseki:**
-```bash
-# Use --data-binary with file references to handle comments in SPARQL
-curl -X POST \
-  -H "Content-Type: application/sparql-query" \
-  -H "Accept: application/json" \
-  --data-binary @queries/your-query.sparql \
-  http://localhost:3030/national-curriculum-for-england/sparql | jq .
-```
+- **Semantic Versioning** (https://semver.org/)
+  - Major: Breaking changes to ontology structure
+  - Minor: New subjects, properties, data (backward compatible)
+  - Patch: Bug fixes, corrections (backward compatible)
+- **RDF 1.1** (https://www.w3.org/TR/rdf11-primer/)
+- **OWL 2** (https://www.w3.org/TR/owl2-overview/)
+- **SKOS** (https://www.w3.org/TR/skos-reference/)
+- **SHACL** (https://www.w3.org/TR/shacl/)
 
-### Working with TTL Files
+## Development Workflow
 
-**Important file naming conventions:**
-- Ontology files use hyphenated names: `dfe-curriculum-ontology.ttl`, `dfe-curriculum-constraints.ttl`
-- But the validation script references: `curriculum-ontology.ttl`, `curriculum-constraints.ttl`
-- The actual files in the repo use the `dfe-` prefix
+1. Make changes to TTL files
+2. Validate locally: `./scripts/validate.sh`
+3. Test JSON generation: `./scripts/build-static-data.sh`
+4. Test Fuseki locally: Docker build and test
+5. Commit changes
+6. CI validates automatically
+7. Create release to trigger deployment
 
-**RDF Property Patterns (CRITICAL for SPARQL queries):**
-
-**Subject entities** use RDFS properties:
-- `curric:Subject`, `curric:SubSubject`, `curric:Scheme`
-- Label: `rdfs:label` (required, SHACL constrained)
-- Description: `rdfs:comment`
-- Example: `eng:subject-science rdfs:label "Science"@en`
-
-**SKOS Concepts** use SKOS properties:
-- `curric:Discipline`, `curric:Strand`, `curric:ContentDescriptor`
-- Label: `skos:prefLabel` (required, SHACL constrained)
-- Description: `skos:definition` (optional)
-- Example: `eng:content-descriptor-cells skos:prefLabel "Cells..."@en`
-
-See SHACL constraints at:
-- Subject entities: `dfe-curriculum-constraints.ttl:283-289`
-- SKOS Concepts: `dfe-curriculum-constraints.ttl:479+`
-
-**Check TTL syntax:**
-```python
-python3 -c "from rdflib import Graph; g = Graph(); g.parse('path/to/file.ttl', format='turtle')"
-```
-
-### Deployment
-
-**Build and run Fuseki locally:**
-```bash
-docker build -t fuseki-local -f deployment/Dockerfile .
-docker run -p 3030:3030 fuseki-local
-# Access at: http://localhost:3030/national-curriculum-for-england/sparql
-```
-
-**Deploy to Cloud Run:**
-```bash
-./deployment/deploy.sh
-# Automatically builds, pushes to GCR, deploys, and tests
-```
-
-**Manual deployment steps (see docs/deployment/deploying.md for full guide):**
-```bash
-export PROJECT_ID="oak-ai-playground"
-export REGION="europe-west1"
-export IMAGE="gcr.io/${PROJECT_ID}/national-curriculum-for-england-fuseki"
-
-# Build, push, deploy
-docker build -t ${IMAGE}:latest -f deployment/Dockerfile .
-docker push ${IMAGE}:latest
-gcloud run deploy national-curriculum-for-england-sparql \
-  --image=${IMAGE}:latest \
-  --region=${REGION} \
-  --memory=2Gi --cpu=2 --port=3030
-```
-
-**Production endpoint:** `https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql`
-
-## Validation Details
-
-### SHACL Validation Process
-
-The validation happens in two stages:
-
-1. **Syntax Check** (`validate-ontology.yml` job 1):
-   - Uses rdflib to parse all .ttl files
-   - Ensures Turtle syntax is valid
-   - Fast feedback on syntax errors
-
-2. **SHACL Validation** (`validate-ontology.yml` job 2):
-   - Merges all TTL files into single graph (`/tmp/combined-data.ttl`)
-   - Validates against SHACL shapes in `ontology/dfe-curriculum-constraints.ttl`
-   - Uses ontology graph from `ontology/dfe-curriculum-ontology.ttl`
-   - Runs with RDFS inference enabled
-   - Uses `--abort` flag to fail on first violation
-
-### Expected Validation Behavior
-
-The merge script (`scripts/merge_ttls.py`):
-- Auto-discovers all .ttl files in `ontology/` and `data/` directories
-- Skips files in `versions/` subdirectories
-- Checks for `owl:imports` declarations and warns about external imports
-- Creates combined graph at `/tmp/combined-data.ttl`
-
-**Note on file references:** The validation script in `.github/workflows/validate-ontology.yml` uses these paths:
-- `--shacl ontology/dfe-curriculum-constraints.ttl`
-- `--ont-graph ontology/dfe-curriculum-ontology.ttl`
-
-However, the local `scripts/validate.sh` references:
-- `--shacl ontology/curriculum-constraints.ttl`
-- `--ont-graph ontology/curriculum-ontology.ttl`
-
-**This is a known inconsistency** - the actual files use the `dfe-` prefix.
-
-## Working with Subjects
-
-When adding a new subject (e.g., Mathematics):
-
-1. Create directory: `data/national-curriculum-for-england/subjects/mathematics/`
-2. Create these files:
-   - `mathematics-subject.ttl` - Subject definitions
-   - `mathematics-knowledge-taxonomy.ttl` - Strands, SubStrands, ContentDescriptors
-   - `mathematics-schemes.ttl` - Scheme definitions linking content to key stages
-
-3. Follow the existing pattern from Science or History subjects
-
-4. Validate:
-```bash
-./scripts/validate.sh
-```
-
-## Namespace Strategy
+## Namespace URIs
 
 **Current (temporary):**
 - Core ontology: `https://w3id.org/uk/curriculum/core/`
 - England data: `https://w3id.org/uk/curriculum/england/`
 
 **Future vision:**
-- Core ontology will move to: `curriculum.education.gov.uk`
-- Maintained by Department for Education with URI persistence
-
-## CI/CD Pipeline
-
-### Validation Workflow (`.github/workflows/validate-ontology.yml`)
-
-**Triggers:**
-- Push to `main` or `develop` branches
-- Pull requests to `main`
-- Manual dispatch
-- Only when TTL files or workflow files change
-
-**Jobs:**
-1. `syntax-check`: Validates Turtle syntax with rdflib
-2. `shacl-validation`: Runs SHACL validation with pyshacl
-
-### JSON Generation Workflow (`.github/workflows/generate-json.yml`)
-
-**Triggers:**
-- Push to `main` branch
-- GitHub releases (published)
-
-**Process:**
-1. Installs Apache Jena 4.10.0 and jq
-2. Runs `./scripts/build-static-data.sh` to generate JSON files
-3. Validates JSON syntax with `jq empty`
-4. Uploads `distributions/` as GitHub Actions artifacts (30-day retention)
-5. Displays file sizes in workflow summary
-
-**Output:** JSON files available as downloadable artifacts for consumption by static websites or other applications
-
-### Fuseki Deployment Workflow (`.github/workflows/deploy-fuseki.yml`)
-
-**Triggers:**
-- GitHub releases (published)
-- Manual dispatch
-
-**Process:**
-1. Builds Docker container using `deployment/Dockerfile` (includes TDB2 pre-loading)
-2. Tags as both `:latest` and `:${{ github.sha }}`
-3. Pushes both tags to Google Container Registry
-4. Deploys to Cloud Run in `europe-west1` with resource limits (2Gi RAM, 2 CPU)
-5. Gets service URL and displays in workflow summary
-6. Tests deployment (health check + SPARQL query validation)
-
-**Required Secrets:**
-- `GCP_SA_KEY`: Service account key JSON
-- `GCP_PROJECT_ID`: GCP project ID
-
-**Setup Status:** ⚠️ Secrets not yet configured - requires GCP admin access. See `deployment/GITHUB-ACTIONS-SETUP.md` for setup instructions.
-
-**Current Deployment Method:** Manual via `./deployment/deploy.sh` (fully functional)
-
-**Deployment:** Service `national-curriculum-for-england-sparql` runs on port 3030
-
-## Important Architectural Decisions
-
-### Generated Files Are NOT Committed
-
-The repository follows "Approach 1" from the implementation plan:
-- Static JSON files are generated at build time
-- `distributions/` directory is gitignored
-- Generated files are published via GitHub Releases
-- This keeps the repository focused on source data
-
-### Fuseki Container Configuration
-
-The Dockerfile uses **TDB2 storage** (`tdb2:DatasetTDB2`) with data pre-loaded at build time:
-- **Data location**: `/data/national-curriculum-for-england-tdb2` (outside `/fuseki` VOLUME, baked into container)
-- **Loader**: `java -cp fuseki-server.jar tdb2.tdbloader` (TDB2, not TDB1)
-- **Read-only endpoints**: SPARQL query (`/sparql`, `/query`) and Graph Store Protocol (`/get`)
-- **Fast startup**: TDB2 indexes pre-built (no loading phase)
-- **Immutable deployments**: To update data, rebuild and redeploy the container
-
-**Configuration file**: `deployment/fuseki-config.ttl`
-
-**Critical Notes:**
-- Do NOT use `tdb2:unionDefaultGraph true` - prevents dataset from being readable
-- Data must be in `/data/` not `/fuseki-base/` (which is a VOLUME and won't persist)
-- Use `.dockerignore` to exclude `**/versions/` (archived TTL files)
-
-### File Name Inconsistencies
-
-There are inconsistencies between:
-- Actual file names: `dfe-curriculum-ontology.ttl`, `dfe-curriculum-constraints.ttl`
-- Script references in `validate.sh`: `curriculum-ontology.ttl`, `curriculum-constraints.ttl`
-
-When editing scripts or workflows, verify the actual filenames in the `ontology/` directory.
-
-## Development Workflow
-
-### Adding New Content
-
-1. Edit or create TTL files in appropriate location
-2. Validate locally: `./scripts/validate.sh`
-3. Commit changes
-4. CI will run validation automatically
-5. If validation passes, merge to main
-6. Create a release to trigger deployment
-
-### Testing SPARQL Queries
-
-Against local Fuseki:
-```bash
-docker run -p 3030:3030 fuseki-local
-curl -X POST http://localhost:3030/uk-curriculum/sparql \
-  -H "Content-Type: application/sparql-query" \
-  -H "Accept: application/json" \
-  --data "SELECT * WHERE { ?s ?p ?o } LIMIT 10"
-```
-
-### Versioning
-
-Follows Semantic Versioning:
-- **Major (1.x.x)**: Breaking changes to ontology structure
-- **Minor (x.1.x)**: New subjects, properties, or data (backward compatible)
-- **Patch (x.x.1)**: Bug fixes, corrections (backward compatible)
-
-Current version: **0.1.0**
-
-## Troubleshooting
-
-### Apache Jena Commands Not Found
-
-If `riot`, `arq`, or `tdbloader` are not found:
-1. Check installation: `ls /usr/local/apache-jena-4.10.0/bin/`
-2. Check PATH: `echo $PATH | grep jena`
-3. Export manually: `export PATH="/usr/local/apache-jena-4.10.0/bin:$PATH"`
-4. Open new terminal (PATH in `~/.zshrc` applies to new sessions only)
-
-### Validation Fails Locally But Not in CI (or vice versa)
-
-Check:
-1. File names match between script and actual files
-2. Python version (CI uses 3.11)
-3. Package versions (pyshacl, rdflib)
-4. Run merge script separately: `python3 scripts/merge_ttls.py`
-
-### Docker Build Fails
-
-Check:
-1. Dockerfile references correct TTL filenames
-2. All referenced files exist in the ontology directory
-3. Fuseki config references correct file paths
-
-### SHACL Validation Errors
-
-Check:
-1. All required properties are present (check constraints.ttl)
-2. URIs are properly formed and consistent
-3. Data types match expected types
-4. Cardinality constraints are satisfied
-
-Use `--format human` in pyshacl for readable error messages (already default in validation script).
-
-## Key Files Reference
-
-- `ontology/dfe-curriculum-ontology.ttl` - Core class and property definitions
-- `ontology/dfe-curriculum-constraints.ttl` - SHACL validation shapes
-- `scripts/validate.sh` - Local validation script
-- `scripts/merge_ttls.py` - TTL file merger with import checking
-- `deployment/Dockerfile` - Fuseki container definition
-- `docs/deployment/architecture.md` - Complete architecture documentation
-- `README.md` - User-facing documentation
-
-## Additional Documentation
-
-### User Guide
-- See `docs/user-guide/` for data model, SPARQL examples, API usage, and validation
-
-### Deployment Guide
-- See `docs/deployment/` for architecture, building, deploying, releasing, and extending
+- `curriculum.education.gov.uk` - DfE-owned with URI persistence
