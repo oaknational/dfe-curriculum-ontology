@@ -30,8 +30,8 @@ else
 fi
 
 $PYSHACL \
-  --shacl ontology/curriculum-constraints.ttl \
-  --ont-graph ontology/curriculum-ontology.ttl \
+  --shacl ontology/dfe-curriculum-constraints.ttl \
+  --ont-graph ontology/dfe-curriculum-ontology.ttl \
   --inference rdfs \
   --abort \
   --format human \
