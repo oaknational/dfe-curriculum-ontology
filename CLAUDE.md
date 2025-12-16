@@ -78,9 +78,12 @@ cd ~/Downloads
 # Download from: https://archive.apache.org/dist/jena/binaries/apache-jena-4.10.0.tar.gz
 tar -xzf apache-jena-4.10.0.tar.gz
 sudo mv apache-jena-4.10.0 /usr/local/
+echo 'export PATH="/usr/local/apache-jena-4.10.0/bin:$PATH"' >> ~/.zshenv
 echo 'export PATH="/usr/local/apache-jena-4.10.0/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc
+source ~/.zshenv
 ```
+
+**Note:** Added to both `~/.zshenv` (for non-interactive shells) and `~/.zshrc` (for interactive shells).
 
 **Why manual installation?**
 - Homebrew requires full Xcode installation (~12GB)
