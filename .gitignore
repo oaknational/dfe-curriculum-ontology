@@ -90,4 +90,4 @@ coverage/
 distributions/
 
 # Local testing
-fuseki-data/
+fuseki-data/apache-jena*.tar.gz
