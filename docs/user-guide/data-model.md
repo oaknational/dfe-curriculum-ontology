@@ -22,11 +22,15 @@ Education in England is divided into:
 - **Phases**: Broad divisions (Primary: ages 5-11, Secondary: ages 11-16)
 - **Key Stages**: Standardized learning stages (KS1 through KS4)
 - **Year Groups**: Individual school years (Year 1 through Year 11)
+- **Subjects**: Top-level curriculum subjects as defined in the National Curriculum (e.g., Science, 
+History, Physical Education)
+- **Sub-Subjects**: Subdivisions of subjects used to organize teaching programmes (e.g., Biology, Chemistry, and Physics as sub-subjects of Science)
+
 
 ### Knowledge Structure
 
 Curriculum content is organized hierarchically:
-- **Subjects**: Major disciplines (Science, Mathematics, History, etc.)
+- **Disciplines**: Major disciplines (Science, Mathematics, History, etc.)
 - **Strands**: Major organizational divisions within a subject
 - **Sub-Strands**: Subdivisions of strands
 - **Content Descriptors**: Specific statements of knowledge, concepts, or skills
@@ -75,7 +79,7 @@ curric:YearGroup
 ### Knowledge Structure Classes
 
 ```
-curric:Subject (subclass of skos:Concept)
+curric:Discipline (subclass of skos:Concept)
   └─ curric:Strand (subclass of skos:Concept)
       └─ curric:SubStrand (subclass of skos:Concept)
           └─ curric:ContentDescriptor (subclass of skos:Concept)
@@ -84,8 +88,8 @@ curric:Subject (subclass of skos:Concept)
 curric:Theme (subclass of skos:Concept)
 ```
 
-**Subject** (`curric:Subject`)
-- A subject discipline (e.g., Science, Mathematics, History)
+**Discipline** (`curric:Discipline`)
+- A discipline (e.g., Science, Mathematics, History)
 - Subclass of `skos:Concept` for integration with SKOS taxonomies
 - Properties: `skos:prefLabel`, `skos:definition`, `curric:hasAim`, `curric:hasStrand`
 - Example: Science subject with aims about developing scientific knowledge and understanding
@@ -214,7 +218,7 @@ Knowledge structure classes (Subject, Strand, etc.) are subclasses of `skos:Conc
 ### Why Separate Subject and SubSubject?
 
 This separation provides flexibility:
-- **Subject** represents the conceptual discipline (e.g., "Science" as a field of knowledge)
+- **Subject** represents the top-level subject area (e.g., "Science")
 - **SubSubject** represents how it's taught (e.g., "Science" as taught in England may combine biology, chemistry, physics differently than in Scotland)
 
 This allows the same knowledge taxonomy to be reused across different teaching structures.

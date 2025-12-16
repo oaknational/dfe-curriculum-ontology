@@ -229,9 +229,12 @@ The ontology has three main hierarchies:
 
 1. **Temporal Hierarchy**: Phase → KeyStage → YearGroup (age-based progression)
 2. **Programme Hierarchy**: Subject → SubSubject → Scheme (how subjects are organized)
-3. **Knowledge Taxonomy**: Subject → Strand → SubStrand → ContentDescriptor → ContentSubDescriptor
+3. **Knowledge Taxonomy**: Discipline → Strand → SubStrand → ContentDescriptor → ContentSubDescriptor (how knowledge is organized)
 
-A **Scheme** connects temporal and knowledge hierarchies by specifying which content descriptors are taught at which key stage.
+**Key separation of concerns:**
+- **Programme Hierarchy** focuses on *how* subjects are taught (programmes of study, schemes of work)
+- **Knowledge Taxonomy** focuses on *what* knowledge is taught (disciplinary structure, conceptual organization)
+- A **Scheme** links these hierarchies by specifying which content descriptors are taught at which key stage
 
 ## Deployment Architecture
 
