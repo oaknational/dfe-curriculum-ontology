@@ -31,10 +31,9 @@ Each version is preserved in the `versions/` directories with dated version IRIs
 - Comprehensive documentation suite
 
 ### Core Ontology Classes
-- `Phase`, `KeyStage`, `YearGroup` - Programme structure
-- `Subject`, `Strand`, `SubStrand`, `ContentDescriptor`, `ContentSubDescriptor` - Knowledge structure
-- `SubSubject` - Teaching structure mapping
-- `Scheme` - Content-to-key-stage mapping
+- `Phase`, `KeyStage`, `YearGroup` - Temporal hierarchy
+- `Subject`, `SubSubject`, `Scheme` - Programme hierarchy
+- `Discipline`, `Strand`, `SubStrand`, `ContentDescriptor`, `ContentSubDescriptor` - Knowledge taxonomy
 - `Theme` - Cross-cutting themes
 
 ### Core Properties

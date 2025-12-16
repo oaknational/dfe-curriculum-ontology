@@ -113,9 +113,9 @@ Subject (e.g. Science)
 A **Scheme** connects temporal and knowledge hierarchies by specifying which content descriptors are taught at which key stage.
 
 ### 3. Knowledge Taxonomy
-Organizes the actual curriculum content and concepts:
+Organizes the actual curriculum content and concepts by discipline:
 ```
-Subject (e.g., Science)
+Discipline (e.g., Science)
   └─ Strand (e.g. Structure and function of living organisms)
       └─ SubStrand (e.g. Cells and organisation)
           └─ ContentDescriptor (e.g. Cells as the fundamental unit of living organisms)
