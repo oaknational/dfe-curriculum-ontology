@@ -326,13 +326,6 @@ curl -X POST \
     https://national-curriculum-for-england-sparql-6336353060.europe-west1.run.app/national-curriculum-for-england/sparql
 ```
 
-## Cost
-
-**Monthly Operating Cost:** ~$10-30
-- Static JSON hosting: Free (GitHub Releases)
-- SPARQL endpoint: $10-30 (Google Cloud Run, scales to zero)
-- Minimal cost with low usage due to automatic scaling
-
 ## Versioning
 
 This ontology follows [Semantic Versioning](https://semver.org/):
@@ -365,11 +358,9 @@ This work is made available under the [Open Government Licence v3.0](http://www.
 
 Crown Copyright (c) 2025
 
-## Support
+## Contributing
 
-For questions or issues:
-- Open an issue: https://github.com/oaknational/uk-curriculum-ontology/issues
-- Email: curriculum@education.gov.uk
+For questions, suggestions, or contributions, please contact the Department for Education.
 
 ## Related Resources
 
