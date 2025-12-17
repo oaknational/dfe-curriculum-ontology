@@ -1,0 +1,45 @@
+name: Generate Documentation with Widoco (Simple)
+
+on:
+  workflow_dispatch:  # Manual trigger only for testing
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Create output directory
+        run: mkdir -p docs-output
+
+      - name: Generate documentation with Widoco
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/data \
+            ghcr.io/dgarijo/widoco:v1.4.25 \
+            -ontFile /data/ontology/dfe-curriculum-ontology.ttl \
+            -outFolder /data/docs-output \
+            -rewriteAll
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './docs-output'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
