@@ -34,6 +34,17 @@ jobs:
           mkdir -p docs-output
           chmod -R 777 docs-output
 
+      - name: Debug - Check config file
+        run: |
+          echo "=== Config file exists? ==="
+          ls -la ontology/widoco-config/config.properties
+          echo ""
+          echo "=== Config file contents ==="
+          cat ontology/widoco-config/config.properties
+          echo ""
+          echo "=== Ontology file exists? ==="
+          ls -la ontology/dfe-curriculum-ontology.ttl
+
       - name: Generate documentation with Widoco
         run: |
           docker run --rm \
