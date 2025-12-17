@@ -30,6 +30,7 @@
   owl:versionIRI <https://w3id.org/uk/curriculum/core/curriculum-ontology/0.1.0> ;
   owl:priorVersion <https://w3id.org/uk/curriculum/core/curriculum-ontology/0.0.9> ;
 
+  bibo:status "DfE Curriculum Ontology" ;
   dcterms:description """This ontology defines the foundational classes and properties for
   representing educational curriculum structures."""@en ;
   dcterms:creator "Department for Education" ;
