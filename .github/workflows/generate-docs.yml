@@ -29,16 +29,6 @@ jobs:
         with:
           python-version: '3.12'
 
-      - name: Install Python dependencies
-        run: |
-          pip install rdflib
-
-      - name: Merge TTL files
-        run: |
-          python scripts/merge_ttls.py
-          echo "Merged ontology created at /tmp/combined-data.ttl"
-          ls -lh /tmp/combined-data.ttl
-
       - name: Create output directory
         run: |
           mkdir -p docs-output
@@ -48,9 +38,8 @@ jobs:
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/data \
-            -v /tmp:/tmp \
             ghcr.io/dgarijo/widoco:v1.4.25 \
-            -ontFile /tmp/combined-data.ttl \
+            -ontFile /data/ontology/dfe-curriculum-ontology.ttl \
             -outFolder /data/docs-output \
             -htaccess \
             -uniteSections \
@@ -62,20 +51,6 @@ jobs:
         run: |
           sudo chown -R runner:runner docs-output/
           chmod -R u+w docs-output/
-
-      - name: Check generated files
-        run: |
-          echo "=== Contents of docs-output ==="
-          ls -la docs-output/
-          echo ""
-          echo "=== Contents of docs-output/doc ==="
-          ls -la docs-output/doc/ || echo "doc directory not found"
-          echo ""
-          echo "=== All HTML files ==="
-          find docs-output/ -name "*.html" -type f
-          echo ""
-          echo "=== Tree structure (first 3 levels) ==="
-          find docs-output/ -maxdepth 3 | head -30
 
       - name: Create index.html redirect
         run: |
