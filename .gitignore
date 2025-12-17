@@ -50,6 +50,8 @@ docs/generated/
 *.html
 !docs/**/*.html
 !ontology/widoco-config/*.html
+# Ignore copied HTML files in ontology root (copied from widoco-config during build)
+ontology/*.html
 
 # Test outputs
 validation-reports/
