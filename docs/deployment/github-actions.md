@@ -1,6 +1,55 @@
-# GitHub Actions Setup - Admin Required
+# GitHub Actions Setup
 
-## Current Status
+## Overview
+
+This repository has several GitHub Actions workflows:
+
+1. **Ontology Validation** - Runs on all PRs and pushes (✅ **Active**)
+2. **JSON Generation** - Generates static JSON files (✅ **Active**)
+3. **Documentation Generation** - Generates HTML documentation with Widoco (✅ **Active**)
+4. **Fuseki Deployment** - Deploys to Cloud Run (⚠️ **Requires GCP Secrets**)
+
+## Documentation Generation Workflow
+
+### Status: ✅ Active
+
+The `.github/workflows/generate-docs.yml` workflow automatically generates HTML documentation from the ontology and deploys it to GitHub Pages.
+
+**Triggers:**
+- On releases (published)
+- Manual trigger via workflow_dispatch
+
+**What it does:**
+1. Merges all TTL files (ontology + data)
+2. Runs Widoco to generate HTML documentation
+3. Deploys to GitHub Pages
+
+**Accessing the documentation:**
+- URL: `https://<username>.github.io/<repository>/`
+- Updates automatically on each release
+
+### Enabling GitHub Pages (First Time Setup)
+
+To enable GitHub Pages for this repository:
+
+1. Go to: **Settings** → **Pages**
+2. Under "Build and deployment":
+   - **Source**: GitHub Actions
+3. Save changes
+
+After the next release, documentation will be available at the GitHub Pages URL.
+
+### Testing Documentation Generation
+
+You can manually trigger the workflow without creating a release:
+
+1. Go to: **Actions** → **Generate Ontology Documentation**
+2. Click **Run workflow**
+3. Select branch and run
+
+## Fuseki Deployment Workflow
+
+### Current Status
 
 ⚠️ **GitHub Actions automated deployment is NOT YET CONFIGURED** due to IAM permissions.
 

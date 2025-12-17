@@ -1,0 +1,66 @@
+name: Generate Ontology Documentation
+
+on:
+  release:
+    types: [published]
+  workflow_dispatch:  # Allow manual triggers for testing
+
+# Sets permissions for GitHub Pages deployment
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  generate-docs:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Install Python dependencies
+        run: |
+          pip install rdflib
+
+      - name: Merge TTL files
+        run: |
+          python scripts/merge_ttls.py
+          echo "Merged ontology created at merged-ontology.ttl"
+          ls -lh merged-ontology.ttl
+
+      - name: Generate documentation with Widoco
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/data \
+            dgarijo/widoco:latest \
+            -ontFile /data/merged-ontology.ttl \
+            -outFolder /data/docs-output \
+            -htaccess \
+            -uniteSections \
+            -includeAnnotationProperties \
+            -analytics UA-XXXXXX-X \
+            -webVowl \
+            -rewriteAll
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './docs-output'
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

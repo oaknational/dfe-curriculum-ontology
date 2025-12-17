@@ -348,6 +348,11 @@ Each version is preserved in `versions/` directories with dated IRIs. See [CHANG
 
 ## Documentation
 
+### Auto-Generated Ontology Documentation
+
+Complete HTML documentation including class hierarchies, properties, and visualizations:
+- **GitHub Pages**: Available after first release (see [setup instructions](docs/deployment/github-actions.md#enabling-github-pages-first-time-setup))
+
 ### User Guide
 
 - [Data Model](docs/user-guide/data-model.md) - Curriculum structure and concepts
@@ -362,6 +367,7 @@ Each version is preserved in `versions/` directories with dated IRIs. See [CHANG
 - [Deploying](docs/deployment/deploying.md) - Cloud deployment
 - [Releasing](docs/deployment/releasing.md) - Release process
 - [Extending](docs/deployment/extending.md) - Adding content
+- [GitHub Actions](docs/deployment/github-actions.md) - CI/CD workflows
 
 ## License
 

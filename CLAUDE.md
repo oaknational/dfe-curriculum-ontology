@@ -263,6 +263,12 @@ The ontology has three main hierarchies:
 - Triggers: Push to main, releases
 - Output: Artifacts (30-day retention)
 
+**Documentation Generation** (`.github/workflows/generate-docs.yml`):
+- Triggers: Releases, manual
+- Process: Merge TTL files → Generate HTML with Widoco → Deploy to GitHub Pages
+- Output: Auto-generated ontology documentation with visualizations
+- **Setup required:** Enable GitHub Pages in repository settings (see `docs/deployment/github-actions.md`)
+
 **Fuseki Deployment** (`.github/workflows/deploy-fuseki.yml`):
 - Triggers: Releases, manual
 - Process: Build → Push to GCR → Deploy to Cloud Run → Test
