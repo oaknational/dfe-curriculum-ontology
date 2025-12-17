@@ -31,8 +31,16 @@
   owl:priorVersion <https://w3id.org/uk/curriculum/core/curriculum-ontology/0.0.9> ;
   
   bibo:status "DfE Curriculum Ontology" ;
+  dcterms:abstract """The DfE Curriculum Ontology provides a standardized, machine-readable 
+  representation of educational curriculum structures. It defines core classes and properties for 
+  representing phases, key stages, subjects, and content organization within the National 
+  Curriculum for England. This ontology enables interoperability across educational platforms, 
+  semantic querying of curriculum relationships, and validation of curriculum data quality through 
+  SHACL constraints."""@en ;
   dcterms:description """This ontology defines the foundational classes and properties for 
-  representing educational curriculum structures."""@en ;
+  representing educational curriculum structures. It organizes curriculum data into three main 
+  hierarchies: temporal (phases, key stages, year groups), programme (subjects, sub-subjects, 
+  schemes), and knowledge taxonomy (disciplines, strands, content descriptors)."""@en ;
   dcterms:creator "Department for Education" ;
   dcterms:created "2025-11-19"^^xsd:date ;
   dcterms:modified "2025-12-03"^^xsd:date ;
