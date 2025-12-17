@@ -1,1 +1,0 @@
-Core vocabulary for describing curriculum structures, content organization, and educational programmes.

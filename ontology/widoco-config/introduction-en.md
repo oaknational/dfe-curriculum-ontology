@@ -1,4 +1,4 @@
-This ontology defines the foundational classes and properties for representing educational curriculum structures. It organizes curriculum data into three main hierarchies:
+XXXXX This ontology defines the foundational classes and properties for representing educational curriculum structures. It organizes curriculum data into three main hierarchies:
 
  1. **Temporal Hierarchy**: Phases, key stages, and year groups (age-based progression)
  2. **Programme Hierarchy**: Subjects, sub-subjects, and schemes (how subjects are organized)
