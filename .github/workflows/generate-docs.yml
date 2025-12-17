@@ -58,6 +58,11 @@ jobs:
             -webVowl \
             -rewriteAll
 
+      - name: Fix permissions
+        run: |
+          sudo chown -R runner:runner docs-output/
+          chmod -R u+w docs-output/
+
       - name: Check generated files
         run: |
           echo "=== Contents of docs-output ==="
