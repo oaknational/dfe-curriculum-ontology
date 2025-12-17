@@ -8,6 +8,7 @@
 @prefix vann: <http://purl.org/vocab/vann/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix schema: <http://schema.org/> .
+@prefix bibo: <http://purl.org/ontology/bibo/> .
 
 # ======================================================================
 # DfE Curriculum Ontology
@@ -29,15 +30,13 @@
   owl:versionIRI <https://w3id.org/uk/curriculum/core/curriculum-ontology/0.1.0> ;
   owl:priorVersion <https://w3id.org/uk/curriculum/core/curriculum-ontology/0.0.9> ;
   
+  bibo:status "DfE Curriculum Ontology" ;
   dcterms:description """This ontology defines the foundational classes and properties for 
   representing educational curriculum structures."""@en ;
   dcterms:creator "Department for Education" ;
   dcterms:created "2025-11-19"^^xsd:date ;
   dcterms:modified "2025-12-03"^^xsd:date ;
   dcterms:issued "2025-12-03"^^xsd:date ;
-
-  # Ontology status (removes "Draft" label)
-  <http://purl.org/ontology/bibo/status> "Ontology Specification" ;
 
   dcterms:license <http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/> ;
   dcterms:rights "Crown Copyright"@en ;
