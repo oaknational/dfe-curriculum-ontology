@@ -49,6 +49,7 @@ __pycache__/
 docs/generated/
 *.html
 !docs/**/*.html
+!ontology/widoco-config/*.html
 
 # Test outputs
 validation-reports/
