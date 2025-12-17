@@ -21,7 +21,9 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Create output directory
-        run: mkdir -p docs-output
+        run: |
+          mkdir -p docs-output
+          chmod -R 777 docs-output
 
       - name: Generate documentation with Widoco
         run: |
@@ -36,6 +38,11 @@ jobs:
             -getOntologyMetadata 2>&1 | tee widoco-output.log
 
           echo "Exit code: $?"
+
+      - name: Fix permissions
+        run: |
+          sudo chown -R runner:runner docs-output/
+          chmod -R u+w docs-output/
 
       - name: Debug - Check Widoco log
         run: |
