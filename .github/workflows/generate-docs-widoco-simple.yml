@@ -30,7 +30,19 @@ jobs:
             ghcr.io/dgarijo/widoco:v1.4.25 \
             -ontFile /data/ontology/dfe-curriculum-ontology.ttl \
             -outFolder /data/docs-output \
-            -rewriteAll
+            -rewriteAll \
+            -includeAnnotationProperties \
+            -lang en \
+            -getOntologyMetadata 2>&1 | tee widoco-output.log
+
+          echo "Exit code: $?"
+
+      - name: Debug - Check Widoco log
+        run: |
+          if [ -f widoco-output.log ]; then
+            echo "=== Widoco output log ==="
+            cat widoco-output.log
+          fi
 
       - name: Debug - Check generated files
         run: |
@@ -39,6 +51,9 @@ jobs:
           echo ""
           echo "=== Looking for index files ==="
           find docs-output -name "index*.html" -type f
+          echo ""
+          echo "=== Looking for sections directory ==="
+          ls -la docs-output/doc/sections/ 2>&1 || echo "No sections directory found"
 
       - name: Create index.html
         run: |
