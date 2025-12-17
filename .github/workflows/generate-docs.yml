@@ -63,8 +63,14 @@ jobs:
           echo "=== Contents of docs-output ==="
           ls -la docs-output/
           echo ""
-          echo "=== Looking for index.html ==="
-          find docs-output/ -name "index.html" -type f
+          echo "=== Contents of docs-output/doc ==="
+          ls -la docs-output/doc/ || echo "doc directory not found"
+          echo ""
+          echo "=== All HTML files ==="
+          find docs-output/ -name "*.html" -type f
+          echo ""
+          echo "=== Tree structure (first 3 levels) ==="
+          find docs-output/ -maxdepth 3 | head -30
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
