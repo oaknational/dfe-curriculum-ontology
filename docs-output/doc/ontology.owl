@@ -1,0 +1,558 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="https://w3id.org/uk/curriculum/core/curriculum-ontology#"
+     xml:base="https://w3id.org/uk/curriculum/core/curriculum-ontology"
+     xmlns:dc="http://purl.org/dc/elements/1.1/"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:bibo="http://purl.org/ontology/bibo/"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+     xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+     xmlns:vann="http://purl.org/vocab/vann/"
+     xmlns:terms="http://purl.org/dc/terms/">
+    <owl:Ontology rdf:about="https://w3id.org/uk/curriculum/core/curriculum-ontology">
+        <owl:versionIRI rdf:resource="https://w3id.org/uk/curriculum/core/curriculum-ontology/0.1.0"/>
+        <owl:imports rdf:resource="http://www.w3.org/2004/02/skos/core"/>
+        <dc:title xml:lang="en">DfE Curriculum Ontology</dc:title>
+        <terms:created rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-11-19</terms:created>
+        <terms:creator>Department for Education</terms:creator>
+        <terms:description xml:lang="en">This ontology defines the foundational classes and properties for
+  representing educational curriculum structures.</terms:description>
+        <terms:issued rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-12-03</terms:issued>
+        <terms:license rdf:resource="http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"/>
+        <terms:modified rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-12-03</terms:modified>
+        <terms:rights xml:lang="en">Crown Copyright</terms:rights>
+        <bibo:status>DfE Curriculum Ontology</bibo:status>
+        <vann:preferredNamespacePrefix>curric</vann:preferredNamespacePrefix>
+        <vann:preferredNamespaceUri>https://w3id.org/uk/curriculum/core/</vann:preferredNamespaceUri>
+        <rdfs:comment xml:lang="en">Core vocabulary for describing curriculum structures, content organization, and 
+  educational programmes.</rdfs:comment>
+        <rdfs:label xml:lang="en">DfE Curriculum Ontology</rdfs:label>
+        <rdfs:seeAlso rdf:resource="https://www.gov.uk/government/collections/national-curriculum"/>
+        <owl:priorVersion rdf:resource="https://w3id.org/uk/curriculum/core/curriculum-ontology/0.0.9"/>
+        <owl:versionInfo>0.1.0</owl:versionInfo>
+    </owl:Ontology>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotation properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- http://purl.org/dc/elements/1.1/title -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/elements/1.1/title"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/created -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/created"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/date -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/date"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/issued -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/issued"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/license -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/license"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/modified -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/modified"/>
+    
+
+
+    <!-- http://purl.org/dc/terms/rights -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/dc/terms/rights"/>
+    
+
+
+    <!-- http://purl.org/ontology/bibo/status -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/ontology/bibo/status"/>
+    
+
+
+    <!-- http://purl.org/vocab/vann/preferredNamespacePrefix -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/vocab/vann/preferredNamespacePrefix"/>
+    
+
+
+    <!-- http://purl.org/vocab/vann/preferredNamespaceUri -->
+
+
+    <owl:AnnotationProperty rdf:about="http://purl.org/vocab/vann/preferredNamespaceUri"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Datatypes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- http://www.w3.org/2001/XMLSchema#date -->
+
+
+    <rdfs:Datatype rdf:about="http://www.w3.org/2001/XMLSchema#date"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/hasContentDescriptor -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/uk/curriculum/core/hasContentDescriptor">
+        <owl:inverseOf rdf:resource="https://w3id.org/uk/curriculum/core/isContentDescriptorOf"/>
+        <rdfs:domain rdf:resource="https://w3id.org/uk/curriculum/core/Scheme"/>
+        <rdfs:range rdf:resource="https://w3id.org/uk/curriculum/core/ContentDescriptor"/>
+        <rdfs:comment xml:lang="en">Indicates that a scheme includes a specific content descriptor.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">has content descriptor</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/hasDiscipline -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/uk/curriculum/core/hasDiscipline">
+        <rdfs:domain rdf:resource="https://w3id.org/uk/curriculum/core/Subject"/>
+        <rdfs:range rdf:resource="https://w3id.org/uk/curriculum/core/Discipline"/>
+        <rdfs:comment xml:lang="en">Indicates that a subject includes content from a discipline.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">has discipline</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/hasKeyStage -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/uk/curriculum/core/hasKeyStage">
+        <rdfs:domain rdf:resource="https://w3id.org/uk/curriculum/core/Scheme"/>
+        <rdfs:range rdf:resource="https://w3id.org/uk/curriculum/core/KeyStage"/>
+        <rdfs:comment xml:lang="en">Indicates that a scheme covers a specific key stage.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">has key stage</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/hasPart -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/uk/curriculum/core/hasPart">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:comment xml:lang="en">Indicates that one curriculum entity contains another narrower entity.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">has part</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/hasStrand -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/uk/curriculum/core/hasStrand">
+        <owl:inverseOf rdf:resource="https://w3id.org/uk/curriculum/core/isStrandOf"/>
+        <rdfs:domain rdf:resource="https://w3id.org/uk/curriculum/core/SubSubject"/>
+        <rdfs:range rdf:resource="https://w3id.org/uk/curriculum/core/Strand"/>
+        <rdfs:comment xml:lang="en">Indicates that a sub-subject includes content from a strand of knowledge.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">has strand</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/isContentDescriptorOf -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/uk/curriculum/core/isContentDescriptorOf">
+        <rdfs:domain rdf:resource="https://w3id.org/uk/curriculum/core/ContentDescriptor"/>
+        <rdfs:range rdf:resource="https://w3id.org/uk/curriculum/core/Scheme"/>
+        <rdfs:comment xml:lang="en">Indicates that a content descriptor is included in a specific scheme.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">is content descriptor of</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/isDisciplineOf -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/uk/curriculum/core/isDisciplineOf">
+        <owl:inverseOf rdf:resource="https://w3id.org/uk/curriculum/core/hasDiscipline"/>
+        <rdfs:domain rdf:resource="https://w3id.org/uk/curriculum/core/Discipline"/>
+        <rdfs:range rdf:resource="https://w3id.org/uk/curriculum/core/Subject"/>
+        <rdfs:comment xml:lang="en">Indicates that content from a discipline is part of a subject.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">is discipline of</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/isKeyStageOf -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/uk/curriculum/core/isKeyStageOf">
+        <owl:inverseOf rdf:resource="https://w3id.org/uk/curriculum/core/hasKeyStage"/>
+        <rdfs:domain rdf:resource="https://w3id.org/uk/curriculum/core/KeyStage"/>
+        <rdfs:range rdf:resource="https://w3id.org/uk/curriculum/core/Scheme"/>
+        <rdfs:comment xml:lang="en">Indicates that a key stage is covered by a specific scheme.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">is key stage of</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/isPartOf -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/uk/curriculum/core/isPartOf">
+        <owl:inverseOf rdf:resource="https://w3id.org/uk/curriculum/core/hasPart"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#TransitiveProperty"/>
+        <rdfs:comment xml:lang="en">Indicates that one curriculum entity is part of another broader entity.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">is part of</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/isStrandOf -->
+
+
+    <owl:ObjectProperty rdf:about="https://w3id.org/uk/curriculum/core/isStrandOf">
+        <rdfs:domain rdf:resource="https://w3id.org/uk/curriculum/core/Strand"/>
+        <rdfs:range rdf:resource="https://w3id.org/uk/curriculum/core/SubSubject"/>
+        <rdfs:comment xml:lang="en">Indicates that content from a strand of knowledge is part of a sub-subject.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">is strand of</rdfs:label>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/example -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/uk/curriculum/core/example">
+        <rdfs:domain rdf:resource="https://w3id.org/uk/curriculum/core/ContentSubDescriptor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString"/>
+        <rdfs:comment xml:lang="en">A text example that illustrates content detail.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">example</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/exampleURL -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/uk/curriculum/core/exampleURL">
+        <rdfs:domain rdf:resource="https://w3id.org/uk/curriculum/core/ContentSubDescriptor"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#anyURI"/>
+        <rdfs:comment xml:lang="en">A URL example that illustrates content detail.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">example URL</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/hasAim -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/uk/curriculum/core/hasAim">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/uk/curriculum/core/SubSubject"/>
+                    <rdf:Description rdf:about="https://w3id.org/uk/curriculum/core/Subject"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#langString"/>
+        <rdfs:comment xml:lang="en">A specific educational aim for this subject as stated in the National Curriculum.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">has aim</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/lowerAgeBoundary -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/uk/curriculum/core/lowerAgeBoundary">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/uk/curriculum/core/KeyStage"/>
+                    <rdf:Description rdf:about="https://w3id.org/uk/curriculum/core/Phase"/>
+                    <rdf:Description rdf:about="https://w3id.org/uk/curriculum/core/YearGroup"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#nonNegativeInteger"/>
+        <rdfs:comment xml:lang="en">Lower age boundary of an educational level.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">lower age boundary</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/upperAgeBoundary -->
+
+
+    <owl:DatatypeProperty rdf:about="https://w3id.org/uk/curriculum/core/upperAgeBoundary">
+        <rdfs:domain>
+            <owl:Class>
+                <owl:unionOf rdf:parseType="Collection">
+                    <rdf:Description rdf:about="https://w3id.org/uk/curriculum/core/KeyStage"/>
+                    <rdf:Description rdf:about="https://w3id.org/uk/curriculum/core/Phase"/>
+                    <rdf:Description rdf:about="https://w3id.org/uk/curriculum/core/YearGroup"/>
+                </owl:unionOf>
+            </owl:Class>
+        </rdfs:domain>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#positiveInteger"/>
+        <rdfs:comment xml:lang="en">Upper age boundary of an educational level.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">upper age boundary</rdfs:label>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/ContentDescriptor -->
+
+
+    <owl:Class rdf:about="https://w3id.org/uk/curriculum/core/ContentDescriptor">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <rdfs:comment xml:lang="en">A statement of knowledge (a concept, fact or skill) within a sub-strand.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">Content Descriptor</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/ContentSubDescriptor -->
+
+
+    <owl:Class rdf:about="https://w3id.org/uk/curriculum/core/ContentSubDescriptor">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <rdfs:comment xml:lang="en">Elaboration or specific detail relating to a content descriptor.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">Content Sub-Descriptor</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/Discipline -->
+
+
+    <owl:Class rdf:about="https://w3id.org/uk/curriculum/core/Discipline">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <rdfs:comment xml:lang="en">An organisational discipline (e.g. mathematics, english, history).</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">Discipline</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/KeyStage -->
+
+
+    <owl:Class rdf:about="https://w3id.org/uk/curriculum/core/KeyStage">
+        <rdfs:comment xml:lang="en">A key stage that structures learning for specific age groups.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">Key Stage</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/Phase -->
+
+
+    <owl:Class rdf:about="https://w3id.org/uk/curriculum/core/Phase">
+        <rdfs:comment xml:lang="en">A phase of study in the education system.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">Phase</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/Scheme -->
+
+
+    <owl:Class rdf:about="https://w3id.org/uk/curriculum/core/Scheme">
+        <rdfs:comment xml:lang="en">A scheme that defines curriculum content for a sub-subject and a key stage.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">Scheme</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/Strand -->
+
+
+    <owl:Class rdf:about="https://w3id.org/uk/curriculum/core/Strand">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <rdfs:comment xml:lang="en">An organisational strand within a discipline (e.g. number, algebra).</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">Strand</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/SubStrand -->
+
+
+    <owl:Class rdf:about="https://w3id.org/uk/curriculum/core/SubStrand">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <rdfs:comment xml:lang="en">A sub-division of a strand (e.g. place value, addition and subtraction).</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">Sub-Strand</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/SubSubject -->
+
+
+    <owl:Class rdf:about="https://w3id.org/uk/curriculum/core/SubSubject">
+        <rdfs:comment xml:lang="en">Sub-subject (e.g. biology, history, physical education).</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">Sub-Subject</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/Subject -->
+
+
+    <owl:Class rdf:about="https://w3id.org/uk/curriculum/core/Subject">
+        <rdfs:comment xml:lang="en">Subject (e.g. science, history, physical education).</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">Subject</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/Theme -->
+
+
+    <owl:Class rdf:about="https://w3id.org/uk/curriculum/core/Theme">
+        <rdfs:subClassOf rdf:resource="http://www.w3.org/2004/02/skos/core#Concept"/>
+        <rdfs:comment xml:lang="en">A cross-cutting theme that can span multiple subjects and content areas.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">Theme</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- https://w3id.org/uk/curriculum/core/YearGroup -->
+
+
+    <owl:Class rdf:about="https://w3id.org/uk/curriculum/core/YearGroup">
+        <rdfs:comment xml:lang="en">A year group within a key stage.</rdfs:comment>
+        <rdfs:isDefinedBy rdf:resource="https://w3id.org/uk/curriculum/core/"/>
+        <rdfs:label xml:lang="en">Year Group</rdfs:label>
+    </owl:Class>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Annotations
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+
+    <rdf:Description rdf:about="https://w3id.org/uk/curriculum/core/version-0.0.9">
+        <terms:date rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-11-19</terms:date>
+        <rdfs:comment xml:lang="en">Development version</rdfs:comment>
+    </rdf:Description>
+    <rdf:Description rdf:about="https://w3id.org/uk/curriculum/core/version-0.1.0">
+        <terms:date rdf:datatype="http://www.w3.org/2001/XMLSchema#date">2025-12-03</terms:date>
+        <rdfs:comment xml:lang="en">Initial release</rdfs:comment>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 5.1.18) https://github.com/owlcs/owlapi/ -->
+
+
