@@ -50,7 +50,10 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/data \
             ghcr.io/dgarijo/widoco:v1.4.25 \
-            -confFile /data/ontology/widoco-config/config.properties
+            -ontFile /data/ontology/dfe-curriculum-ontology.ttl \
+            -outFolder /data/docs-output \
+            -confFile /data/ontology/widoco-config/config.properties \
+            -rewriteAll
 
       - name: Fix permissions
         run: |
