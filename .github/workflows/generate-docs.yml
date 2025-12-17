@@ -36,20 +36,20 @@ jobs:
       - name: Merge TTL files
         run: |
           python scripts/merge_ttls.py
-          echo "Merged ontology created at merged-ontology.ttl"
-          ls -lh merged-ontology.ttl
+          echo "Merged ontology created at /tmp/combined-data.ttl"
+          ls -lh /tmp/combined-data.ttl
 
       - name: Generate documentation with Widoco
         run: |
           docker run --rm \
             -v ${{ github.workspace }}:/data \
+            -v /tmp:/tmp \
             dgarijo/widoco:latest \
-            -ontFile /data/merged-ontology.ttl \
+            -ontFile /tmp/combined-data.ttl \
             -outFolder /data/docs-output \
             -htaccess \
             -uniteSections \
             -includeAnnotationProperties \
-            -analytics UA-XXXXXX-X \
             -webVowl \
             -rewriteAll
 
