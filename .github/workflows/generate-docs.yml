@@ -39,6 +39,11 @@ jobs:
           echo "Merged ontology created at /tmp/combined-data.ttl"
           ls -lh /tmp/combined-data.ttl
 
+      - name: Create output directory
+        run: |
+          mkdir -p docs-output
+          chmod -R 777 docs-output
+
       - name: Generate documentation with Widoco
         run: |
           docker run --rm \
