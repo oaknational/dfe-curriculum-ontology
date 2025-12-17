@@ -34,6 +34,13 @@ jobs:
           mkdir -p docs-output
           chmod -R 777 docs-output
 
+      - name: Copy documentation markdown files
+        run: |
+          if [ -d "ontology/docs" ]; then
+            cp ontology/docs/*.md ontology/ 2>/dev/null || true
+            echo "Copied markdown files from ontology/docs/"
+          fi
+
       - name: Generate documentation with Widoco
         run: |
           docker run --rm \

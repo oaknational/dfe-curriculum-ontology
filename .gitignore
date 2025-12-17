@@ -50,6 +50,10 @@ docs/generated/
 *.html
 !docs/**/*.html
 
+# Widoco markdown files (copied to ontology/ during workflow)
+ontology/*-en.md
+!ontology/docs/
+
 # Test outputs
 validation-reports/
 *.report.ttl

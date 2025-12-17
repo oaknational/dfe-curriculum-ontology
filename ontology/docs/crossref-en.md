@@ -1,0 +1,1 @@
+This section provides details for each class and property defined by DfE Curriculum Ontology.
