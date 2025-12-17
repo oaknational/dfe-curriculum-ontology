@@ -32,13 +32,18 @@ jobs:
             -outFolder /data/docs-output \
             -rewriteAll
 
+      - name: Create index.html
+        run: |
+          cp docs-output/doc/index-en.html docs-output/doc/index.html
+          echo "Created index.html from index-en.html"
+
       - name: Setup Pages
         uses: actions/configure-pages@v4
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: './docs-output'
+          path: './docs-output/doc'
 
       - name: Deploy to GitHub Pages
         id: deployment
