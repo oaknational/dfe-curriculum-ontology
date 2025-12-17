@@ -45,6 +45,12 @@ jobs:
           echo "=== Ontology file exists? ==="
           ls -la ontology/dfe-curriculum-ontology.ttl
 
+      - name: Copy custom HTML sections to ontology directory
+        run: |
+          echo "=== Copying HTML files for Widoco to find ==="
+          cp ontology/widoco-config/*.html ontology/
+          ls -la ontology/*.html
+
       - name: Generate documentation with Widoco
         run: |
           docker run --rm \
