@@ -39,22 +39,14 @@ jobs:
           echo "Merged ontology created at /tmp/combined-data.ttl"
           ls -lh /tmp/combined-data.ttl
 
-      - name: Set up Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: 'temurin'
-          java-version: '11'
-
-      - name: Download Widoco
-        run: |
-          wget https://github.com/dgarijo/Widoco/releases/download/v1.4.25/widoco-1.4.25-jar-with-dependencies.jar -O widoco.jar
-          echo "Downloaded Widoco JAR"
-
       - name: Generate documentation with Widoco
         run: |
-          java -jar widoco.jar \
+          docker run --rm \
+            -v ${{ github.workspace }}:/data \
+            -v /tmp:/tmp \
+            ghcr.io/dgarijo/widoco:v1.4.25 \
             -ontFile /tmp/combined-data.ttl \
-            -outFolder docs-output \
+            -outFolder /data/docs-output \
             -htaccess \
             -uniteSections \
             -includeAnnotationProperties \
