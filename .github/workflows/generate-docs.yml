@@ -53,6 +53,7 @@ jobs:
             -ontFile /data/ontology/dfe-curriculum-ontology.ttl \
             -outFolder /data/docs-output \
             -confFile /data/ontology/widoco-config/config.properties \
+            -getOntologyMetadata \
             -rewriteAll
 
       - name: Fix permissions
