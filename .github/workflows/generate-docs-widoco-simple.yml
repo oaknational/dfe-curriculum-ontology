@@ -1,7 +1,9 @@
 name: Generate Documentation with Widoco (Simple)
 
 on:
-  workflow_dispatch:  # Manual trigger only for testing
+  release:
+    types: [published]
+  workflow_dispatch:  # Allow manual triggers for testing
 
 permissions:
   contents: read
@@ -30,8 +32,12 @@ jobs:
           docker run --rm \
             -v ${{ github.workspace }}:/data \
             ghcr.io/dgarijo/widoco:v1.4.25 \
-            -ontFile /data/ontology/dfe-curriculum-ontology.ttl \
+            -ontFile /data/ontology/oak-curriculum-ontology.ttl \
             -outFolder /data/docs-output \
+            -htaccess \
+            -uniteSections \
+            -includeAnnotationProperties \
+            -webVowl \
             -rewriteAll
 
       - name: Fix permissions
