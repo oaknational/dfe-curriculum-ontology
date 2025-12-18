@@ -38,8 +38,7 @@ jobs:
             -uniteSections \
             -includeAnnotationProperties \
             -webVowl \
-            -excludeIntroduction \
-            -excludeReferences \
+            -noPlaceHolderText \
             -excludeProvenance \
             -rewriteAll
 
