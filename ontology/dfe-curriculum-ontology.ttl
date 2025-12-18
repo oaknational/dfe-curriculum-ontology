@@ -35,11 +35,11 @@
   representing educational curriculum structures."""@en ;
   dcterms:description """This ontology defines the foundational classes and properties for
   representing educational curriculum structures."""@en ;
-  dcterms:references <http://www.w3.org/2004/02/skos/core#> ;
-  dcterms:references <http://purl.org/dc/terms/> ;
-  dcterms:bibliographicCitation """Smith, J. (2024). 'Semantic Curriculum Design'. 
+  dc:references <http://www.w3.org/2004/02/skos/core#> ;
+  dc:references <http://purl.org/dc/terms/> ;
+  dc:bibliographicCitation """Smith, J. (2024). 'Semantic Curriculum Design'. 
   Journal of Educational Ontology, 12(3), 45-67.""" ;
-  dcterms:bibliographicCitation """Department for Education (2023). 'National Curriculum Framework'. 
+  dc:bibliographicCitation """Department for Education (2023). 'National Curriculum Framework'. 
   Available at: https://www.gov.uk""" ;
   dcterms:creator "Department for Education" ;
   dcterms:created "2025-11-19"^^xsd:date ;
