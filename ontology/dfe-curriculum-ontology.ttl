@@ -31,12 +31,11 @@
   owl:priorVersion <https://w3id.org/uk/curriculum/core/curriculum-ontology/0.0.9> ;
 
   bibo:status "DfE Curriculum Ontology" ;
+  bibo:citesAsAuthority "Smith, J. (2024)..." ;
   dcterms:abstract """This ontology defines the foundational classes and properties for
   representing educational curriculum structures."""@en ;
   dcterms:description """This ontology defines the foundational classes and properties for
   representing educational curriculum structures."""@en ;
-  dc:references <http://www.w3.org/2004/02/skos/core#> ;
-  dc:references <http://purl.org/dc/terms/> ;
   dc:bibliographicCitation """Smith, J. (2024). 'Semantic Curriculum Design'. 
   Journal of Educational Ontology, 12(3), 45-67.""" ;
   dc:bibliographicCitation """Department for Education (2023). 'National Curriculum Framework'. 
