@@ -45,16 +45,13 @@ target/
 *.pyc
 __pycache__/
 
-# Generated documentation (if auto-generated)
+# Generated documentation
 docs/generated/
+docs-output/
 *.html
 !docs/**/*.html
-!ontology/widoco-config/*.html
-# Ignore copied HTML files in ontology root (copied from widoco-config during build)
-ontology/*.html
 
 # Test outputs
-validation-reports/
 *.report.ttl
 
 # Environment files
