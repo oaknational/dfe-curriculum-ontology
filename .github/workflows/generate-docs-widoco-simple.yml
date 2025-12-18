@@ -38,6 +38,7 @@ jobs:
             -uniteSections \
             -includeAnnotationProperties \
             -webVowl \
+            -excludeIntroduction \
             -rewriteAll
 
       - name: Fix permissions
