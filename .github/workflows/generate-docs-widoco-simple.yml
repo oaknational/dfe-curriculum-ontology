@@ -39,6 +39,8 @@ jobs:
             -includeAnnotationProperties \
             -webVowl \
             -excludeIntroduction \
+            -excludeReferences \
+            -excludeProvenance \
             -rewriteAll
 
       - name: Fix permissions
