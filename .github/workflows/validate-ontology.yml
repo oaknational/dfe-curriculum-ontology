@@ -138,7 +138,7 @@ jobs:
         echo "Validates all curriculum data instances against the ontology schema:" >> $GITHUB_STEP_SUMMARY
         echo "- Required properties and cardinalities" >> $GITHUB_STEP_SUMMARY
         echo "- Property value types and patterns" >> $GITHUB_STEP_SUMMARY
-        echo "- Relationships between entities (subjects, key stages, strands, content descriptors)" >> $GITHUB_STEP_SUMMARY
+        echo "- Relationships between entities" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
 
         if [ "${{ steps.shacl-validation.outcome }}" == "success" ]; then
