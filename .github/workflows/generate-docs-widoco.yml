@@ -61,3 +61,29 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Display summary
+        if: always()
+        run: |
+          echo "### Ontology Documentation Generated with Widoco" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Source Ontology:** \`ontology/dfe-curriculum-ontology.ttl\`" >> $GITHUB_STEP_SUMMARY
+          echo "**Generator:** Widoco v1.4.25" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ steps.deployment.outcome }}" == "success" ]; then
+            echo "✅ **Status:** Documentation deployed successfully" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "**Live Documentation:** ${{ steps.deployment.outputs.page_url }}" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "#### Features Included" >> $GITHUB_STEP_SUMMARY
+            echo "- HTML documentation with cross-references" >> $GITHUB_STEP_SUMMARY
+            echo "- WebVOWL interactive visualization" >> $GITHUB_STEP_SUMMARY
+            echo "- Class and property definitions" >> $GITHUB_STEP_SUMMARY
+            echo "- Annotation properties" >> $GITHUB_STEP_SUMMARY
+            echo "- .htaccess file for content negotiation" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "❌ **Status:** Documentation generation or deployment failed" >> $GITHUB_STEP_SUMMARY
+            echo "" >> $GITHUB_STEP_SUMMARY
+            echo "Please review the logs above for error details." >> $GITHUB_STEP_SUMMARY
+          fi

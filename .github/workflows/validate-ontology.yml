@@ -31,15 +31,17 @@ jobs:
       run: pip install rdflib
 
     - name: Check Turtle syntax
+      id: syntax-check
       run: |
         python - <<'EOF'
         import sys
+        import os
         from pathlib import Path
         from rdflib import Graph
-        
+
         errors = []
         files_checked = 0
-        
+
         for ttl_file in sorted(Path('.').rglob('*.ttl')):
             files_checked += 1
             print(f'Checking: {ttl_file}')
@@ -50,10 +52,15 @@ jobs:
             except Exception as e:
                 errors.append((str(ttl_file), str(e)))
                 print(f'  ✗ ERROR: {e}')
-        
+
         print(f'\n{"="*60}')
         print(f'Checked {files_checked} files')
-        
+
+        # Write to GitHub output
+        with open(os.environ['GITHUB_OUTPUT'], 'a') as f:
+            f.write(f'files_checked={files_checked}\n')
+            f.write(f'error_count={len(errors)}\n')
+
         if errors:
             print(f'\n❌ {len(errors)} file(s) with syntax errors:\n')
             for file, error in errors:
@@ -63,6 +70,21 @@ jobs:
         else:
             print('✅ All files have valid Turtle syntax')
         EOF
+
+    - name: Display syntax check summary
+      if: always()
+      run: |
+        echo "### Turtle Syntax Validation" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Files checked:** ${{ steps.syntax-check.outputs.files_checked }}" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        if [ "${{ steps.syntax-check.outcome }}" == "success" ]; then
+          echo "✅ **Status:** All files have valid Turtle syntax" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ **Status:** Syntax errors found (${{ steps.syntax-check.outputs.error_count }} file(s))" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "" >> $GITHUB_STEP_SUMMARY
 
   shacl-validation:
     needs: syntax-check
@@ -85,15 +107,57 @@ jobs:
         python scripts/merge_ttls.py
 
     - name: Validate combined dataset
+      id: shacl-validation
       run: |
         echo ""
         echo "Running SHACL validation..."
-        pyshacl \
+
+        # Run SHACL validation and capture output
+        if pyshacl \
           --shacl ontology/dfe-curriculum-constraints.ttl \
           --ont-graph ontology/dfe-curriculum-ontology.ttl \
           --abort \
           --format human \
-          /tmp/combined-data.ttl
+          /tmp/combined-data.ttl > /tmp/shacl-output.txt 2>&1; then
 
-        echo ""
-        echo "✅ Validation passed"
+          echo "✅ Validation passed"
+          echo "conforms=true" >> $GITHUB_OUTPUT
+          cat /tmp/shacl-output.txt
+        else
+          echo "❌ Validation failed"
+          echo "conforms=false" >> $GITHUB_OUTPUT
+          cat /tmp/shacl-output.txt
+          exit 1
+        fi
+
+    - name: Display SHACL validation summary
+      if: always()
+      run: |
+        echo "### SHACL Validation" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "**Ontology:** \`ontology/dfe-curriculum-ontology.ttl\`" >> $GITHUB_STEP_SUMMARY
+        echo "**Constraints:** \`ontology/dfe-curriculum-constraints.ttl\`" >> $GITHUB_STEP_SUMMARY
+        echo "**Data:** Combined dataset from \`ontology/\` and \`data/\`" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        if [ "${{ steps.shacl-validation.outcome }}" == "success" ]; then
+          echo "✅ **Result:** Conforms to all SHACL constraints" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ **Result:** Validation failed - see logs for constraint violations" >> $GITHUB_STEP_SUMMARY
+        fi
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        echo "---" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "## Overall Validation Status" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        if [ "${{ needs.syntax-check.result }}" == "success" ] && [ "${{ steps.shacl-validation.outcome }}" == "success" ]; then
+          echo "### ✅ All validations passed!" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "The ontology is ready for deployment." >> $GITHUB_STEP_SUMMARY
+        else
+          echo "### ❌ Validation failed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Please review the errors above and fix them before deployment." >> $GITHUB_STEP_SUMMARY
+        fi
