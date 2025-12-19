@@ -135,13 +135,14 @@ jobs:
       run: |
         echo "### SHACL Validation" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "**Ontology:** \`ontology/dfe-curriculum-ontology.ttl\`" >> $GITHUB_STEP_SUMMARY
-        echo "**Constraints:** \`ontology/dfe-curriculum-constraints.ttl\`" >> $GITHUB_STEP_SUMMARY
-        echo "**Data:** Combined dataset from \`ontology/\` and \`data/\`" >> $GITHUB_STEP_SUMMARY
+        echo "Validates all curriculum data instances against the ontology schema:" >> $GITHUB_STEP_SUMMARY
+        echo "- Required properties and cardinalities" >> $GITHUB_STEP_SUMMARY
+        echo "- Property value types and patterns" >> $GITHUB_STEP_SUMMARY
+        echo "- Relationships between entities (subjects, key stages, strands, content descriptors)" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
 
         if [ "${{ steps.shacl-validation.outcome }}" == "success" ]; then
-          echo "✅ **Result:** Conforms to all SHACL constraints" >> $GITHUB_STEP_SUMMARY
+          echo "✅ **Result:** All curriculum data conforms to validation constraints" >> $GITHUB_STEP_SUMMARY
         else
           echo "❌ **Result:** Validation failed - see logs for constraint violations" >> $GITHUB_STEP_SUMMARY
         fi
