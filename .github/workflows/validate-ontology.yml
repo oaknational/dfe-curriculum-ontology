@@ -91,7 +91,6 @@ jobs:
         pyshacl \
           --shacl ontology/dfe-curriculum-constraints.ttl \
           --ont-graph ontology/dfe-curriculum-ontology.ttl \
-          --inference rdfs \
           --abort \
           --format human \
           /tmp/combined-data.ttl
