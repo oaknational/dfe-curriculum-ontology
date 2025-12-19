@@ -63,7 +63,7 @@ curric:version-0.0.9
 
 # ----------------------------------------------------------------------
 # Classes: Programme Structure
-# (Phase, KeyStage, YearGroup, Subject, SubSubject, Scheme)
+# (Phase, KeyStage, YearGroup, Subject, SubSubject, Scheme, Progression)
 # ----------------------------------------------------------------------
 
 curric:Phase 
@@ -100,6 +100,12 @@ curric:Scheme
   rdf:type owl:Class ;
   rdfs:label "Scheme"@en ;
   rdfs:comment """A scheme that defines curriculum content for a sub-subject and a key stage."""@en ;
+  rdfs:isDefinedBy curric: .
+
+curric:Progression
+  rdf:type owl:Class ;
+  rdfs:label "Progression"@en ;
+  rdfs:comment """A progression that defines curriculum content for a sub-subject and a key stage."""@en ;
   rdfs:isDefinedBy curric: .
 
 # ----------------------------------------------------------------------
