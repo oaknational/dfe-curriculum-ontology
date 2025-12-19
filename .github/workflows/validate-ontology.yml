@@ -151,13 +151,3 @@ jobs:
         echo "" >> $GITHUB_STEP_SUMMARY
         echo "## Overall Validation Status" >> $GITHUB_STEP_SUMMARY
         echo "" >> $GITHUB_STEP_SUMMARY
-
-        if [ "${{ needs.syntax-check.result }}" == "success" ] && [ "${{ steps.shacl-validation.outcome }}" == "success" ]; then
-          echo "### ✅ All validations passed!" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "The ontology is ready for deployment." >> $GITHUB_STEP_SUMMARY
-        else
-          echo "### ❌ Validation failed" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "Please review the errors above and fix them before deployment." >> $GITHUB_STEP_SUMMARY
-        fi
