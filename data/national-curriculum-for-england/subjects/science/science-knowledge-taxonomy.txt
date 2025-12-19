@@ -142,8 +142,7 @@ eng:content-descriptor-observe-seasonal-changes
   skos:prefLabel "Observe changes across the 4 seasons"@en ;
   skos:broader eng:substrand-seasonal-changes ;
   skos:narrower eng:content-subdescriptor-seasons-detail ;
-  skos:inScheme eng:knowledge-taxonomy ;
-  skos:related eng:theme-climate-change-and-sustainability .
+  skos:inScheme eng:knowledge-taxonomy .
 
 eng:content-descriptor-biomechanics
   a skos:Concept, curric:ContentDescriptor ;
@@ -165,4 +164,5 @@ eng:content-subdescriptor-seasons-detail
   a skos:Concept, curric:ContentSubDescriptor ;
   skos:prefLabel "Seasons detail"@en ;
   skos:broader eng:content-descriptor-observe-seasonal-changes ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  skos:related eng:theme-climate-change-and-sustainability .

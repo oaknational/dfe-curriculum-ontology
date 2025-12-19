@@ -364,9 +364,3 @@ interconnections with other world developments."""@en ;
 # ----------------------------------------------------------------------
 # Content Sub-Descriptors
 # ----------------------------------------------------------------------
-
-eng:content-subdescriptor-seasons-detail
-  a skos:Concept, curric:ContentSubDescriptor ;
-  skos:prefLabel "Seasons detail"@en ;
-  skos:broader eng:content-descriptor-observe-seasonal-changes ;
-  skos:inScheme eng:knowledge-taxonomy .

@@ -99,13 +99,14 @@ curric:SubSubject
 curric:Scheme
   rdf:type owl:Class ;
   rdfs:label "Scheme"@en ;
-  rdfs:comment """A scheme that defines curriculum content for a sub-subject and a key stage."""@en ;
+  rdfs:comment "A scheme defines one or more progressions for a sub-subject and a key stage."@en ;
   rdfs:isDefinedBy curric: .
 
 curric:Progression
   rdf:type owl:Class ;
   rdfs:label "Progression"@en ;
-  rdfs:comment """A progression that defines curriculum content for a sub-subject and a key stage."""@en ;
+  rdfs:comment """A progression defines curriculum content relating to a single sub-strand, for a 
+  scheme."""@en ;
   rdfs:isDefinedBy curric: .
 
 # ----------------------------------------------------------------------
@@ -273,7 +274,7 @@ curric:hasAim
   rdf:type owl:DatatypeProperty ;
   rdfs:label "has aim"@en ;
   rdfs:comment "A specific educational aim for this subject as stated in the National Curriculum."@en ;
-  rdfs:domain [ owl:unionOf (curric:Subject curric:SubSubject) ] ;
+  rdfs:domain curric:SubSubject ;
   rdfs:range rdf:langString ;
   rdfs:isDefinedBy curric: .
 

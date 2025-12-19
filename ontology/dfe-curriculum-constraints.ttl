@@ -352,6 +352,15 @@ curricshapes:SubSubjectShape
   ] ;
 
   sh:property [
+     sh:path curric:hasAim ;
+     sh:datatype rdf:langString ;
+     sh:minCount 1 ;
+     sh:name "has aim" ;
+     sh:description "Every sub-subject must have one or more aims." ;
+     sh:message "Sub-subjects must have one or more aims." ;
+   ] ;
+
+  sh:property [
     sh:path curric:isPartOf ;
     sh:class curric:Subject ;
     sh:minCount 1 ;
@@ -423,16 +432,6 @@ curricshapes:SchemeShape
     sh:message "Schemes must specify exactly which key stage they cover." ;
   ] ;
 
-  sh:property [
-    sh:path curric:hasContentDescriptor ;
-    sh:class curric:ContentDescriptor ;
-    sh:minCount 1 ;
-    sh:severity sh:Warning ;
-    sh:name "has content descriptor" ;
-    sh:description "Every scheme should relate to at least one content descriptor." ;
-    sh:message "Scheme should relate to at least one content descriptor (WARNING)." ;
-  ] ;
-
   sh:sparql [
     sh:message "Scheme's sub-subjects must all belong to the same subject" ;
     sh:select """
@@ -447,6 +446,44 @@ curricshapes:SchemeShape
         FILTER (?subject1 != ?subject2)
       }
     """ ;
+  ] .
+
+# ----------------------------------------------------------------------
+# Shape: Progression
+# ----------------------------------------------------------------------
+
+curricshapes:ProgressionShape
+  a sh:NodeShape ;
+  sh:targetClass curric:Progression ;
+
+  sh:property [
+    sh:path rdfs:label ;
+    sh:datatype rdf:langString ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:name "label" ;
+    sh:description "Every progression must have exactly one rdfs:label." ;
+    sh:message "Progressions must have exactly one rdfs:label." ;
+  ] ;
+
+  sh:property [
+    sh:path curric:isPartOf ;
+    sh:class curric:Scheme ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:name "is part of" ;
+    sh:description "Every progression must be part of exactly one scheme." ;
+    sh:message "Progressions must specify which scheme they belong to." ;
+  ] ;
+
+  sh:property [
+    sh:path curric:hasContentDescriptor ;
+    sh:class curric:ContentDescriptor ;
+    sh:minCount 1 ;
+    sh:severity sh:Warning ;
+    sh:name "has content descriptor" ;
+    sh:description "Every progression should relate to at least one content descriptor." ;
+    sh:message "Progressions should relate to at least one content descriptor (WARNING)." ;
   ] .
 
 # ----------------------------------------------------------------------
@@ -701,13 +738,13 @@ curricshapes:ContentDescriptorShape
 
   sh:sparql [
     sh:severity sh:Warning ;
-    sh:message "Content descriptor is not used in any scheme (WARNING - orphaned)" ;
+    sh:message "Content descriptor is not used in any progression (WARNING - orphaned)" ;
     sh:select """
       PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
         $this a curric:ContentDescriptor .
         FILTER NOT EXISTS {
-          ?scheme a curric:Scheme ;
+          ?progression a curric:Progression ;
                   curric:hasContentDescriptor $this .
         }
       }

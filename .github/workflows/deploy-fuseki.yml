@@ -23,6 +23,13 @@ jobs:
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
+      - name: Verify authentication
+        run: |
+          echo "Authenticated service account:"
+          gcloud auth list --filter=status:ACTIVE --format="value(account)"
+          echo ""
+          echo "Expected: github-actions-deployer@oak-ai-playground.iam.gserviceaccount.com"
+
       - name: Configure Docker for GCR
         run: gcloud auth configure-docker gcr.io
 
