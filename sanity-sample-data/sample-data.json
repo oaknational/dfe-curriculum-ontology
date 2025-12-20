@@ -1,0 +1,497 @@
+{
+  "phases": [
+    {
+      "_id": "phase-primary",
+      "_type": "phase",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "phase-primary"
+      },
+      "label": "Primary",
+      "description": "Primary education phase covering years 1-6.",
+      "lowerAgeBoundary": 5,
+      "upperAgeBoundary": 11
+    },
+    {
+      "_id": "phase-secondary",
+      "_type": "phase",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "phase-secondary"
+      },
+      "label": "Secondary",
+      "description": "Secondary education phase covering years 7-11.",
+      "lowerAgeBoundary": 11,
+      "upperAgeBoundary": 16
+    }
+  ],
+  "keyStages": [
+    {
+      "_id": "key-stage-3",
+      "_type": "keyStage",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "key-stage-3"
+      },
+      "label": "Key Stage 3",
+      "description": "Key Stage 3 covering years 7-9.",
+      "phase": {
+        "_type": "reference",
+        "_ref": "phase-secondary"
+      },
+      "lowerAgeBoundary": 11,
+      "upperAgeBoundary": 14
+    },
+    {
+      "_id": "key-stage-4",
+      "_type": "keyStage",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "key-stage-4"
+      },
+      "label": "Key Stage 4",
+      "description": "Key Stage 4 covering years 10-11.",
+      "phase": {
+        "_type": "reference",
+        "_ref": "phase-secondary"
+      },
+      "lowerAgeBoundary": 14,
+      "upperAgeBoundary": 16
+    }
+  ],
+  "disciplines": [
+    {
+      "_id": "discipline-science",
+      "_type": "discipline",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "discipline-science"
+      },
+      "prefLabel": "Science",
+      "definition": "The systematic study of the natural world through observation, experimentation, and theory, encompassing biology, chemistry, and physics.",
+      "scopeNote": "Science is essential for understanding the natural world and making informed decisions about scientific developments. It develops critical thinking, analytical skills, and systematic investigation methods that students will use throughout their lives."
+    },
+    {
+      "_id": "discipline-geography",
+      "_type": "discipline",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "discipline-geography"
+      },
+      "prefLabel": "Geography",
+      "definition": "The study of places and the relationships between people and their environments.",
+      "scopeNote": "Geography explores both physical features of the Earth and human societies spread across it."
+    }
+  ],
+  "subjects": [
+    {
+      "_id": "subject-science",
+      "_type": "subject",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "subject-science"
+      },
+      "label": "Science",
+      "description": "Science subject in the National Curriculum for England.",
+      "disciplines": [
+        {
+          "_type": "reference",
+          "_ref": "discipline-science",
+          "_key": "disc1"
+        }
+      ]
+    },
+    {
+      "_id": "subject-geography",
+      "_type": "subject",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "subject-geography"
+      },
+      "label": "Geography",
+      "description": "Geography subject in the National Curriculum for England.",
+      "disciplines": [
+        {
+          "_type": "reference",
+          "_ref": "discipline-geography",
+          "_key": "disc1"
+        }
+      ]
+    }
+  ],
+  "strands": [
+    {
+      "_id": "strand-structure-function-living-organisms",
+      "_type": "strand",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "strand-structure-function-living-organisms"
+      },
+      "prefLabel": "Structure and function of living organisms",
+      "definition": "Understanding the organization and functioning of living organisms from cells to systems.",
+      "discipline": {
+        "_type": "reference",
+        "_ref": "discipline-science"
+      }
+    },
+    {
+      "_id": "strand-material-cycles-and-energy",
+      "_type": "strand",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "strand-material-cycles-and-energy"
+      },
+      "prefLabel": "Material cycles and energy",
+      "definition": "Study of how materials and energy flow through natural systems.",
+      "discipline": {
+        "_type": "reference",
+        "_ref": "discipline-science"
+      }
+    }
+  ],
+  "substrands": [
+    {
+      "_id": "substrand-cells-organisation",
+      "_type": "substrand",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "substrand-cells-organisation"
+      },
+      "prefLabel": "Cells and organisation",
+      "definition": "The structure and function of cells as the fundamental units of life.",
+      "strand": {
+        "_type": "reference",
+        "_ref": "strand-structure-function-living-organisms"
+      }
+    },
+    {
+      "_id": "substrand-skeletal-and-muscular-systems",
+      "_type": "substrand",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "substrand-skeletal-and-muscular-systems"
+      },
+      "prefLabel": "The skeletal and muscular systems",
+      "definition": "How the skeletal and muscular systems work together for movement and support.",
+      "strand": {
+        "_type": "reference",
+        "_ref": "strand-structure-function-living-organisms"
+      }
+    },
+    {
+      "_id": "substrand-seasonal-changes",
+      "_type": "substrand",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "substrand-seasonal-changes"
+      },
+      "prefLabel": "Seasonal changes",
+      "definition": "Patterns and changes that occur across different seasons.",
+      "strand": {
+        "_type": "reference",
+        "_ref": "strand-material-cycles-and-energy"
+      }
+    }
+  ],
+  "contentDescriptors": [
+    {
+      "_id": "content-descriptor-cells-as-unit-of-living-organism",
+      "_type": "contentDescriptor",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "content-descriptor-cells-as-unit-of-living-organism"
+      },
+      "prefLabel": "Cells as the fundamental unit of living organisms, including how to observe, interpret and record cell structure using a light microscope.",
+      "substrand": {
+        "_type": "reference",
+        "_ref": "substrand-cells-organisation"
+      }
+    },
+    {
+      "_id": "content-descriptor-functions-of-the-cell-wall",
+      "_type": "contentDescriptor",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "content-descriptor-functions-of-the-cell-wall"
+      },
+      "prefLabel": "The functions of the cell wall, cell membrane, cytoplasm, nucleus, vacuole, mitochondria and chloroplasts.",
+      "substrand": {
+        "_type": "reference",
+        "_ref": "substrand-cells-organisation"
+      }
+    },
+    {
+      "_id": "content-descriptor-biomechanics",
+      "_type": "contentDescriptor",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "content-descriptor-biomechanics"
+      },
+      "prefLabel": "Biomechanics",
+      "substrand": {
+        "_type": "reference",
+        "_ref": "substrand-skeletal-and-muscular-systems"
+      }
+    },
+    {
+      "_id": "content-descriptor-function-of-muscles",
+      "_type": "contentDescriptor",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "content-descriptor-function-of-muscles"
+      },
+      "prefLabel": "The function of muscles and examples of antagonistic muscles.",
+      "substrand": {
+        "_type": "reference",
+        "_ref": "substrand-skeletal-and-muscular-systems"
+      }
+    },
+    {
+      "_id": "content-descriptor-observe-seasonal-changes",
+      "_type": "contentDescriptor",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "content-descriptor-observe-seasonal-changes"
+      },
+      "prefLabel": "Observe changes across the 4 seasons",
+      "substrand": {
+        "_type": "reference",
+        "_ref": "substrand-seasonal-changes"
+      }
+    }
+  ],
+  "contentSubdescriptors": [
+    {
+      "_id": "content-subdescriptor-seasons-detail",
+      "_type": "contentSubdescriptor",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "content-subdescriptor-seasons-detail"
+      },
+      "prefLabel": "Observe and describe weather associated with the seasons and how day length varies",
+      "contentDescriptor": {
+        "_type": "reference",
+        "_ref": "content-descriptor-observe-seasonal-changes"
+      },
+      "exampleText": "Students should observe how trees change through autumn and spring, noting leaf color changes and bud formation."
+    }
+  ],
+  "subsubjects": [
+    {
+      "_id": "subsubject-science",
+      "_type": "subsubject",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "subsubject-science"
+      },
+      "label": "Science",
+      "description": "Science sub-subject in the National Curriculum for England.",
+      "fullDescription": "A high-quality science education provides the foundations for understanding the world through the specific disciplines of biology, chemistry and physics.",
+      "subject": {
+        "_type": "reference",
+        "_ref": "subject-science"
+      },
+      "strands": [
+        {
+          "_type": "reference",
+          "_ref": "strand-structure-function-living-organisms",
+          "_key": "strand1"
+        },
+        {
+          "_type": "reference",
+          "_ref": "strand-material-cycles-and-energy",
+          "_key": "strand2"
+        }
+      ],
+      "aims": [
+        {
+          "_key": "aim1",
+          "aimText": "Develop scientific knowledge and conceptual understanding through the specific disciplines of biology, chemistry and physics"
+        },
+        {
+          "_key": "aim2",
+          "aimText": "Develop understanding of the nature, processes and methods of science through different types of science enquiries that help them to answer scientific questions about the world around them"
+        },
+        {
+          "_key": "aim3",
+          "aimText": "Are equipped with the scientific knowledge required to understand the uses and implications of science, today and for the future"
+        }
+      ],
+      "sourceUrl": "https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study"
+    },
+    {
+      "_id": "subsubject-geography",
+      "_type": "subsubject",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "subsubject-geography"
+      },
+      "label": "Geography",
+      "description": "Geography sub-subject in the National Curriculum for England.",
+      "fullDescription": "A high-quality geography education should inspire pupils' curiosity and fascination about the world and its people.",
+      "subject": {
+        "_type": "reference",
+        "_ref": "subject-geography"
+      },
+      "strands": [],
+      "aims": [
+        {
+          "_key": "aim1",
+          "aimText": "Develop contextual knowledge of the location of globally significant places"
+        }
+      ],
+      "sourceUrl": "https://www.gov.uk/government/publications/national-curriculum-in-england-geography-programmes-of-study"
+    }
+  ],
+  "schemes": [
+    {
+      "_id": "scheme-science-key-stage-3",
+      "_type": "scheme",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "scheme-science-key-stage-3"
+      },
+      "label": "Science Key Stage 3",
+      "description": "Science programme of study for key stage 3.",
+      "subsubject": {
+        "_type": "reference",
+        "_ref": "subsubject-science"
+      },
+      "keyStage": {
+        "_type": "reference",
+        "_ref": "key-stage-3"
+      },
+      "contentDescriptors": [
+        {
+          "_type": "reference",
+          "_ref": "content-descriptor-observe-seasonal-changes",
+          "_key": "cd1"
+        },
+        {
+          "_type": "reference",
+          "_ref": "content-descriptor-biomechanics",
+          "_key": "cd2"
+        },
+        {
+          "_type": "reference",
+          "_ref": "content-descriptor-function-of-muscles",
+          "_key": "cd3"
+        }
+      ]
+    },
+    {
+      "_id": "scheme-combined-science-key-stage-4",
+      "_type": "scheme",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "scheme-combined-science-key-stage-4"
+      },
+      "label": "Combined Science Key Stage 4",
+      "description": "Combined science programme of study for key stage 4.",
+      "subsubject": {
+        "_type": "reference",
+        "_ref": "subsubject-science"
+      },
+      "keyStage": {
+        "_type": "reference",
+        "_ref": "key-stage-4"
+      },
+      "contentDescriptors": [
+        {
+          "_type": "reference",
+          "_ref": "content-descriptor-cells-as-unit-of-living-organism",
+          "_key": "cd1"
+        },
+        {
+          "_type": "reference",
+          "_ref": "content-descriptor-functions-of-the-cell-wall",
+          "_key": "cd2"
+        }
+      ]
+    }
+  ],
+  "themes": [
+    {
+      "_id": "theme-sustainability",
+      "_type": "theme",
+      "_createdAt": "2025-12-01T10:00:00Z",
+      "_updatedAt": "2025-12-01T10:00:00Z",
+      "_rev": "v1",
+      "id": {
+        "_type": "slug",
+        "current": "theme-sustainability"
+      },
+      "prefLabel": "Sustainability",
+      "definition": "Understanding environmental sustainability and human impact on ecosystems."
+    }
+  ]
+}

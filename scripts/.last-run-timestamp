@@ -1,0 +1,3 @@
+# This file tracks the last successful run of sanity_to_ttl.py
+# Used for incremental updates
+# Format: ISO 8601 timestamp
