@@ -154,7 +154,8 @@ eng:content-descriptor-function-of-muscles
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel "Function of muscles"@en ;
   skos:broader eng:substrand-skeletal-and-muscular-systems ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  skos:related eng:theme-climate-change-and-sustainability .
 
 # ----------------------------------------------------------------------
 # Content Sub-Descriptors
@@ -164,5 +165,4 @@ eng:content-subdescriptor-seasons-detail
   a skos:Concept, curric:ContentSubDescriptor ;
   skos:prefLabel "Seasons detail"@en ;
   skos:broader eng:content-descriptor-observe-seasonal-changes ;
-  skos:inScheme eng:knowledge-taxonomy ;
-  skos:related eng:theme-climate-change-and-sustainability .
+  skos:inScheme eng:knowledge-taxonomy .

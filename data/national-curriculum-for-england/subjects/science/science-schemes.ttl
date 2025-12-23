@@ -56,18 +56,41 @@ eng:scheme-science-key-stage-3
   rdfs:label "Science Key Stage 3"@en ;
   rdfs:comment "Science programme of study for key stage 3."@en ;
   curric:isPartOf eng:subsubject-science ;
-  curric:hasKeyStage eng:key-stage-3 ;
-  curric:hasContentDescriptor
-    eng:content-descriptor-observe-seasonal-changes ,
-    eng:content-descriptor-biomechanics ,
-    eng:content-descriptor-function-of-muscles .
+  curric:hasKeyStage eng:key-stage-3 .
 
 eng:scheme-combined-science-key-stage-4
   a curric:Scheme ;
   rdfs:label "Combined Science Key Stage 4"@en ;
   rdfs:comment "Combined science programme of study for key stage 4."@en ;
   curric:isPartOf eng:subsubject-science ;
-  curric:hasKeyStage eng:key-stage-4 ;
-  curric:hasContentDescriptor
+  curric:hasKeyStage eng:key-stage-4 .
+
+# ----------------------------------------------------------------------
+# Progressions
+# ----------------------------------------------------------------------
+
+eng:progression-science-key-stage-3-seasonal-changes
+  a curric:Progression ;
+  rdfs:label "Science Key Stage 3 Seasonal Changes"@en ;
+  rdfs:comment "Science progression for key stage 3: Seasonal changes."@en ;
+  curric:isPartOf eng:scheme-science-key-stage-3 ;
+  curric:includesContentDescriptor
+    eng:content-descriptor-observe-seasonal-changes .
+
+eng:progression-science-key-stage-3-skeletal-and-muscular-systems
+  a curric:Progression ;
+  rdfs:label "Science Key Stage 3 Skeletal and Muscular Systems"@en ;
+  rdfs:comment "Science progression for key stage 3: Skeletal and muscular systems."@en ;
+  curric:isPartOf eng:scheme-science-key-stage-3 ;
+  curric:includesContentDescriptor
+    eng:content-descriptor-biomechanics ,
+    eng:content-descriptor-function-of-muscles .
+
+eng:progression-combined-science-key-stage-4-cells-organisation
+  a curric:Progression ;
+  rdfs:label "Combined Science Key Stage 4 Cells Organisation"@en ;
+  rdfs:comment "Combined Science progression for key stage 4: Cells Organisation."@en ;
+  curric:isPartOf eng:scheme-combined-science-key-stage-4 ;
+  curric:includesContentDescriptor
     eng:content-descriptor-cells-as-unit-of-living-organism ,
     eng:content-descriptor-functions-of-the-cell-wall .

@@ -161,7 +161,7 @@ curric:Theme
 # Object Properties
 # (hasKeyStage, isKeyStageOf, hasYearGroup, isYearGroupOf, 
 # coversKeyStage, isCoveredByScheme, hasDiscipline, isDisciplineOf, coversStrand, 
-# isStrandOf, hasContentDescriptor, isContentDescriptorOf, hasScheme,
+# isStrandOf, includesContentDescriptor, isIncludedByProgression, hasScheme,
 # isSchemeOf, )
 # ----------------------------------------------------------------------
 
@@ -255,22 +255,22 @@ curric:isCoveredBySubSubject
   owl:inverseOf curric:coversStrand ;
   rdfs:isDefinedBy curric: .
 
-curric:hasContentDescriptor
+curric:includesContentDescriptor
   rdf:type owl:ObjectProperty ;
-  rdfs:label "has content descriptor"@en ;
-  rdfs:comment "Indicates that a scheme includes a specific content descriptor."@en ;
-  rdfs:domain curric:Scheme ;
+  rdfs:label "includes content descriptor"@en ;
+  rdfs:comment "Indicates that a progression includes a specific content descriptor."@en ;
+  rdfs:domain curric:Progression ;
   rdfs:range curric:ContentDescriptor ;
-  owl:inverseOf curric:isContentDescriptorOf ;
+  owl:inverseOf curric:isIncludedByProgression ;
   rdfs:isDefinedBy curric: .
 
-curric:isContentDescriptorOf
+curric:isIncludedByProgression
   rdf:type owl:ObjectProperty ;
-  rdfs:label "is content descriptor of"@en ;
-  rdfs:comment "Indicates that a content descriptor is included in a specific scheme."@en ;
+  rdfs:label "is included by progression"@en ;
+  rdfs:comment "Indicates that a content descriptor is included in a specific progression."@en ;
   rdfs:domain curric:ContentDescriptor ;
-  rdfs:range curric:Scheme ;
-  owl:inverseOf curric:hasContentDescriptor ;
+  rdfs:range curric:Progression ;
+  owl:inverseOf curric:includesContentDescriptor ;
   rdfs:isDefinedBy curric: .
 
 curric:hasScheme
