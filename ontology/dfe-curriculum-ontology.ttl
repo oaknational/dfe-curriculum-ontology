@@ -159,29 +159,17 @@ curric:Theme
 
 # ----------------------------------------------------------------------
 # Object Properties
-# (hasPart, isPartOf, hasKeyStage, isKeyStageOf, hasStrand, isStrandOf, 
-# includesStrand, applicableToSubSubject, hasContentDescriptor, isContentOf)
+# (hasKeyStage, isKeyStageOf, hasYearGroup, isYearGroupOf, 
+# coversKeyStage, isCoveredByScheme, hasDiscipline, isDisciplineOf, coversStrand, 
+# isStrandOf, hasContentDescriptor, isContentDescriptorOf, hasScheme,
+# isSchemeOf, )
 # ----------------------------------------------------------------------
-
-curric:hasPart
-  rdf:type owl:ObjectProperty , owl:TransitiveProperty ;
-  rdfs:label "has part"@en ;
-  rdfs:comment "Indicates that one curriculum entity contains another narrower entity."@en ;
-  owl:inverseOf curric:isPartOf ;
-  rdfs:isDefinedBy curric: .
-
-curric:isPartOf
-  rdf:type owl:ObjectProperty , owl:TransitiveProperty ;
-  rdfs:label "is part of"@en ;
-  rdfs:comment "Indicates that one curriculum entity is part of another broader entity."@en ;
-  owl:inverseOf curric:hasPart ;
-  rdfs:isDefinedBy curric: .
 
 curric:hasKeyStage
   rdf:type owl:ObjectProperty ;
   rdfs:label "has key stage"@en ;
-  rdfs:comment "Indicates that a scheme covers a specific key stage."@en ;
-  rdfs:domain curric:Scheme ;
+  rdfs:comment "Indicates that a phase contains a key stage as a subdivision."@en ;
+  rdfs:domain curric:Phase ;
   rdfs:range curric:KeyStage ;
   owl:inverseOf curric:isKeyStageOf ;
   rdfs:isDefinedBy curric: .
@@ -189,46 +177,82 @@ curric:hasKeyStage
 curric:isKeyStageOf
   rdf:type owl:ObjectProperty ;
   rdfs:label "is key stage of"@en ;
-  rdfs:comment "Indicates that a key stage is covered by a specific scheme."@en ;
+  rdfs:comment "Indicates that a key stage is a subdivision of a phase."@en ;
   rdfs:domain curric:KeyStage ;
-  rdfs:range curric:Scheme ;
+  rdfs:range curric:Phase ;
   owl:inverseOf curric:hasKeyStage ;
   rdfs:isDefinedBy curric: .
 
-curric:hasDiscipline
+curric:hasYearGroup
   rdf:type owl:ObjectProperty ;
-  rdfs:label "has discipline"@en ;
-  rdfs:comment "Indicates that a subject includes content from a discipline."@en ;
+  rdfs:label "has year group"@en ;
+  rdfs:comment "Indicates that a key stage contains a year group as a subdivision."@en ;
+  rdfs:domain curric:KeyStage ;
+  rdfs:range curric:YearGroup ;
+  owl:inverseOf curric:isYearGroupOf ;
+  rdfs:isDefinedBy curric: .
+
+curric:isYearGroupOf
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "is key stage of"@en ;
+  rdfs:comment "Indicates that a year group is a subdivision of a key stage."@en ;
+  rdfs:domain curric:YearGroup ;
+  rdfs:range curric:KeyStage ;
+  owl:inverseOf curric:hasYearGroup ;
+  rdfs:isDefinedBy curric: .
+
+curric:coversKeyStage
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "covers key stage"@en ;
+  rdfs:comment "Indicates that a scheme covers a specific key stage."@en ;
+  rdfs:domain curric:Scheme ;
+  rdfs:range curric:KeyStage ;
+  owl:inverseOf curric:isCoveredByScheme ;
+  rdfs:isDefinedBy curric: .
+
+curric:isCoveredByScheme
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "is covered by scheme"@en ;
+  rdfs:comment "Indicates that a key stage is covered by a specific scheme."@en ;
+  rdfs:domain curric:KeyStage ;
+  rdfs:range curric:Scheme ;
+  owl:inverseOf curric:coversKeyStage ;
+  rdfs:isDefinedBy curric: .
+
+curric:coversDiscipline
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "covers discipline"@en ;
+  rdfs:comment "Indicates that a subject covers content from a discipline."@en ;
   rdfs:domain curric:Subject ;
   rdfs:range curric:Discipline ;
-  owl:inverseOf curric:isDisciplineOf ;
+  owl:inverseOf curric:isCoveredBySubject ;
   rdfs:isDefinedBy curric: .
 
-curric:isDisciplineOf
+curric:isCoveredBySubject
   rdf:type owl:ObjectProperty ;
-  rdfs:label "is discipline of"@en ;
-  rdfs:comment "Indicates that content from a discipline is part of a subject."@en ;
+  rdfs:label "is covered by subject"@en ;
+  rdfs:comment "Indicates that content from a discipline is covered by a subject."@en ;
   rdfs:domain curric:Discipline ;
   rdfs:range curric:Subject ;
-  owl:inverseOf curric:hasDiscipline ;
+  owl:inverseOf curric:coversDiscipline ;
   rdfs:isDefinedBy curric: .
 
-curric:hasStrand
+curric:coversStrand
   rdf:type owl:ObjectProperty ;
-  rdfs:label "has strand"@en ;
-  rdfs:comment "Indicates that a sub-subject includes content from a strand of knowledge."@en ;
+  rdfs:label "covers strand"@en ;
+  rdfs:comment "Indicates that a sub-subject covers content from a strand of knowledge."@en ;
   rdfs:domain curric:SubSubject ;
   rdfs:range curric:Strand ;
-  owl:inverseOf curric:isStrandOf ;
+  owl:inverseOf curric:isCoveredBySubSubject ;
   rdfs:isDefinedBy curric: .
 
-curric:isStrandOf
+curric:isCoveredBySubSubject
   rdf:type owl:ObjectProperty ;
-  rdfs:label "is strand of"@en ;
-  rdfs:comment "Indicates that content from a strand of knowledge is part of a sub-subject."@en ;
+  rdfs:label "is covered by sub-subject"@en ;
+  rdfs:comment "Indicates that content from a strand of knowledge is covered by a sub-subject."@en ;
   rdfs:domain curric:Strand ;
   rdfs:range curric:SubSubject ;
-  owl:inverseOf curric:hasStrand ;
+  owl:inverseOf curric:coversStrand ;
   rdfs:isDefinedBy curric: .
 
 curric:hasContentDescriptor
@@ -247,6 +271,24 @@ curric:isContentDescriptorOf
   rdfs:domain curric:ContentDescriptor ;
   rdfs:range curric:Scheme ;
   owl:inverseOf curric:hasContentDescriptor ;
+  rdfs:isDefinedBy curric: .
+
+curric:hasScheme
+  rdf:type owl:ObjectProperty , owl:TransitiveProperty ;
+  rdfs:label "has scheme"@en ;
+  rdfs:comment "Indicates that a sub-subject contains a scheme."@en ;
+  rdfs:domain curric:SubSubject ;
+  rdfs:range curric:Scheme ;
+  owl:inverseOf curric:isSchemeOf ;
+  rdfs:isDefinedBy curric: .
+
+curric:isSchemeOf
+  rdf:type owl:ObjectProperty , owl:TransitiveProperty ;
+  rdfs:label "is scheme of"@en ;
+  rdfs:comment "Indicates that a scheme is part of a sub-subject."@en ;
+  rdfs:domain curric:Scheme ;
+  rdfs:range curric:SubSubject ;
+  owl:inverseOf curric:hasScheme ;
   rdfs:isDefinedBy curric: .
 
 # ----------------------------------------------------------------------

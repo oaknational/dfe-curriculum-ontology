@@ -53,7 +53,7 @@ eng:subject-science
   a curric:Subject ;
   rdfs:label "Science"@en ;
   rdfs:comment "Science subject in the National Curriculum for England."@en ;
-  curric:hasDiscipline eng:discipline-science .
+  curric:coversDiscipline eng:discipline-science .
 
 # ----------------------------------------------------------------------
 # Sub-Subjects 
@@ -68,7 +68,7 @@ eng:subsubject-science
   physics."""@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study> ;
   curric:isPartOf eng:subject-science ;
-  curric:hasStrand eng:strand-structure-function-living-organisms ,
+  curric:coversStrand eng:strand-structure-function-living-organisms ,
                    eng:strand-material-cycles-and-energy ;
 
   curric:hasAim 

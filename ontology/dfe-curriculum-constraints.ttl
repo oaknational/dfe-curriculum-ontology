@@ -290,13 +290,13 @@ curricshapes:SubjectShape
   ] ;
 
   sh:property [
-    sh:path curric:hasDiscipline ;
+    sh:path curric:coversDiscipline ;
     sh:class curric:Discipline ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:name "has discipline" ;
+    sh:name "covers discipline" ;
     sh:description "Every subject must relate to exactly one discipline." ;
-    sh:message "Subjects must specify which disciplines they relate to." ;
+    sh:message "Subjects must specify which discipline they relate to." ;
   ] ;
 
   sh:sparql [
@@ -308,7 +308,7 @@ curricshapes:SubjectShape
       
       SELECT $this WHERE {
         $this a curric:Subject ;
-              curric:hasDiscipline ?discipline ;
+              curric:coversDiscipline ?discipline ;
               rdfs:label ?subjectLabel .
         
         ?discipline skos:prefLabel ?disciplineLabel .
@@ -371,13 +371,13 @@ curricshapes:SubSubjectShape
   ] ;
 
   sh:property [
-    sh:path curric:hasStrand ;
+    sh:path curric:coversStrand ;
     sh:class curric:Strand ;
     sh:minCount 1 ;
     sh:severity sh:Warning ;
-    sh:name "has strand" ;
-    sh:description "Every sub-subject should relate to at least one strand." ;
-    sh:message "Sub-subject should relate to at least one strand (WARNING)." ;
+    sh:name "covers strand" ;
+    sh:description "Every sub-subject should cover at least one strand." ;
+    sh:message "Sub-subject should cover at least one strand (WARNING)." ;
   ] ;
 
   sh:sparql [
@@ -597,7 +597,7 @@ curricshapes:StrandShape
         $this a curric:Strand .
         FILTER NOT EXISTS {
           ?subsubject a curric:SubSubject ;
-                      curric:hasStrand $this .
+                      curric:coversStrand $this .
         }
       }
     """ ;
