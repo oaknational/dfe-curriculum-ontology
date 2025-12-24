@@ -136,11 +136,11 @@ curricshapes:KeyStageShape
   ] ;
 
   sh:property [
-    sh:path curric:isPartOf ;
+    sh:path curric:isKeyStageOf ;
     sh:class curric:Phase ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:name "is part of" ;
+    sh:name "is key stage of" ;
     sh:description "Every key stage must be part of exactly one phase." ;
     sh:message "Key stages must specify which phase they belong to." ;
   ] ;
@@ -182,7 +182,7 @@ curricshapes:KeyStageShape
     sh:select """
       PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
-        $this curric:isPartOf ?phase ;
+        $this curric:isKeyStageOf ?phase ;
               curric:lowerAgeBoundary ?childLower ;
               curric:upperAgeBoundary ?childUpper .
         
@@ -213,11 +213,11 @@ curricshapes:YearGroupShape
   ] ;
 
   sh:property [
-    sh:path curric:isPartOf ;
+    sh:path curric:isYearGroupOf ;
     sh:class curric:KeyStage ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:name "is part of" ;
+    sh:name "is year group of" ;
     sh:description "Every year group must be part of exactly one key stage." ;
     sh:message "Year groups must specify which key stage they belong to." ;
   ] ;
@@ -259,7 +259,7 @@ curricshapes:YearGroupShape
     sh:select """
       PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
-        $this curric:isPartOf ?keystage ;
+        $this curric:isYearGroupOf ?keystage ;
               curric:lowerAgeBoundary ?childLower ;
               curric:upperAgeBoundary ?childUpper .
         
@@ -327,7 +327,7 @@ curricshapes:SubjectShape
         $this a curric:Subject .
         FILTER NOT EXISTS {
           ?subsubject a curric:SubSubject ;
-                      curric:isPartOf $this .
+                      curric:isSubSubjectOf $this .
         }
       }
     """ ;
@@ -361,11 +361,11 @@ curricshapes:SubSubjectShape
    ] ;
 
   sh:property [
-    sh:path curric:isPartOf ;
+    sh:path curric:isSubSubjectOf ;
     sh:class curric:Subject ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:name "is part of" ;
+    sh:name "is sub-subject of" ;
     sh:description "Every sub-subject must be part of exactly one subject." ;
     sh:message "Sub-subjects must specify which subject they belong to." ;
   ] ;
@@ -389,7 +389,7 @@ curricshapes:SubSubjectShape
         $this a curric:SubSubject .
         FILTER NOT EXISTS {
           ?scheme a curric:Scheme ;
-                  curric:isPartOf $this .
+                  curric:isSchemeOf $this .
         }
       }
     """ ;
@@ -414,10 +414,10 @@ curricshapes:SchemeShape
   ] ;
 
   sh:property [
-    sh:path curric:isPartOf ;
+    sh:path curric:isSchemeOf ;
     sh:class curric:SubSubject ;
     sh:minCount 1 ;
-    sh:name "is part of" ;
+    sh:name "is scheme of" ;
     sh:description "Every scheme must be part of at least one sub-subject." ;
     sh:message "Schemes must specify which sub-subject(s) they belong to." ;
   ] ;
@@ -437,10 +437,10 @@ curricshapes:SchemeShape
     sh:select """
       PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
-        $this curric:isPartOf ?subsubject1 , ?subsubject2 .
+        $this curric:isSchemeOf ?subsubject1 , ?subsubject2 .
         
-        ?subsubject1 curric:isPartOf ?subject1 .
-        ?subsubject2 curric:isPartOf ?subject2 .
+        ?subsubject1 curric:isSubSubjectOf ?subject1 .
+        ?subsubject2 curric:isSubSubjectOf ?subject2 .
         
         FILTER (?subsubject1 != ?subsubject2)
         FILTER (?subject1 != ?subject2)
@@ -467,11 +467,11 @@ curricshapes:ProgressionShape
   ] ;
 
   sh:property [
-    sh:path curric:isPartOf ;
+    sh:path curric:isProgressionOf ;
     sh:class curric:Scheme ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:name "is part of" ;
+    sh:name "is progression of" ;
     sh:description "Every progression must be part of exactly one scheme." ;
     sh:message "Progressions must specify which scheme they belong to." ;
   ] ;

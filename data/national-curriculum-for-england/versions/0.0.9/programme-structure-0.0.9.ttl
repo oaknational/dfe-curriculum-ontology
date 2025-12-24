@@ -78,7 +78,7 @@ eng:key-stage-1
   rdfs:comment "Key Stage 1 covering years 1-2."@en ;
   curric:lowerAgeBoundary 5 ;
   curric:upperAgeBoundary 7 ;
-  curric:isPartOf eng:phase-primary .
+  curric:isKeyStageOf eng:phase-primary .
 
 eng:key-stage-2
   a curric:KeyStage ;
@@ -86,7 +86,7 @@ eng:key-stage-2
   rdfs:comment "Key Stage 2 covering years 3-6."@en ;
   curric:lowerAgeBoundary 7 ;
   curric:upperAgeBoundary 11 ;
-  curric:isPartOf eng:phase-primary .
+  curric:isKeyStageOf eng:phase-primary .
 
 eng:key-stage-3
   a curric:KeyStage ;
@@ -94,7 +94,7 @@ eng:key-stage-3
   rdfs:comment "Key Stage 3 covering years 7-9."@en ;
   curric:lowerAgeBoundary 11 ;
   curric:upperAgeBoundary 14 ;
-  curric:isPartOf eng:phase-secondary .
+  curric:isKeyStageOf eng:phase-secondary .
 
 eng:key-stage-4
   a curric:KeyStage ;
@@ -102,7 +102,7 @@ eng:key-stage-4
   rdfs:comment "Key Stage 4 covering years 10-11 (GCSE years)."@en ;
   curric:lowerAgeBoundary 14 ;
   curric:upperAgeBoundary 16 ;
-  curric:isPartOf eng:phase-secondary .
+  curric:isKeyStageOf eng:phase-secondary .
 
 eng:primary-key-stages
   a skos:OrderedCollection ;

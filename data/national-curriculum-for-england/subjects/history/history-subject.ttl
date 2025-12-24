@@ -71,7 +71,7 @@ eng:subsubject-history
   change, the diversity of societies and relationships between different groups, as well as their 
   own identity and the challenges of their time."""@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
-  curric:isPartOf eng:subject-history ;
+  curric:isSubSubjectOf eng:subject-history ;
   curric:coversStrand eng:strand-knowledge-of-past ,
                    eng:strand-knowledge-of-history ;
   

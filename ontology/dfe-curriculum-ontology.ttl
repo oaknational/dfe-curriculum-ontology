@@ -273,6 +273,24 @@ curric:isIncludedByProgression
   owl:inverseOf curric:includesContentDescriptor ;
   rdfs:isDefinedBy curric: .
 
+curric:hasSubSubject
+  rdf:type owl:ObjectProperty , owl:TransitiveProperty ;
+  rdfs:label "has sub-subject"@en ;
+  rdfs:comment "Indicates that a subject contains a sub-subject."@en ;
+  rdfs:domain curric:Subject ;
+  rdfs:range curric:SubSubject ;
+  owl:inverseOf curric:isSubSubjectOf ;
+  rdfs:isDefinedBy curric: .
+
+curric:isSubSubjectOf
+  rdf:type owl:ObjectProperty , owl:TransitiveProperty ;
+  rdfs:label "is sub-subject of"@en ;
+  rdfs:comment "Indicates that a sub-subject is part of a subject."@en ;
+  rdfs:domain curric:SubSubject ;
+  rdfs:range curric:Subject ;
+  owl:inverseOf curric:hasSubSubject ;
+  rdfs:isDefinedBy curric: .
+
 curric:hasScheme
   rdf:type owl:ObjectProperty , owl:TransitiveProperty ;
   rdfs:label "has scheme"@en ;
@@ -289,6 +307,24 @@ curric:isSchemeOf
   rdfs:domain curric:Scheme ;
   rdfs:range curric:SubSubject ;
   owl:inverseOf curric:hasScheme ;
+  rdfs:isDefinedBy curric: .
+
+curric:hasProgression
+  rdf:type owl:ObjectProperty , owl:TransitiveProperty ;
+  rdfs:label "has progression"@en ;
+  rdfs:comment "Indicates that a scheme contains a progression."@en ;
+  rdfs:domain curric:Scheme ;
+  rdfs:range curric:Progression ;
+  owl:inverseOf curric:isProgressionOf ;
+  rdfs:isDefinedBy curric: .
+
+curric:isProgressionOf
+  rdf:type owl:ObjectProperty , owl:TransitiveProperty ;
+  rdfs:label "is progression of"@en ;
+  rdfs:comment "Indicates that a progression is part of a scheme."@en ;
+  rdfs:domain curric:Progression ;
+  rdfs:range curric:Scheme ;
+  owl:inverseOf curric:hasProgression ;
   rdfs:isDefinedBy curric: .
 
 # ----------------------------------------------------------------------

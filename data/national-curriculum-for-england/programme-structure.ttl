@@ -79,7 +79,7 @@ eng:key-stage-1
   rdfs:comment "Key Stage 1 covering years 1-2."@en ;
   curric:lowerAgeBoundary "5"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "7"^^xsd:positiveInteger ;
-  curric:isPartOf eng:phase-primary .
+  curric:isKeyStageOf eng:phase-primary .
 
 eng:key-stage-2
   a curric:KeyStage ;
@@ -87,7 +87,7 @@ eng:key-stage-2
   rdfs:comment "Key Stage 2 covering years 3-6."@en ;
   curric:lowerAgeBoundary "7"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "11"^^xsd:positiveInteger ;
-  curric:isPartOf eng:phase-primary .
+  curric:isKeyStageOf eng:phase-primary .
 
 eng:key-stage-3
   a curric:KeyStage ;
@@ -95,7 +95,7 @@ eng:key-stage-3
   rdfs:comment "Key Stage 3 covering years 7-9."@en ;
   curric:lowerAgeBoundary "11"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "14"^^xsd:positiveInteger ;
-  curric:isPartOf eng:phase-secondary .
+  curric:isKeyStageOf eng:phase-secondary .
 
 eng:key-stage-4
   a curric:KeyStage ;
@@ -103,7 +103,7 @@ eng:key-stage-4
   rdfs:comment "Key Stage 4 covering years 10-11 (GCSE years)."@en ;
   curric:lowerAgeBoundary "14"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "16"^^xsd:positiveInteger ;
-  curric:isPartOf eng:phase-secondary .
+  curric:isKeyStageOf eng:phase-secondary .
 
 eng:primary-key-stages
   a skos:OrderedCollection ;
@@ -125,7 +125,7 @@ eng:year-group-1
   rdfs:comment "Year Group 1 (age 5-6)."@en ;
   curric:lowerAgeBoundary "5"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "6"^^xsd:positiveInteger ;
-  curric:isPartOf eng:key-stage-1 .
+  curric:isYearGroupOf eng:key-stage-1 .
 
 eng:year-group-2
   a curric:YearGroup ;
@@ -133,7 +133,7 @@ eng:year-group-2
   rdfs:comment "Year Group 2 (age 6-7)."@en ;
   curric:lowerAgeBoundary "6"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "7"^^xsd:positiveInteger ;
-  curric:isPartOf eng:key-stage-1 .
+  curric:isYearGroupOf eng:key-stage-1 .
 
 eng:year-group-3
   a curric:YearGroup ;
@@ -141,7 +141,7 @@ eng:year-group-3
   rdfs:comment "Year Group 3 (age 7-8)."@en ;
   curric:lowerAgeBoundary "7"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "8"^^xsd:positiveInteger ;
-  curric:isPartOf eng:key-stage-2 .
+  curric:isYearGroupOf eng:key-stage-2 .
 
 eng:year-group-4
   a curric:YearGroup ;
@@ -149,7 +149,7 @@ eng:year-group-4
   rdfs:comment "Year Group 4 (age 8-9)."@en ;
   curric:lowerAgeBoundary "8"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "9"^^xsd:positiveInteger ;
-  curric:isPartOf eng:key-stage-2 .
+  curric:isYearGroupOf eng:key-stage-2 .
 
 eng:year-group-5
   a curric:YearGroup ;
@@ -157,7 +157,7 @@ eng:year-group-5
   rdfs:comment "Year Group 5 (age 9-10)."@en ;
   curric:lowerAgeBoundary "9"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "10"^^xsd:positiveInteger ;
-  curric:isPartOf eng:key-stage-2 .
+  curric:isYearGroupOf eng:key-stage-2 .
 
 eng:year-group-6
   a curric:YearGroup ;
@@ -165,7 +165,7 @@ eng:year-group-6
   rdfs:comment "Year Group 6 (age 10-11)."@en ;
   curric:lowerAgeBoundary "10"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "11"^^xsd:positiveInteger ;
-  curric:isPartOf eng:key-stage-2 .
+  curric:isYearGroupOf eng:key-stage-2 .
 
 eng:year-group-7
   a curric:YearGroup ;
@@ -173,7 +173,7 @@ eng:year-group-7
   rdfs:comment "Year Group 7 (age 11-12)."@en ;
   curric:lowerAgeBoundary "11"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "12"^^xsd:positiveInteger ;
-  curric:isPartOf eng:key-stage-3 .
+  curric:isYearGroupOf eng:key-stage-3 .
 
 eng:year-group-8
   a curric:YearGroup ;
@@ -181,7 +181,7 @@ eng:year-group-8
   rdfs:comment "Year Group 8 (age 12-13)."@en ;
   curric:lowerAgeBoundary "12"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "13"^^xsd:positiveInteger ;
-  curric:isPartOf eng:key-stage-3 .
+  curric:isYearGroupOf eng:key-stage-3 .
 
 eng:year-group-9
   a curric:YearGroup ;
@@ -189,7 +189,7 @@ eng:year-group-9
   rdfs:comment "Year Group 9 (age 13-14)."@en ;
   curric:lowerAgeBoundary "13"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "14"^^xsd:positiveInteger ;
-  curric:isPartOf eng:key-stage-3 .
+  curric:isYearGroupOf eng:key-stage-3 .
 
 eng:year-group-10
   a curric:YearGroup ;
@@ -197,7 +197,7 @@ eng:year-group-10
   rdfs:comment "Year Group 10 (age 14-15), first year of GCSE study."@en ;
   curric:lowerAgeBoundary "14"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "15"^^xsd:positiveInteger ;
-  curric:isPartOf eng:key-stage-4 .
+  curric:isYearGroupOf eng:key-stage-4 .
 
 eng:year-group-11
   a curric:YearGroup ;
@@ -205,7 +205,7 @@ eng:year-group-11
   rdfs:comment "Year Group 11 (age 15-16), final year of GCSE study."@en ;
   curric:lowerAgeBoundary "15"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "16"^^xsd:positiveInteger ;
-  curric:isPartOf eng:key-stage-4 .
+  curric:isYearGroupOf eng:key-stage-4 .
 
 eng:key-stage-1-year-groups
   a skos:OrderedCollection ;

@@ -67,7 +67,7 @@ eng:subsubject-science
   understanding the world through the specific disciplines of biology, chemistry and 
   physics."""@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study> ;
-  curric:isPartOf eng:subject-science ;
+  curric:isSubSubjectOf eng:subject-science ;
   curric:coversStrand eng:strand-structure-function-living-organisms ,
                    eng:strand-material-cycles-and-energy ;
 
