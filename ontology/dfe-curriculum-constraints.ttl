@@ -423,11 +423,11 @@ curricshapes:SchemeShape
   ] ;
 
   sh:property [
-    sh:path curric:hasKeyStage ;
+    sh:path curric:coversKeyStage ;
     sh:class curric:KeyStage ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:name "has key stage" ;
+    sh:name "covers key stage" ;
     sh:description "A scheme must cover exactly one key stage." ;
     sh:message "Schemes must specify exactly which key stage they cover." ;
   ] ;
@@ -477,7 +477,7 @@ curricshapes:ProgressionShape
   ] ;
 
   sh:property [
-    sh:path curric:includesContentDescriptor ;
+    sh:path curric:coversContentDescriptor ;
     sh:class curric:ContentDescriptor ;
     sh:minCount 1 ;
     sh:severity sh:Warning ;
@@ -745,7 +745,7 @@ curricshapes:ContentDescriptorShape
         $this a curric:ContentDescriptor .
         FILTER NOT EXISTS {
           ?progression a curric:Progression ;
-                  curric:includesContentDescriptor $this .
+                  curric:coversContentDescriptor $this .
         }
       }
     """ ;

@@ -161,8 +161,8 @@ curric:Theme
 # Object Properties
 # (hasKeyStage, isKeyStageOf, hasYearGroup, isYearGroupOf, 
 # coversKeyStage, isCoveredByScheme, hasDiscipline, isDisciplineOf, coversStrand, 
-# isStrandOf, includesContentDescriptor, isIncludedByProgression, hasScheme,
-# isSchemeOf, )
+# isStrandOf, coversContentDescriptor, isIncludedByProgression, hasSubSubject,
+# isSubSubjectOf, hasScheme, isSchemeOf, hasProgression, isProgressionOf)
 # ----------------------------------------------------------------------
 
 curric:hasKeyStage
@@ -255,7 +255,7 @@ curric:isCoveredBySubSubject
   owl:inverseOf curric:coversStrand ;
   rdfs:isDefinedBy curric: .
 
-curric:includesContentDescriptor
+curric:coversContentDescriptor
   rdf:type owl:ObjectProperty ;
   rdfs:label "includes content descriptor"@en ;
   rdfs:comment "Indicates that a progression includes a specific content descriptor."@en ;
@@ -270,7 +270,7 @@ curric:isIncludedByProgression
   rdfs:comment "Indicates that a content descriptor is included in a specific progression."@en ;
   rdfs:domain curric:ContentDescriptor ;
   rdfs:range curric:Progression ;
-  owl:inverseOf curric:includesContentDescriptor ;
+  owl:inverseOf curric:coversContentDescriptor ;
   rdfs:isDefinedBy curric: .
 
 curric:hasSubSubject
