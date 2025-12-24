@@ -477,7 +477,7 @@ curricshapes:ProgressionShape
   ] ;
 
   sh:property [
-    sh:path curric:coversContentDescriptor ;
+    sh:path curric:coversContent ;
     sh:class curric:ContentDescriptor ;
     sh:minCount 1 ;
     sh:severity sh:Warning ;
@@ -745,7 +745,7 @@ curricshapes:ContentDescriptorShape
         $this a curric:ContentDescriptor .
         FILTER NOT EXISTS {
           ?progression a curric:Progression ;
-                  curric:coversContentDescriptor $this .
+                  curric:coversContent $this .
         }
       }
     """ ;
