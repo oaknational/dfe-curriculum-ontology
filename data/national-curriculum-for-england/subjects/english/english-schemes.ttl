@@ -62,10 +62,10 @@ eng:scheme-english-key-stage-2
 # Progressions
 # ----------------------------------------------------------------------
 
-eng:progression-science-key-stage-3-seasonal-changes
+eng:progression-english-key-stage-2-seasonal-changes
   a curric:Progression ;
-  rdfs:label "Science Key Stage 3 Seasonal Changes"@en ;
-  rdfs:comment "Science progression for key stage 3: Seasonal changes."@en ;
+  rdfs:label "English Key Stage 2 Seasonal Changes"@en ;
+  rdfs:comment "English progression for key stage 2: Seasonal changes."@en ;
   curric:isProgressionOf eng:scheme-english-key-stage-2 ;
   curric:coversContent
     eng:content-descriptor-observe-seasonal-changes .
