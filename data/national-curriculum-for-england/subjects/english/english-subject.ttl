@@ -53,7 +53,7 @@ eng:subject-english
   a curric:Subject ;
   rdfs:label "English"@en ;
   rdfs:comment "English subject in the National Curriculum for England."@en ;
-  curric:coversDiscipline eng:discipline-english .
+  curric:coversDiscipline eng:discipline-science .
 
 # ----------------------------------------------------------------------
 # Sub-Subjects 
