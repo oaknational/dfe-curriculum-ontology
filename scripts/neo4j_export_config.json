@@ -25,7 +25,8 @@
     },
     "filters": {
       "exclude_subjects_by_type": [
-        "owl:Ontology"
+        "owl:Ontology",
+        "owl:ConceptScheme"
       ]
     }
   },
