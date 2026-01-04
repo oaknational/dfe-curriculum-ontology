@@ -33,9 +33,9 @@
   Curriculum in England, organizing content through strands, sub-strands, content descriptors, 
   and content sub-descriptors."""@en ;
   dc:creator "Department for Education" ;
-  dcterms:created "2025-11-24"^^xsd:date ;
-  dcterms:modified "2025-12-03"^^xsd:date ;
-  dcterms:issued "2025-12-03"^^xsd:date ;
+  dcterms:created "2025-11-24T12:33:32Z"^^xsd:dateTime ;
+  dcterms:modified "2025-12-03T12:33:32Z"^^xsd:dateTime ;
+  dcterms:issued "2025-12-03T12:33:32Z"^^xsd:dateTime ;
   
   dcterms:license <http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/> ;
   dcterms:rights "Crown Copyright"@en ;
@@ -54,7 +54,8 @@
 eng:knowledge-taxonomy
   a skos:ConceptScheme ;
   skos:prefLabel "National Curriculum for England Knowledge Structure"@en ;
-  skos:hasTopConcept eng:discipline-history .
+  skos:hasTopConcept eng:discipline-history ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
   
 # ----------------------------------------------------------------------
 # Disciplines
@@ -73,7 +74,8 @@ eng:discipline-history
   judgement."""@en ;
   skos:narrower eng:strand-knowledge-of-past ,
                 eng:strand-knowledge-of-history ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 # ----------------------------------------------------------------------
 # Strands
@@ -86,7 +88,8 @@ eng:strand-knowledge-of-past
   skos:narrower eng:substrand-substantive-concepts ,
                 eng:substrand-history-of-diverse-britain ,
                 eng:substrand-significant-aspects-of-world-history ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:strand-knowledge-of-history
   a skos:Concept, curric:Strand ;
@@ -94,7 +97,8 @@ eng:strand-knowledge-of-history
   skos:broader eng:discipline-history ;
   skos:narrower eng:substrand-second-order-concepts ,
                 eng:substrand-nature-of-historical-enquiry ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 # ----------------------------------------------------------------------
 # Sub-Strands
@@ -111,7 +115,8 @@ eng:substrand-second-order-concepts
                 eng:content-descriptor-narratives-analyses-accounts-historical-significance ,
                 eng:content-descriptor-narratives-analyses-accounts-sources-and-evidence,
                 eng:content-descriptor-narratives-analyses-accounts-historical-interpretations ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:substrand-nature-of-historical-enquiry
   a skos:Concept, curric:SubStrand ;
@@ -119,14 +124,16 @@ eng:substrand-nature-of-historical-enquiry
   skos:broader eng:strand-knowledge-of-history ;
   skos:narrower eng:content-descriptor-historians-investigate-the-past ,
                 eng:content-descriptor-historians-construct-arguments ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:substrand-substantive-concepts
   a skos:Concept, curric:SubStrand ;
   skos:prefLabel "Substantive concepts"@en ;
   skos:broader eng:strand-knowledge-of-past ;
   skos:narrower eng:content-descriptor-abstract-terms-historically-grounded ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:substrand-history-of-diverse-britain
   a skos:Concept, curric:SubStrand ;
@@ -147,7 +154,8 @@ eng:substrand-history-of-diverse-britain
                 eng:content-descriptor-ideas-power-industry-empire-1745-1901 ,
                 eng:content-descriptor-challenges-britain-europe-world-1901-present ,
                 eng:content-descriptor-aspect-british-history-before-1066 ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:substrand-significant-aspects-of-world-history
   a skos:Concept, curric:SubStrand ;
@@ -157,7 +165,8 @@ eng:substrand-significant-aspects-of-world-history
                 eng:content-descriptor-ancient-greece ,
                 eng:content-descriptor-non-european-society ,
                 eng:content-descriptor-significant-society-or-issue ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 # ----------------------------------------------------------------------
 # Content Descriptors
@@ -167,73 +176,84 @@ eng:content-descriptor-narratives-analyses-accounts
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel "How to construct causal narratives, analyses, arguments and accounts."@en ;
   skos:broader eng:substrand-second-order-concepts ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-narratives-analyses-accounts-consequence
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel "How to construct narratives, analyses and accounts that focus on consequence."@en ;
   skos:broader eng:substrand-second-order-concepts ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-narratives-analyses-accounts-change-and-continuity
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """How to construct narratives, analyses and accounts that focus on change and 
   continuity."""@en ;
   skos:broader eng:substrand-second-order-concepts ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-narratives-analyses-accounts-similarity-and-difference
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """How to construct narratives, analyses and accounts that focus on similarity and 
   difference."""@en ;
   skos:broader eng:substrand-second-order-concepts ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-narratives-analyses-accounts-historical-significance
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """How to construct narratives, analyses and accounts that focus on how historical 
   significance."""@en ;
   skos:broader eng:substrand-second-order-concepts ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-narratives-analyses-accounts-sources-and-evidence
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """How to construct narratives, analyses and accounts that focus on the ways in 
   which historians interact with sources and evidence."""@en ;
   skos:broader eng:substrand-second-order-concepts ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-narratives-analyses-accounts-historical-interpretations
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """How to construct narratives, analyses and accounts that focus on the 
   construction of historical interpretations."""@en ;
   skos:broader eng:substrand-second-order-concepts ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-historians-investigate-the-past
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel "About how historians investigate the past."@en ;
   skos:broader eng:substrand-nature-of-historical-enquiry ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-historians-construct-arguments
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel "About how historians construct historical claims, arguments and accounts."@en ;
   skos:broader eng:substrand-nature-of-historical-enquiry ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-abstract-terms-historically-grounded
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel "About abstract terms in a historically grounded manner."@en ;
   skos:broader eng:substrand-substantive-concepts ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-changes-within-living-memory
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """About changes within living memory. Where appropriate, these should be used to 
   reveal aspects of change in national life."""@en ;
   skos:broader eng:substrand-history-of-diverse-britain ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-events-beyond-living-memory
   a skos:Concept, curric:ContentDescriptor ;
@@ -241,7 +261,8 @@ eng:content-descriptor-events-beyond-living-memory
   [for example, the Great Fire of London, the first aeroplane flight or events commemorated through 
   festivals or anniversaries]."""@en ;
   skos:broader eng:substrand-history-of-diverse-britain ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-lives-of-significant-individuals
   a skos:Concept, curric:ContentDescriptor ;
@@ -249,86 +270,99 @@ eng:content-descriptor-lives-of-significant-individuals
   national and international achievements. Some should be used to compare aspects of life in 
   different periods."""@en ;
   skos:broader eng:substrand-history-of-diverse-britain ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-significant-historical-events-own-locality
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """About significant historical events, people and places in their own 
   locality."""@en ;
   skos:broader eng:substrand-history-of-diverse-britain ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-changes-in-britain-stone-age-to-iron-age
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel "About changes in Britain from the Stone Age to the Iron Age."@en ;
   skos:broader eng:substrand-history-of-diverse-britain ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-roman-empire-impact-on-britain
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel "About the Roman Empire and its impact on Britain."@en ;
   skos:broader eng:substrand-history-of-diverse-britain ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-settlement-by-anglo-saxons-and-scots
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel "About Britain’s settlement by Anglo-Saxons and Scots."@en ;
   skos:broader eng:substrand-history-of-diverse-britain ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-viking-and-anglo-saxon-struggle
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """About the Viking and Anglo-Saxon struggle for the Kingdom of England to the 
   time of Edward the Confessor."""@en ;
   skos:broader eng:substrand-history-of-diverse-britain ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-local-history-study
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel "About a local history study."@en ;
   skos:broader eng:substrand-history-of-diverse-britain ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-aspect-british-history-beyond-1066
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """About a study of an aspect or theme in British history that extends pupils’ 
   chronological knowledge beyond 1066."""@en ;
   skos:broader eng:substrand-history-of-diverse-britain ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-church-state-society-1066-1509
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """About the development of Church, state and society in Medieval Britain, and its 
   connections to the wider world 1066-1509."""@en ;
   skos:broader eng:substrand-history-of-diverse-britain ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-church-state-society-1509-1745
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """About the development of Church, state and society in Britain and its 
   connections to the wider world 1509-1745."""@en ;
   skos:broader eng:substrand-history-of-diverse-britain ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-ideas-power-industry-empire-1745-1901
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel "About ideas, political power, industry and empire: Britain, 1745-1901."@en ;
   skos:broader eng:substrand-history-of-diverse-britain ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-challenges-britain-europe-world-1901-present
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """About challenges for Britain, Europe and the wider world 1901 to the present 
   day In addition to studying the Holocaust, this could include:."""@en ;
   skos:broader eng:substrand-history-of-diverse-britain ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-aspect-british-history-before-1066
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """About an aspect or theme in British history that consolidates and extends 
   pupils’ chronological knowledge from before 1066."""@en ;
   skos:broader eng:substrand-history-of-diverse-britain ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-earliest-civilizations
   a skos:Concept, curric:ContentDescriptor ;
@@ -336,14 +370,16 @@ eng:content-descriptor-earliest-civilizations
   when the first civilizations appeared and a depth study of one of the following: Ancient Sumer; 
   The Indus Valley; Ancient Egypt; The Shang Dynasty of Ancient China."""@en ;
   skos:broader eng:substrand-significant-aspects-of-world-history ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-ancient-greece
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """About Ancient Greece – a study of Greek life and achievements and their 
   influence on the western world."""@en ;
   skos:broader eng:substrand-significant-aspects-of-world-history ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-non-european-society
   a skos:Concept, curric:ContentDescriptor ;
@@ -352,14 +388,16 @@ eng:content-descriptor-non-european-society
   schools may choose to teach an additional non-European society from the following; Maya 
   civilization c. AD 900; Benin (West Africa) c. AD 900-1300."""@en ;
   skos:broader eng:substrand-significant-aspects-of-world-history ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-significant-society-or-issue
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """About a significant society or issue in world history and its
 interconnections with other world developments."""@en ;
   skos:broader eng:substrand-significant-aspects-of-world-history ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 # ----------------------------------------------------------------------
 # Content Sub-Descriptors

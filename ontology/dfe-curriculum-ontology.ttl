@@ -36,9 +36,9 @@
   dcterms:description """This ontology defines the foundational classes and properties for
   representing educational curriculum structures."""@en ;
   dcterms:creator "Department for Education" ;
-  dcterms:created "2025-11-19"^^xsd:date ;
-  dcterms:modified "2025-12-03"^^xsd:date ;
-  dcterms:issued "2025-12-03"^^xsd:date ;
+  dcterms:created "2025-11-19T12:33:32Z"^^xsd:dateTime ;
+  dcterms:modified "2025-12-03T12:33:32Z"^^xsd:dateTime ;
+  dcterms:issued "2025-12-03T12:33:32Z"^^xsd:dateTime ;
 
   dcterms:license <http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/> ;
   dcterms:rights "Crown Copyright"@en ;
@@ -54,11 +54,11 @@
 # ----------------------------------------------------------------------
 
 curric:version-0.1.0
-  dcterms:date "2025-12-03"^^xsd:date ;
+  dcterms:date "2025-12-03T12:33:32Z"^^xsd:dateTime ;
   rdfs:comment "Initial release"@en .
 
 curric:version-0.0.9
-  dcterms:date "2025-11-19"^^xsd:date ;
+  dcterms:date "2025-11-19T12:33:32Z"^^xsd:dateTime ;
   rdfs:comment "Development version"@en .
 
 # ----------------------------------------------------------------------
@@ -329,7 +329,7 @@ curric:isProgressionOf
 
 # ----------------------------------------------------------------------
 # Datatype Properties
-# (lowerAgeBoundary, upperAgeBoundary, hasAim, example, exampleURL)
+# (lowerAgeBoundary, upperAgeBoundary, hasAims, example, exampleURL)
 # ----------------------------------------------------------------------
 
 curric:lowerAgeBoundary
@@ -348,10 +348,10 @@ curric:upperAgeBoundary
   rdfs:range xsd:positiveInteger ;
   rdfs:isDefinedBy curric: .
 
-curric:hasAim
+curric:hasAims
   rdf:type owl:DatatypeProperty ;
-  rdfs:label "has aim"@en ;
-  rdfs:comment "A specific educational aim for this subject as stated in the National Curriculum."@en ;
+  rdfs:label "has aims"@en ;
+  rdfs:comment "Specific educational aims for this subject as stated in the National Curriculum."@en ;
   rdfs:domain curric:SubSubject ;
   rdfs:range rdf:langString ;
   rdfs:isDefinedBy curric: .

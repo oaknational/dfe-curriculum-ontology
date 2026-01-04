@@ -32,9 +32,9 @@
   dcterms:description """This file defines the English subject in the National Curriculum 
   for England, including its aims and strands within the knowledge taxonomy."""@en ;
   dc:creator "Department for Education" ;
-  dcterms:created "2025-11-24"^^xsd:date ;
-  dcterms:modified "2025-12-03"^^xsd:date ;
-  dcterms:issued "2025-12-03"^^xsd:date ;
+  dcterms:created "2025-11-24T12:33:32Z"^^xsd:dateTime ;
+  dcterms:modified "2025-12-03T12:33:32Z"^^xsd:dateTime ;
+  dcterms:issued "2025-12-03T12:33:32Z"^^xsd:dateTime ;
   
   dcterms:license <http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/> ;
   dcterms:rights "Crown Copyright"@en ;
@@ -70,7 +70,7 @@ eng:subsubject-english
   curric:coversStrand eng:strand-structure-function-living-organisms ,
                    eng:strand-material-cycles-and-energy ;
 
-  curric:hasAim 
+  curric:hasAims 
     """English aim 1"""@en ,
     """English aim 2"""@en ,
     """English aim 3"""@en .

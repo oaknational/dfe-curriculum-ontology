@@ -31,9 +31,9 @@
   dcterms:description """This file defines Science schemes across all key stages (KS1-4), 
   specifying which content descriptors are taught at each stage."""@en ;
   dc:creator "Department for Education" ;
-  dcterms:created "2025-11-24"^^xsd:date ;
-  dcterms:modified "2025-12-03"^^xsd:date ;
-  dcterms:issued "2025-12-03"^^xsd:date ;
+  dcterms:created "2025-11-24T12:33:32Z"^^xsd:dateTime ;
+  dcterms:modified "2025-12-03T12:33:32Z"^^xsd:dateTime ;
+  dcterms:issued "2025-12-03T12:33:32Z"^^xsd:dateTime ;
   
   dcterms:license <http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/> ;
   dcterms:rights "Crown Copyright"@en ;
@@ -55,6 +55,7 @@ eng:scheme-science-key-stage-3
   a curric:Scheme ;
   rdfs:label "Science Key Stage 3"@en ;
   rdfs:comment "Science programme of study for key stage 3."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isSchemeOf eng:subsubject-science ;
   curric:coversKeyStage eng:key-stage-3 .
 
@@ -62,6 +63,7 @@ eng:scheme-combined-science-key-stage-4
   a curric:Scheme ;
   rdfs:label "Combined Science Key Stage 4"@en ;
   rdfs:comment "Combined science programme of study for key stage 4."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isSchemeOf eng:subsubject-science ;
   curric:coversKeyStage eng:key-stage-4 .
 
@@ -73,6 +75,7 @@ eng:progression-science-key-stage-3-seasonal-changes
   a curric:Progression ;
   rdfs:label "Science Key Stage 3 Seasonal Changes"@en ;
   rdfs:comment "Science progression for key stage 3: Seasonal changes."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-science-key-stage-3 ;
   curric:coversContent
     eng:content-descriptor-observe-seasonal-changes .
@@ -81,6 +84,7 @@ eng:progression-science-key-stage-3-skeletal-and-muscular-systems
   a curric:Progression ;
   rdfs:label "Science Key Stage 3 Skeletal and Muscular Systems"@en ;
   rdfs:comment "Science progression for key stage 3: Skeletal and muscular systems."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-science-key-stage-3 ;
   curric:coversContent
     eng:content-descriptor-biomechanics ,
@@ -90,6 +94,7 @@ eng:progression-combined-science-key-stage-4-cells-organisation
   a curric:Progression ;
   rdfs:label "Combined Science Key Stage 4 Cells Organisation"@en ;
   rdfs:comment "Combined Science progression for key stage 4: Cells Organisation."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-combined-science-key-stage-4 ;
   curric:coversContent
     eng:content-descriptor-cells-as-unit-of-living-organism ,

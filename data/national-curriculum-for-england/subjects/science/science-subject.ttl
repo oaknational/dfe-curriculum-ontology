@@ -32,9 +32,9 @@
   dcterms:description """This file defines the Science subject in the National Curriculum 
   for England, including its aims and strands within the knowledge taxonomy."""@en ;
   dc:creator "Department for Education" ;
-  dcterms:created "2025-11-24"^^xsd:date ;
-  dcterms:modified "2025-12-03"^^xsd:date ;
-  dcterms:issued "2025-12-03"^^xsd:date ;
+  dcterms:created "2025-11-24T12:33:32Z"^^xsd:dateTime ;
+  dcterms:modified "2025-12-03T12:33:32Z"^^xsd:dateTime ;
+  dcterms:issued "2025-12-03T12:33:32Z"^^xsd:dateTime ;
   
   dcterms:license <http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/> ;
   dcterms:rights "Crown Copyright"@en ;
@@ -46,13 +46,14 @@
   owl:imports <https://w3id.org/uk/curriculum/core/> .
 
 # ----------------------------------------------------------------------
-# Subject: Science
+# Subject: Science 
 # ----------------------------------------------------------------------
 
 eng:subject-science
   a curric:Subject ;
   rdfs:label "Science"@en ;
   rdfs:comment "Science subject in the National Curriculum for England."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:coversDiscipline eng:discipline-science .
 
 # ----------------------------------------------------------------------
@@ -67,11 +68,12 @@ eng:subsubject-science
   understanding the world through the specific disciplines of biology, chemistry and 
   physics."""@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-science-programmes-of-study> ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isSubSubjectOf eng:subject-science ;
   curric:coversStrand eng:strand-structure-function-living-organisms ,
                    eng:strand-material-cycles-and-energy ;
 
-  curric:hasAim 
+  curric:hasAims 
     """Develop scientific knowledge and conceptual understanding through the specific disciplines 
     of biology, chemistry and physics"""@en ,
     """Develop understanding of the nature, processes and methods of science through different 

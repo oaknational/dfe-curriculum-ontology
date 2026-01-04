@@ -33,9 +33,9 @@
   England, including phases (Primary, Secondary), key stages (KS1-4), and year groups (Year 1 - 
   Year 11) that provide the framework for curriculum delivery."""@en ;
   dc:creator "Department for Education" ;
-  dcterms:created "2025-11-24"^^xsd:date ;
-  dcterms:modified "2025-12-03"^^xsd:date ;
-  dcterms:issued "2025-12-03"^^xsd:date ;
+  dcterms:created "2025-11-24T12:33:32Z"^^xsd:dateTime ;
+  dcterms:modified "2025-12-03T12:33:32Z"^^xsd:dateTime ;
+  dcterms:issued "2025-12-03T12:33:32Z"^^xsd:dateTime ;
   
   dcterms:license <http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/> ;
   dcterms:rights "Crown Copyright"@en ;
@@ -55,19 +55,22 @@ eng:phase-primary
   rdfs:label "Primary"@en ;
   rdfs:comment "Primary education phase covering years 1-6."@en ;
   curric:lowerAgeBoundary "5"^^xsd:nonNegativeInteger ;
-  curric:upperAgeBoundary "11"^^xsd:positiveInteger .
+  curric:upperAgeBoundary "11"^^xsd:positiveInteger ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:phase-secondary
   a curric:Phase ;
   rdfs:label "Secondary"@en ;
   rdfs:comment "Secondary education phase covering years 7-11."@en ;
   curric:lowerAgeBoundary "11"^^xsd:nonNegativeInteger ;
-  curric:upperAgeBoundary "16"^^xsd:positiveInteger .
+  curric:upperAgeBoundary "16"^^xsd:positiveInteger ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:education-phases
   a skos:OrderedCollection ;
   rdfs:label "Education Phases"@en ;
-  skos:memberList (eng:phase-primary eng:phase-secondary) .
+  skos:memberList (eng:phase-primary eng:phase-secondary) ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 # ----------------------------------------------------------------------
 # Key Stages
@@ -79,7 +82,8 @@ eng:key-stage-1
   rdfs:comment "Key Stage 1 covering years 1-2."@en ;
   curric:lowerAgeBoundary "5"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "7"^^xsd:positiveInteger ;
-  curric:isKeyStageOf eng:phase-primary .
+  curric:isKeyStageOf eng:phase-primary ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:key-stage-2
   a curric:KeyStage ;
@@ -87,7 +91,8 @@ eng:key-stage-2
   rdfs:comment "Key Stage 2 covering years 3-6."@en ;
   curric:lowerAgeBoundary "7"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "11"^^xsd:positiveInteger ;
-  curric:isKeyStageOf eng:phase-primary .
+  curric:isKeyStageOf eng:phase-primary ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:key-stage-3
   a curric:KeyStage ;
@@ -95,7 +100,8 @@ eng:key-stage-3
   rdfs:comment "Key Stage 3 covering years 7-9."@en ;
   curric:lowerAgeBoundary "11"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "14"^^xsd:positiveInteger ;
-  curric:isKeyStageOf eng:phase-secondary .
+  curric:isKeyStageOf eng:phase-secondary ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:key-stage-4
   a curric:KeyStage ;
@@ -103,17 +109,20 @@ eng:key-stage-4
   rdfs:comment "Key Stage 4 covering years 10-11 (GCSE years)."@en ;
   curric:lowerAgeBoundary "14"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "16"^^xsd:positiveInteger ;
-  curric:isKeyStageOf eng:phase-secondary .
+  curric:isKeyStageOf eng:phase-secondary ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:primary-key-stages
   a skos:OrderedCollection ;
   rdfs:label "Primary Key Stages"@en ;
-  skos:memberList (eng:key-stage-1 eng:key-stage-2) .
+  skos:memberList (eng:key-stage-1 eng:key-stage-2) ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:secondary-key-stages
   a skos:OrderedCollection ;
   rdfs:label "Secondary Key Stages"@en ;
-  skos:memberList (eng:key-stage-3 eng:key-stage-4) .
+  skos:memberList (eng:key-stage-3 eng:key-stage-4) ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 # ----------------------------------------------------------------------
 # Year Groups
@@ -125,7 +134,8 @@ eng:year-group-1
   rdfs:comment "Year Group 1 (age 5-6)."@en ;
   curric:lowerAgeBoundary "5"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "6"^^xsd:positiveInteger ;
-  curric:isYearGroupOf eng:key-stage-1 .
+  curric:isYearGroupOf eng:key-stage-1 ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:year-group-2
   a curric:YearGroup ;
@@ -133,7 +143,8 @@ eng:year-group-2
   rdfs:comment "Year Group 2 (age 6-7)."@en ;
   curric:lowerAgeBoundary "6"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "7"^^xsd:positiveInteger ;
-  curric:isYearGroupOf eng:key-stage-1 .
+  curric:isYearGroupOf eng:key-stage-1 ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:year-group-3
   a curric:YearGroup ;
@@ -141,7 +152,8 @@ eng:year-group-3
   rdfs:comment "Year Group 3 (age 7-8)."@en ;
   curric:lowerAgeBoundary "7"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "8"^^xsd:positiveInteger ;
-  curric:isYearGroupOf eng:key-stage-2 .
+  curric:isYearGroupOf eng:key-stage-2 ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:year-group-4
   a curric:YearGroup ;
@@ -149,7 +161,8 @@ eng:year-group-4
   rdfs:comment "Year Group 4 (age 8-9)."@en ;
   curric:lowerAgeBoundary "8"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "9"^^xsd:positiveInteger ;
-  curric:isYearGroupOf eng:key-stage-2 .
+  curric:isYearGroupOf eng:key-stage-2 ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:year-group-5
   a curric:YearGroup ;
@@ -157,7 +170,8 @@ eng:year-group-5
   rdfs:comment "Year Group 5 (age 9-10)."@en ;
   curric:lowerAgeBoundary "9"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "10"^^xsd:positiveInteger ;
-  curric:isYearGroupOf eng:key-stage-2 .
+  curric:isYearGroupOf eng:key-stage-2 ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:year-group-6
   a curric:YearGroup ;
@@ -165,7 +179,8 @@ eng:year-group-6
   rdfs:comment "Year Group 6 (age 10-11)."@en ;
   curric:lowerAgeBoundary "10"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "11"^^xsd:positiveInteger ;
-  curric:isYearGroupOf eng:key-stage-2 .
+  curric:isYearGroupOf eng:key-stage-2 ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:year-group-7
   a curric:YearGroup ;
@@ -173,7 +188,8 @@ eng:year-group-7
   rdfs:comment "Year Group 7 (age 11-12)."@en ;
   curric:lowerAgeBoundary "11"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "12"^^xsd:positiveInteger ;
-  curric:isYearGroupOf eng:key-stage-3 .
+  curric:isYearGroupOf eng:key-stage-3 ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:year-group-8
   a curric:YearGroup ;
@@ -181,7 +197,8 @@ eng:year-group-8
   rdfs:comment "Year Group 8 (age 12-13)."@en ;
   curric:lowerAgeBoundary "12"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "13"^^xsd:positiveInteger ;
-  curric:isYearGroupOf eng:key-stage-3 .
+  curric:isYearGroupOf eng:key-stage-3 ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:year-group-9
   a curric:YearGroup ;
@@ -189,7 +206,8 @@ eng:year-group-9
   rdfs:comment "Year Group 9 (age 13-14)."@en ;
   curric:lowerAgeBoundary "13"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "14"^^xsd:positiveInteger ;
-  curric:isYearGroupOf eng:key-stage-3 .
+  curric:isYearGroupOf eng:key-stage-3 ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:year-group-10
   a curric:YearGroup ;
@@ -197,7 +215,8 @@ eng:year-group-10
   rdfs:comment "Year Group 10 (age 14-15), first year of GCSE study."@en ;
   curric:lowerAgeBoundary "14"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "15"^^xsd:positiveInteger ;
-  curric:isYearGroupOf eng:key-stage-4 .
+  curric:isYearGroupOf eng:key-stage-4 ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:year-group-11
   a curric:YearGroup ;
@@ -205,25 +224,30 @@ eng:year-group-11
   rdfs:comment "Year Group 11 (age 15-16), final year of GCSE study."@en ;
   curric:lowerAgeBoundary "15"^^xsd:nonNegativeInteger ;
   curric:upperAgeBoundary "16"^^xsd:positiveInteger ;
-  curric:isYearGroupOf eng:key-stage-4 .
+  curric:isYearGroupOf eng:key-stage-4 ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:key-stage-1-year-groups
   a skos:OrderedCollection ;
   rdfs:label "Key Stage 1 Year Groups"@en ;
-  skos:memberList (eng:year-group-1 eng:year-group-2) .
+  skos:memberList (eng:year-group-1 eng:year-group-2) ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:key-stage-2-year-groups
   a skos:OrderedCollection ;
   rdfs:label "Key Stage 2 Year Groups"@en ;
-  skos:memberList (eng:year-group-3 eng:year-group-4 eng:year-group-5 eng:year-group-6) .
+  skos:memberList (eng:year-group-3 eng:year-group-4 eng:year-group-5 eng:year-group-6) ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:key-stage-3-year-groups
   a skos:OrderedCollection ;
   rdfs:label "Key Stage 3 Year Groups"@en ;
-  skos:memberList (eng:year-group-7 eng:year-group-8 eng:year-group-9) .
+  skos:memberList (eng:year-group-7 eng:year-group-8 eng:year-group-9) ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:key-stage-4-year-groups
   a skos:OrderedCollection ;
   rdfs:label "Key Stage 4 Year Groups"@en ;
-  skos:memberList (eng:year-group-10 eng:year-group-11) .
+  skos:memberList (eng:year-group-10 eng:year-group-11) ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
   

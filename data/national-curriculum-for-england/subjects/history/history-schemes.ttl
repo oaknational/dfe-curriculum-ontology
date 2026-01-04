@@ -31,9 +31,9 @@
   dcterms:description """This file defines History schemes across all key stages (KS1-4), 
   specifying which content descriptors are taught at each stage."""@en ;
   dc:creator "Department for Education" ;
-  dcterms:created "2025-11-24"^^xsd:date ;
-  dcterms:modified "2025-12-03"^^xsd:date ;
-  dcterms:issued "2025-12-03"^^xsd:date ;
+  dcterms:created "2025-11-24T12:33:32Z"^^xsd:dateTime ;
+  dcterms:modified "2025-12-03T12:33:32Z"^^xsd:dateTime ;
+  dcterms:issued "2025-12-03T12:33:32Z"^^xsd:dateTime ;
   
   dcterms:license <http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/> ;
   dcterms:rights "Crown Copyright"@en ;
@@ -67,6 +67,7 @@ eng:scheme-history-key-stage-1
   and changes outlined below, teachers are often introducing pupils to historical periods that they 
   will study more fully at key stages 2 and 3."""@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isSchemeOf eng:subsubject-history ;
   curric:coversKeyStage eng:key-stage-1 .
 
@@ -88,6 +89,7 @@ eng:scheme-history-key-stage-2
   understand both the long arc of development and the complexity of specific aspects of the 
   content."""@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isSchemeOf eng:subsubject-history ;
   curric:coversKeyStage eng:key-stage-2 .
 
@@ -110,6 +112,7 @@ eng:scheme-history-key-stage-3
   pupils understand both the long arc of development and the complexity of specific aspects of the 
   content."""@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isSchemeOf eng:subsubject-history ;
   curric:coversKeyStage eng:key-stage-3 .
 
@@ -121,6 +124,7 @@ eng:progression-history-key-stage-1-second-order-concepts
   a curric:Progression ;
   rdfs:label "History Key Stage 1 Second Order Concepts"@en ;
   rdfs:comment "History progression for key stage 1: Second Order Concepts."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-1 ;
   curric:coversContent
     eng:content-descriptor-narratives-analyses-accounts ,
@@ -135,6 +139,7 @@ eng:progression-history-key-stage-1-nature-of-historical-enquiry
   a curric:Progression ;
   rdfs:label "History Key Stage 1 Nature of Historical Enquiry"@en ;
   rdfs:comment "History progression for key stage 1: Nature of Historical Enquiry."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-1 ;
   curric:coversContent
     eng:content-descriptor-historians-investigate-the-past ,
@@ -144,6 +149,7 @@ eng:progression-history-key-stage-1-substantive-concepts
   a curric:Progression ;
   rdfs:label "History Key Stage 1 Substantive Concepts"@en ;
   rdfs:comment "History progression for key stage 1: Substantive Concepts."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-1 ;
   curric:coversContent
     eng:content-descriptor-abstract-terms-historically-grounded .
@@ -152,6 +158,7 @@ eng:progression-history-key-stage-1-history-of-diverse-britain
   a curric:Progression ;
   rdfs:label "History Key Stage 1 History of Diverse Britain"@en ;
   rdfs:comment "History progression for key stage 1: History of Diverse Britain."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-1 ;
   curric:coversContent
     eng:content-descriptor-changes-within-living-memory ,
@@ -163,6 +170,7 @@ eng:progression-history-key-stage-2-second-order-concepts
   a curric:Progression ;
   rdfs:label "History Key Stage 2 Second Order Concepts"@en ;
   rdfs:comment "History progression for key stage 2: Second Order Concepts."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-2 ;
   curric:coversContent
     eng:content-descriptor-narratives-analyses-accounts ,
@@ -177,6 +185,7 @@ eng:progression-history-key-stage-2-nature-of-historical-enquiry
   a curric:Progression ;
   rdfs:label "History Key Stage 2 Nature of Historical Enquiry"@en ;
   rdfs:comment "History progression for key stage 2: Nature of Historical Enquiry."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-2 ;
   curric:coversContent
     eng:content-descriptor-historians-investigate-the-past ,
@@ -186,6 +195,7 @@ eng:progression-history-key-stage-2-substantive-concepts
   a curric:Progression ;
   rdfs:label "History Key Stage 2 Substantive Concepts"@en ;
   rdfs:comment "History progression for key stage 2: Substantive Concepts."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-2 ;
   curric:coversContent
     eng:content-descriptor-abstract-terms-historically-grounded .
@@ -194,6 +204,7 @@ eng:progression-history-key-stage-2-history-of-diverse-britain
   a curric:Progression ;
   rdfs:label "History Key Stage 2 History of Diverse Britain"@en ;
   rdfs:comment "History progression for key stage 2: History of Diverse Britain."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-2 ;
   curric:coversContent
     eng:content-descriptor-changes-in-britain-stone-age-to-iron-age ,
@@ -207,6 +218,7 @@ eng:progression-history-key-stage-2-significant-aspects-of-world-history
   a curric:Progression ;
   rdfs:label "History Key Stage 2 Significant Aspects of World History"@en ;
   rdfs:comment "History progression for key stage 2: Significant Aspects of World History."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-2 ;
   curric:coversContent
     eng:content-descriptor-earliest-civilizations ,
@@ -217,6 +229,7 @@ eng:progression-history-key-stage-3-second-order-concepts
   a curric:Progression ;
   rdfs:label "History Key Stage 3 Second Order Concepts"@en ;
   rdfs:comment "History progression for key stage 3: Second Order Concepts."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-3 ;
   curric:coversContent
     eng:content-descriptor-narratives-analyses-accounts ,
@@ -231,6 +244,7 @@ eng:progression-history-key-stage-3-nature-of-historical-enquiry
   a curric:Progression ;
   rdfs:label "History Key Stage 3 Nature of Historical Enquiry"@en ;
   rdfs:comment "History progression for key stage 3: Nature of Historical Enquiry."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-3 ;
   curric:coversContent
     eng:content-descriptor-historians-investigate-the-past ,
@@ -240,6 +254,7 @@ eng:progression-history-key-stage-3-substantive-concepts
   a curric:Progression ;
   rdfs:label "History Key Stage 3 Substantive Concepts"@en ;
   rdfs:comment "History progression for key stage 3: Substantive Concepts."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-3 ;
   curric:coversContent
     eng:content-descriptor-abstract-terms-historically-grounded .
@@ -248,6 +263,7 @@ eng:progression-history-key-stage-3-history-of-diverse-britain
   a curric:Progression ;
   rdfs:label "History Key Stage 3 History of Diverse Britain"@en ;
   rdfs:comment "History progression for key stage 3: History of Diverse Britain."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-3 ;
   curric:coversContent
     eng:content-descriptor-local-history-study ,
@@ -261,6 +277,7 @@ eng:progression-history-key-stage-3-significant-aspects-of-world-history
   a curric:Progression ;
   rdfs:label "History Key Stage 3 Significant Aspects of World History"@en ;
   rdfs:comment "History progression for key stage 3: Significant Aspects of World History."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-3 ;
   curric:coversContent
     eng:content-descriptor-significant-society-or-issue .

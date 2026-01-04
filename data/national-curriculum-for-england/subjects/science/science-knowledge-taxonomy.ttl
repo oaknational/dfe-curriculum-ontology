@@ -33,9 +33,9 @@
   Curriculum in England, organizing content through strands, sub-strands, content descriptors, 
   and content sub-descriptors."""@en ;
   dc:creator "Department for Education" ;
-  dcterms:created "2025-11-24"^^xsd:date ;
-  dcterms:modified "2025-12-03"^^xsd:date ;
-  dcterms:issued "2025-12-03"^^xsd:date ;
+  dcterms:created "2025-11-24T12:33:32Z"^^xsd:dateTime ;
+  dcterms:modified "2025-12-03T12:33:32Z"^^xsd:dateTime ;
+  dcterms:issued "2025-12-03T12:33:32Z"^^xsd:dateTime ;
   
   dcterms:license <http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/> ;
   dcterms:rights "Crown Copyright"@en ;
@@ -54,7 +54,8 @@
 eng:knowledge-taxonomy
   a skos:ConceptScheme ;
   skos:prefLabel "National Curriculum for England Knowledge Structure"@en ;
-  skos:hasTopConcept eng:discipline-science .
+  skos:hasTopConcept eng:discipline-science ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
   
 # ----------------------------------------------------------------------
 # Disciplines
@@ -71,7 +72,8 @@ eng:discipline-science
   systematic investigation methods that students will use throughout their lives."""@en ;
   skos:narrower eng:strand-structure-function-living-organisms ,
                 eng:strand-material-cycles-and-energy ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 # ----------------------------------------------------------------------
 # Strands 
@@ -83,14 +85,16 @@ eng:strand-structure-function-living-organisms
   skos:broader eng:discipline-science ;
   skos:narrower eng:substrand-cells-organisation ,
                 eng:substrand-skeletal-and-muscular-systems ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:strand-material-cycles-and-energy
   a skos:Concept, curric:Strand ;
   skos:prefLabel "Material cycles and energy"@en ;
   skos:broader eng:discipline-science ;
   skos:narrower eng:substrand-seasonal-changes ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 # ----------------------------------------------------------------------
 # Sub-Strands
@@ -102,7 +106,8 @@ eng:substrand-cells-organisation
   skos:broader eng:strand-structure-function-living-organisms ;
   skos:narrower eng:content-descriptor-cells-as-unit-of-living-organism ,
                 eng:content-descriptor-functions-of-the-cell-wall ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:substrand-skeletal-and-muscular-systems
   a skos:Concept, curric:SubStrand ;
@@ -110,14 +115,16 @@ eng:substrand-skeletal-and-muscular-systems
   skos:broader eng:strand-structure-function-living-organisms ;
   skos:narrower eng:content-descriptor-biomechanics ,
                 eng:content-descriptor-function-of-muscles ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:substrand-seasonal-changes
   a skos:Concept, curric:SubStrand ;
   skos:prefLabel "Seasonal changes"@en ;
   skos:broader eng:strand-material-cycles-and-energy ;
   skos:narrower eng:content-descriptor-observe-seasonal-changes ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 # ----------------------------------------------------------------------
 # Content Descriptors
@@ -128,34 +135,39 @@ eng:content-descriptor-cells-as-unit-of-living-organism
   skos:prefLabel """Cells as the fundamental unit of living organisms, including how to observe, 
   interpret and record cell structure using a light microscope."""@en ;
   skos:broader eng:substrand-cells-organisation ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-functions-of-the-cell-wall
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel """The functions of the cell wall, cell membrane, cytoplasm, nucleus, vacuole,
   mitochondria and chloroplasts."""@en ;
   skos:broader eng:substrand-cells-organisation ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-observe-seasonal-changes
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel "Observe changes across the 4 seasons"@en ;
   skos:broader eng:substrand-seasonal-changes ;
   skos:narrower eng:content-subdescriptor-seasons-detail ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-biomechanics
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel "Biomechanics"@en ;
   skos:broader eng:substrand-skeletal-and-muscular-systems ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:content-descriptor-function-of-muscles
   a skos:Concept, curric:ContentDescriptor ;
   skos:prefLabel "Function of muscles"@en ;
   skos:broader eng:substrand-skeletal-and-muscular-systems ;
   skos:inScheme eng:knowledge-taxonomy ;
-  skos:related eng:theme-climate-change-and-sustainability .
+  skos:related eng:theme-climate-change-and-sustainability ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 # ----------------------------------------------------------------------
 # Content Sub-Descriptors
@@ -165,4 +177,5 @@ eng:content-subdescriptor-seasons-detail
   a skos:Concept, curric:ContentSubDescriptor ;
   skos:prefLabel "Seasons detail"@en ;
   skos:broader eng:content-descriptor-observe-seasonal-changes ;
-  skos:inScheme eng:knowledge-taxonomy .
+  skos:inScheme eng:knowledge-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .

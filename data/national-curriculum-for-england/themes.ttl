@@ -34,9 +34,9 @@
   in the National Curriculum for England, providing conceptual connections across different areas 
   of learning."""@en ;
   dc:creator "Department for Education" ;
-  dcterms:created "2025-11-24"^^xsd:date ;
-  dcterms:modified "2025-12-03"^^xsd:date ;
-  dcterms:issued "2025-12-03"^^xsd:date ;
+  dcterms:created "2025-11-24T12:33:32Z"^^xsd:dateTime ;
+  dcterms:modified "2025-12-03T12:33:32Z"^^xsd:dateTime ;
+  dcterms:issued "2025-12-03T12:33:32Z"^^xsd:dateTime ;
   
   dcterms:license <http://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/> ;
   dcterms:rights "Crown Copyright"@en ;
@@ -59,11 +59,30 @@ eng:themes-taxonomy
   skos:hasTopConcept eng:theme-financial-education ,
                      eng:theme-digital-literacy ,
                      eng:theme-climate-change-and-sustainability ,
-                     eng:theme-media-literacy .
+                     eng:theme-media-literacy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 # ----------------------------------------------------------------------
-# Themes
+# Themes 
 # ----------------------------------------------------------------------
+
+eng:theme-financial-education
+  a skos:Concept, curric:Theme ;
+  skos:prefLabel "Financial Education"@en ;
+  skos:definition """Understanding money, budgeting, saving, and financial 
+  decision-making."""@en ;
+  skos:inScheme eng:themes-taxonomy ;
+  skos:topConceptOf eng:themes-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
+
+eng:theme-digital-literacy
+  a skos:Concept, curric:Theme ;
+  skos:prefLabel "Digital Literacy"@en ;
+  skos:definition """Using technology safely, effectively, and responsibly in 
+  educational and personal contexts."""@en ;
+  skos:inScheme eng:themes-taxonomy ;
+  skos:topConceptOf eng:themes-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 eng:theme-climate-change-and-sustainability
   a skos:Concept, curric:Theme ;
@@ -71,4 +90,14 @@ eng:theme-climate-change-and-sustainability
   skos:definition """Understanding climate change, environmental impact, and promoting 
   sustainable practices."""@en ;
   skos:inScheme eng:themes-taxonomy ;
-  skos:topConceptOf eng:themes-taxonomy .
+  skos:topConceptOf eng:themes-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
+
+eng:theme-media-literacy
+  a skos:Concept, curric:Theme ;
+  skos:prefLabel "Media Literacy"@en ;
+  skos:definition """Ability to access, analyze, evaluate, and create media in 
+  various forms."""@en ;
+  skos:inScheme eng:themes-taxonomy ;
+  skos:topConceptOf eng:themes-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
