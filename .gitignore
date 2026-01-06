@@ -59,6 +59,10 @@ docs-output/
 .env.local
 .env.*.local
 
+# Secrets (NEVER commit)
+.secrets/
+*.credentials.txt
+
 # Package manager
 node_modules/
 package-lock.json
