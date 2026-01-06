@@ -1,6 +1,7 @@
 #!/bin/bash
 # Deploy National Curriculum for England SPARQL endpoint to Google Cloud Run
-# Usage: ./deployment/deploy.sh
+# WITHOUT Secret Manager (fallback method)
+# Usage: ./deployment/deploy-without-secrets.sh
 
 set -e
 
@@ -13,6 +14,7 @@ NC='\033[0m' # No Color
 
 echo -e "${BLUE}=========================================${NC}"
 echo -e "${BLUE}🚀 Deploying National Curriculum SPARQL${NC}"
+echo -e "${BLUE}   (Without Secret Manager)${NC}"
 echo -e "${BLUE}=========================================${NC}"
 echo ""
 
@@ -29,6 +31,23 @@ echo "  Service: $SERVICE_NAME"
 echo "  Image: $IMAGE:latest"
 echo ""
 
+# Check if shiro.ini exists
+if [ ! -f "deployment/shiro.ini" ]; then
+    echo -e "${RED}❌ deployment/shiro.ini not found${NC}"
+    echo -e "${YELLOW}Run: ./deployment/generate-local-passwords.sh${NC}"
+    exit 1
+fi
+
+# Check if shiro.ini contains hashed passwords (not plaintext)
+if grep -q "admin = fuseki-admin-" deployment/shiro.ini 2>/dev/null; then
+    echo -e "${RED}❌ shiro.ini contains plaintext passwords${NC}"
+    echo -e "${YELLOW}Run: ./deployment/generate-local-passwords.sh${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}✅ shiro.ini found with hashed passwords${NC}"
+echo ""
+
 # Step 1: Validate TTL files
 echo -e "${BLUE}📋 Step 1: Validating TTL files...${NC}"
 if [ -f "scripts/validate.sh" ]; then
@@ -42,9 +61,9 @@ else
 fi
 echo ""
 
-# Step 2: Build Docker image
+# Step 2: Build Docker image (using simplified Dockerfile)
 echo -e "${BLUE}🔨 Step 2: Building Docker image...${NC}"
-docker build -t ${IMAGE}:latest -f deployment/Dockerfile . || {
+docker build -t ${IMAGE}:latest -f deployment/Dockerfile.no-secrets . || {
     echo -e "${RED}❌ Docker build failed${NC}"
     exit 1
 }
@@ -69,23 +88,8 @@ docker push ${IMAGE}:latest || {
 echo -e "${GREEN}✅ Image pushed to GCR${NC}"
 echo ""
 
-# Step 5: Verify secrets exist
-echo -e "${BLUE}🔐 Step 5: Verifying secrets exist...${NC}"
-if ! gcloud secrets describe fuseki-admin-password --project=${PROJECT_ID} >/dev/null 2>&1; then
-    echo -e "${RED}❌ Secret 'fuseki-admin-password' not found${NC}"
-    echo -e "${YELLOW}Run: ./deployment/setup-secrets.sh${NC}"
-    exit 1
-fi
-if ! gcloud secrets describe fuseki-viewer-password --project=${PROJECT_ID} >/dev/null 2>&1; then
-    echo -e "${RED}❌ Secret 'fuseki-viewer-password' not found${NC}"
-    echo -e "${YELLOW}Run: ./deployment/setup-secrets.sh${NC}"
-    exit 1
-fi
-echo -e "${GREEN}✅ Secrets verified${NC}"
-echo ""
-
-# Step 6: Deploy to Cloud Run with secrets
-echo -e "${BLUE}☁️  Step 6: Deploying to Cloud Run with secrets...${NC}"
+# Step 5: Deploy to Cloud Run (without secrets)
+echo -e "${BLUE}☁️  Step 5: Deploying to Cloud Run...${NC}"
 gcloud run deploy ${SERVICE_NAME} \
     --image=${IMAGE}:latest \
     --platform=managed \
@@ -98,8 +102,6 @@ gcloud run deploy ${SERVICE_NAME} \
     --min-instances=0 \
     --timeout=300 \
     --concurrency=80 \
-    --update-secrets=FUSEKI_ADMIN_PASSWORD=fuseki-admin-password:latest \
-    --update-secrets=FUSEKI_VIEWER_PASSWORD=fuseki-viewer-password:latest \
     --project=${PROJECT_ID} || {
     echo -e "${RED}❌ Cloud Run deployment failed${NC}"
     exit 1
@@ -107,8 +109,8 @@ gcloud run deploy ${SERVICE_NAME} \
 echo -e "${GREEN}✅ Deployed to Cloud Run${NC}"
 echo ""
 
-# Step 7: Get service URL
-echo -e "${BLUE}🔗 Step 7: Getting service URL...${NC}"
+# Step 6: Get service URL
+echo -e "${BLUE}🔗 Step 6: Getting service URL...${NC}"
 SERVICE_URL=$(gcloud run services describe ${SERVICE_NAME} \
     --region=${REGION} \
     --project=${PROJECT_ID} \
@@ -122,14 +124,14 @@ fi
 echo -e "${GREEN}✅ Service URL retrieved${NC}"
 echo ""
 
-# Step 8: Wait for service to be ready
-echo -e "${BLUE}⏳ Step 8: Waiting for service to be ready...${NC}"
+# Step 7: Wait for service to be ready
+echo -e "${BLUE}⏳ Step 7: Waiting for service to be ready...${NC}"
 sleep 15
 echo -e "${GREEN}✅ Service should be ready${NC}"
 echo ""
 
-# Step 9: Test deployment
-echo -e "${BLUE}🧪 Step 9: Testing SPARQL endpoint...${NC}"
+# Step 8: Test deployment
+echo -e "${BLUE}🧪 Step 8: Testing SPARQL endpoint...${NC}"
 
 # Test 1: Health check
 echo -n "  Testing health endpoint... "
@@ -141,21 +143,29 @@ else
     exit 1
 fi
 
-# Test 2: Triple count (with authentication - retrieve password from secrets)
-echo -n "  Testing SPARQL query... "
-VIEWER_PASSWORD=$(gcloud secrets versions access latest --secret="fuseki-viewer-password" --project=${PROJECT_ID} 2>/dev/null)
-TRIPLE_COUNT=$(curl -u viewer:${VIEWER_PASSWORD} -s -X POST \
-    -H "Content-Type: application/sparql-query" \
-    -H "Accept: application/json" \
-    --data "SELECT (COUNT(*) as ?count) WHERE { ?s ?p ?o }" \
-    ${SERVICE_URL}/national-curriculum-for-england/sparql | \
-    jq -r '.results.bindings[0].count.value' 2>/dev/null)
+# Test 2: Check if credentials are in local file
+if [ -f ".secrets/fuseki-credentials.txt" ]; then
+    echo -n "  Testing SPARQL query with credentials... "
 
-if [ "$TRIPLE_COUNT" -gt "0" ]; then
-    echo -e "${GREEN}✅ OK (${TRIPLE_COUNT} triples)${NC}"
+    # Extract passwords from credentials file
+    VIEWER_PASSWORD=$(grep "Viewer Password:" .secrets/fuseki-credentials.txt | cut -d':' -f2 | xargs)
+
+    TRIPLE_COUNT=$(curl -u viewer:${VIEWER_PASSWORD} -s -X POST \
+        -H "Content-Type: application/sparql-query" \
+        -H "Accept: application/json" \
+        --data "SELECT (COUNT(*) as ?count) WHERE { ?s ?p ?o }" \
+        ${SERVICE_URL}/national-curriculum-for-england/sparql | \
+        jq -r '.results.bindings[0].count.value' 2>/dev/null)
+
+    if [ "$TRIPLE_COUNT" -gt "0" ]; then
+        echo -e "${GREEN}✅ OK (${TRIPLE_COUNT} triples)${NC}"
+    else
+        echo -e "${RED}❌ Failed (no triples returned)${NC}"
+        exit 1
+    fi
 else
-    echo -e "${RED}❌ Failed (no triples returned)${NC}"
-    exit 1
+    echo -e "${YELLOW}⚠️  Cannot test authentication (.secrets/fuseki-credentials.txt not found)${NC}"
+    echo -e "${YELLOW}   You'll need to test manually with your credentials${NC}"
 fi
 
 echo ""
@@ -174,8 +184,16 @@ echo ""
 echo -e "${BLUE}Health Check:${NC}"
 echo "  ${SERVICE_URL}/\$/ping"
 echo ""
+
+if [ -f ".secrets/fuseki-credentials.txt" ]; then
+    echo -e "${BLUE}Credentials:${NC}"
+    echo "  View: cat .secrets/fuseki-credentials.txt"
+    echo ""
+fi
+
 echo -e "${BLUE}Example Query:${NC}"
-echo "  curl -X POST \\"
+echo "  curl -u viewer:YOUR_PASSWORD \\"
+echo "    -X POST \\"
 echo "    -H \"Content-Type: application/sparql-query\" \\"
 echo "    -H \"Accept: application/json\" \\"
 echo "    --data \"SELECT * WHERE { ?s ?p ?o } LIMIT 10\" \\"
@@ -186,4 +204,8 @@ echo "  gcloud run services logs read ${SERVICE_NAME} --region=${REGION}"
 echo ""
 echo -e "${BLUE}View Metrics:${NC}"
 echo "  https://console.cloud.google.com/run/detail/${REGION}/${SERVICE_NAME}/metrics?project=${PROJECT_ID}"
+echo ""
+echo -e "${YELLOW}⚠️  Security Note:${NC}"
+echo "  Passwords are hashed in the container (secure)"
+echo "  To rotate: run ./deployment/generate-local-passwords.sh and redeploy"
 echo ""
