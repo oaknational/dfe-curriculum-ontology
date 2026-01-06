@@ -352,10 +352,10 @@ curricshapes:SubSubjectShape
   ] ;
 
   sh:property [
-     sh:path curric:hasAim ;
+     sh:path curric:hasAims ;
      sh:datatype rdf:langString ;
      sh:minCount 1 ;
-     sh:name "has aim" ;
+     sh:name "has aims" ;
      sh:description "Every sub-subject must have one or more aims." ;
      sh:message "Sub-subjects must have one or more aims." ;
    ] ;
