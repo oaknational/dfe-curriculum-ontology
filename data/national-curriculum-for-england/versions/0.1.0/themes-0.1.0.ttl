@@ -65,3 +65,39 @@ eng:themes-taxonomy
 # ----------------------------------------------------------------------
 # Themes 
 # ----------------------------------------------------------------------
+
+eng:theme-financial-education
+  a skos:Concept, curric:Theme ;
+  skos:prefLabel "Financial Education"@en ;
+  skos:definition """Understanding money, budgeting, saving, and financial 
+  decision-making."""@en ;
+  skos:inScheme eng:themes-taxonomy ;
+  skos:topConceptOf eng:themes-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
+
+eng:theme-digital-literacy
+  a skos:Concept, curric:Theme ;
+  skos:prefLabel "Digital Literacy"@en ;
+  skos:definition """Using technology safely, effectively, and responsibly in 
+  educational and personal contexts."""@en ;
+  skos:inScheme eng:themes-taxonomy ;
+  skos:topConceptOf eng:themes-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
+
+eng:theme-climate-change-and-sustainability
+  a skos:Concept, curric:Theme ;
+  skos:prefLabel "Climate and Sustainability"@en ;
+  skos:definition """Understanding climate change, environmental impact, and promoting 
+  sustainable practices."""@en ;
+  skos:inScheme eng:themes-taxonomy ;
+  skos:topConceptOf eng:themes-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
+
+eng:theme-media-literacy
+  a skos:Concept, curric:Theme ;
+  skos:prefLabel "Media Literacy"@en ;
+  skos:definition """Ability to access, analyze, evaluate, and create media in 
+  various forms."""@en ;
+  skos:inScheme eng:themes-taxonomy ;
+  skos:topConceptOf eng:themes-taxonomy ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
