@@ -51,17 +51,6 @@
 # Themes Taxonomy
 # ----------------------------------------------------------------------
 
-eng:themes-taxonomy
-  a skos:ConceptScheme ;
-  skos:prefLabel "English National Curriculum Cross-Cutting Themes"@en ;
-  dcterms:description """Cross-cutting themes that appear across multiple subjects and provide 
-  connections between different areas of the curriculum."""@en ;
-  skos:hasTopConcept eng:theme-financial-education ,
-                     eng:theme-digital-literacy ,
-                     eng:theme-climate-change-and-sustainability ,
-                     eng:theme-media-literacy ;
-  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
-
 # ----------------------------------------------------------------------
 # Themes 
 # ----------------------------------------------------------------------
