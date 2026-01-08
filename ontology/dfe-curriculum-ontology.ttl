@@ -63,7 +63,8 @@ curric:version-0.0.9
 
 # ----------------------------------------------------------------------
 # Classes: Programme Structure
-# (Phase, KeyStage, YearGroup, Subject, SubSubject, Scheme, Progression)
+# (Phase, KeyStage, YearGroup, SubjectGroup, Subject, Scheme, 
+# Progression)
 # ----------------------------------------------------------------------
 
 curric:Phase 
@@ -84,22 +85,22 @@ curric:YearGroup
   rdfs:comment "A year group within a key stage."@en ;
   rdfs:isDefinedBy curric: .
 
+curric:SubjectGroup
+  rdf:type owl:Class ;
+  rdfs:label "Subject Group"@en ;
+  rdfs:comment "Subject group (e.g. science, history, physical education)."@en ;
+  rdfs:isDefinedBy curric: .
+
 curric:Subject
   rdf:type owl:Class ;
   rdfs:label "Subject"@en ;
-  rdfs:comment "Subject (e.g. science, history, physical education)."@en ;
-  rdfs:isDefinedBy curric: .
-
-curric:SubSubject
-  rdf:type owl:Class ;
-  rdfs:label "Sub-Subject"@en ;
-  rdfs:comment "Sub-subject (e.g. biology, history, physical education)."@en ;
+  rdfs:comment "Subject (e.g. biology, history, physical education)."@en ;
   rdfs:isDefinedBy curric: .
 
 curric:Scheme
   rdf:type owl:Class ;
   rdfs:label "Scheme"@en ;
-  rdfs:comment "A scheme defines one or more progressions for a sub-subject and a key stage."@en ;
+  rdfs:comment "A scheme defines one or more progressions for a subject and a key stage."@en ;
   rdfs:isDefinedBy curric: .
 
 curric:Progression
@@ -160,9 +161,10 @@ curric:Theme
 # ----------------------------------------------------------------------
 # Object Properties
 # (hasKeyStage, isKeyStageOf, hasYearGroup, isYearGroupOf, 
-# coversKeyStage, isCoveredByScheme, hasDiscipline, isDisciplineOf, coversStrand, 
-# isStrandOf, coversContent, isIncludedByProgression, hasSubSubject,
-# isSubSubjectOf, hasScheme, isSchemeOf, hasProgression, isProgressionOf)
+# coversKeyStage, isCoveredByScheme, coversDiscipline, 
+# isCoveredBySubjectGroup, coversStrand, isCoveredBySubject, 
+# coversContent, isIncludedByProgression, hasSubject, isSubjectOf, 
+# hasScheme, isSchemeOf, hasProgression, isProgressionOf)
 # ----------------------------------------------------------------------
 
 curric:hasKeyStage
@@ -222,36 +224,36 @@ curric:isCoveredByScheme
 curric:coversDiscipline
   rdf:type owl:ObjectProperty ;
   rdfs:label "covers discipline"@en ;
-  rdfs:comment "Indicates that a subject covers content from a discipline."@en ;
-  rdfs:domain curric:Subject ;
+  rdfs:comment "Indicates that a subject group covers content from a discipline."@en ;
+  rdfs:domain curric:SubjectGroup ;
   rdfs:range curric:Discipline ;
-  owl:inverseOf curric:isCoveredBySubject ;
+  owl:inverseOf curric:isCoveredBySubjectGroup ;
   rdfs:isDefinedBy curric: .
 
-curric:isCoveredBySubject
+curric:isCoveredBySubjectGroup
   rdf:type owl:ObjectProperty ;
-  rdfs:label "is covered by subject"@en ;
-  rdfs:comment "Indicates that content from a discipline is covered by a subject."@en ;
+  rdfs:label "is covered by subject group"@en ;
+  rdfs:comment "Indicates that content from a discipline is covered by a subject group."@en ;
   rdfs:domain curric:Discipline ;
-  rdfs:range curric:Subject ;
+  rdfs:range curric:SubjectGroup ;
   owl:inverseOf curric:coversDiscipline ;
   rdfs:isDefinedBy curric: .
 
 curric:coversStrand
   rdf:type owl:ObjectProperty ;
   rdfs:label "covers strand"@en ;
-  rdfs:comment "Indicates that a sub-subject covers content from a strand of knowledge."@en ;
-  rdfs:domain curric:SubSubject ;
+  rdfs:comment "Indicates that a subject covers content from a strand of knowledge."@en ;
+  rdfs:domain curric:Subject ;
   rdfs:range curric:Strand ;
-  owl:inverseOf curric:isCoveredBySubSubject ;
+  owl:inverseOf curric:isCoveredBySubject ;
   rdfs:isDefinedBy curric: .
 
-curric:isCoveredBySubSubject
+curric:isCoveredBySubject
   rdf:type owl:ObjectProperty ;
-  rdfs:label "is covered by sub-subject"@en ;
-  rdfs:comment "Indicates that content from a strand of knowledge is covered by a sub-subject."@en ;
+  rdfs:label "is covered by subject"@en ;
+  rdfs:comment "Indicates that content from a strand of knowledge is covered by a subject."@en ;
   rdfs:domain curric:Strand ;
-  rdfs:range curric:SubSubject ;
+  rdfs:range curric:Subject ;
   owl:inverseOf curric:coversStrand ;
   rdfs:isDefinedBy curric: .
 
@@ -273,29 +275,29 @@ curric:isIncludedByProgression
   owl:inverseOf curric:coversContent ;
   rdfs:isDefinedBy curric: .
 
-curric:hasSubSubject
+curric:hasSubject
   rdf:type owl:ObjectProperty , owl:TransitiveProperty ;
-  rdfs:label "has sub-subject"@en ;
-  rdfs:comment "Indicates that a subject contains a sub-subject."@en ;
-  rdfs:domain curric:Subject ;
-  rdfs:range curric:SubSubject ;
-  owl:inverseOf curric:isSubSubjectOf ;
+  rdfs:label "has ssubject"@en ;
+  rdfs:comment "Indicates that a subject group contains a subject."@en ;
+  rdfs:domain curric:SubjectGroup ;
+  rdfs:range curric:Subject ;
+  owl:inverseOf curric:isSubjectOf ;
   rdfs:isDefinedBy curric: .
 
-curric:isSubSubjectOf
+curric:isSubjectOf
   rdf:type owl:ObjectProperty , owl:TransitiveProperty ;
-  rdfs:label "is sub-subject of"@en ;
-  rdfs:comment "Indicates that a sub-subject is part of a subject."@en ;
-  rdfs:domain curric:SubSubject ;
-  rdfs:range curric:Subject ;
-  owl:inverseOf curric:hasSubSubject ;
+  rdfs:label "is subject of"@en ;
+  rdfs:comment "Indicates that a subject is part of a subject group."@en ;
+  rdfs:domain curric:Subject ;
+  rdfs:range curric:SubjectGroup ;
+  owl:inverseOf curric:hasSubject ;
   rdfs:isDefinedBy curric: .
 
 curric:hasScheme
   rdf:type owl:ObjectProperty , owl:TransitiveProperty ;
   rdfs:label "has scheme"@en ;
-  rdfs:comment "Indicates that a sub-subject contains a scheme."@en ;
-  rdfs:domain curric:SubSubject ;
+  rdfs:comment "Indicates that a subject contains a scheme."@en ;
+  rdfs:domain curric:Subject ;
   rdfs:range curric:Scheme ;
   owl:inverseOf curric:isSchemeOf ;
   rdfs:isDefinedBy curric: .
@@ -303,9 +305,9 @@ curric:hasScheme
 curric:isSchemeOf
   rdf:type owl:ObjectProperty , owl:TransitiveProperty ;
   rdfs:label "is scheme of"@en ;
-  rdfs:comment "Indicates that a scheme is part of a sub-subject."@en ;
+  rdfs:comment "Indicates that a scheme is part of a subject."@en ;
   rdfs:domain curric:Scheme ;
-  rdfs:range curric:SubSubject ;
+  rdfs:range curric:Subject ;
   owl:inverseOf curric:hasScheme ;
   rdfs:isDefinedBy curric: .
 
@@ -352,7 +354,7 @@ curric:hasAims
   rdf:type owl:DatatypeProperty ;
   rdfs:label "has aims"@en ;
   rdfs:comment "Specific educational aims for this subject as stated in the National Curriculum."@en ;
-  rdfs:domain curric:SubSubject ;
+  rdfs:domain curric:Subject ;
   rdfs:range rdf:langString ;
   rdfs:isDefinedBy curric: .
 

@@ -68,7 +68,7 @@ eng:scheme-history-key-stage-1
   will study more fully at key stages 2 and 3."""@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
-  curric:isSchemeOf eng:subsubject-history ;
+  curric:isSchemeOf eng:subject-history ;
   curric:coversKeyStage eng:key-stage-1 .
 
 eng:scheme-history-key-stage-2
@@ -90,7 +90,7 @@ eng:scheme-history-key-stage-2
   content."""@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
-  curric:isSchemeOf eng:subsubject-history ;
+  curric:isSchemeOf eng:subject-history ;
   curric:coversKeyStage eng:key-stage-2 .
 
 eng:scheme-history-key-stage-3
@@ -113,7 +113,7 @@ eng:scheme-history-key-stage-3
   content."""@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
-  curric:isSchemeOf eng:subsubject-history ;
+  curric:isSchemeOf eng:subject-history ;
   curric:coversKeyStage eng:key-stage-3 .
 
 # ----------------------------------------------------------------------

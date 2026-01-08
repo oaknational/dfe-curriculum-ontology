@@ -272,6 +272,68 @@ curricshapes:YearGroupShape
   ] .
 
 # ----------------------------------------------------------------------
+# Shape: SubjectGroup
+# ----------------------------------------------------------------------
+
+curricshapes:SubjectGroupShape
+  a sh:NodeShape ;
+  sh:targetClass curric:SubjectGroup ;
+
+  sh:property [
+    sh:path rdfs:label ;
+    sh:datatype rdf:langString ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:name "label" ;
+    sh:description "Every subject group must have exactly one rdfs:label." ;
+    sh:message "Subject groups must have exactly one rdfs:label." ;
+  ] ;
+
+  sh:property [
+    sh:path curric:coversDiscipline ;
+    sh:class curric:Discipline ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:name "covers discipline" ;
+    sh:description "Every subject group must relate to exactly one discipline." ;
+    sh:message "Subject groups must specify which discipline they relate to." ;
+  ] ;
+
+  sh:sparql [
+    sh:message "Subject group label must match its discipline's preferred label" ;
+    sh:select """
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
+      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+      
+      SELECT $this WHERE {
+        $this a curric:SubjectGroup ;
+              curric:coversDiscipline ?discipline ;
+              rdfs:label ?subjectGroupLabel .
+        
+        ?discipline skos:prefLabel ?disciplineLabel .
+        
+        FILTER (?subjectGroupLabel != ?disciplineLabel)
+      }
+    """ ;
+  ] ;
+
+  sh:sparql [
+    sh:severity sh:Warning ;
+    sh:message "Subject group is not used in any subject (WARNING - orphaned)" ;
+    sh:select """
+      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
+      SELECT $this WHERE {
+        $this a curric:SubjectGroup .
+        FILTER NOT EXISTS {
+          ?subject a curric:Subject ;
+                      curric:isSubjectOf $this .
+        }
+      }
+    """ ;
+  ] .
+
+# ----------------------------------------------------------------------
 # Shape: Subject
 # ----------------------------------------------------------------------
 
@@ -290,84 +352,22 @@ curricshapes:SubjectShape
   ] ;
 
   sh:property [
-    sh:path curric:coversDiscipline ;
-    sh:class curric:Discipline ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-    sh:name "covers discipline" ;
-    sh:description "Every subject must relate to exactly one discipline." ;
-    sh:message "Subjects must specify which discipline they relate to." ;
-  ] ;
-
-  sh:sparql [
-    sh:message "Subject label must match its discipline's preferred label" ;
-    sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
-      PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
-      PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-      
-      SELECT $this WHERE {
-        $this a curric:Subject ;
-              curric:coversDiscipline ?discipline ;
-              rdfs:label ?subjectLabel .
-        
-        ?discipline skos:prefLabel ?disciplineLabel .
-        
-        FILTER (?subjectLabel != ?disciplineLabel)
-      }
-    """ ;
-  ] ;
-
-  sh:sparql [
-    sh:severity sh:Warning ;
-    sh:message "Subject is not used in any sub-subject (WARNING - orphaned)" ;
-    sh:select """
-      PREFIX curric: <https://w3id.org/uk/curriculum/core/>
-      SELECT $this WHERE {
-        $this a curric:Subject .
-        FILTER NOT EXISTS {
-          ?subsubject a curric:SubSubject ;
-                      curric:isSubSubjectOf $this .
-        }
-      }
-    """ ;
-  ] .
-
-# ----------------------------------------------------------------------
-# Shape: SubSubject
-# ----------------------------------------------------------------------
-
-curricshapes:SubSubjectShape
-  a sh:NodeShape ;
-  sh:targetClass curric:SubSubject ;
-
-  sh:property [
-    sh:path rdfs:label ;
-    sh:datatype rdf:langString ;
-    sh:minCount 1 ;
-    sh:maxCount 1 ;
-    sh:name "label" ;
-    sh:description "Every sub-subject must have exactly one rdfs:label." ;
-    sh:message "Sub-subjects must have exactly one rdfs:label." ;
-  ] ;
-
-  sh:property [
      sh:path curric:hasAims ;
      sh:datatype rdf:langString ;
      sh:minCount 1 ;
      sh:name "has aims" ;
-     sh:description "Every sub-subject must have one or more aims." ;
-     sh:message "Sub-subjects must have one or more aims." ;
+     sh:description "Every subject must have one or more aims." ;
+     sh:message "Subjects must have one or more aims." ;
    ] ;
 
   sh:property [
-    sh:path curric:isSubSubjectOf ;
-    sh:class curric:Subject ;
+    sh:path curric:isSubjectOf ;
+    sh:class curric:SubjectGroup ;
     sh:minCount 1 ;
     sh:maxCount 1 ;
-    sh:name "is sub-subject of" ;
-    sh:description "Every sub-subject must be part of exactly one subject." ;
-    sh:message "Sub-subjects must specify which subject they belong to." ;
+    sh:name "is subject of" ;
+    sh:description "Every subject must be part of exactly one subject group." ;
+    sh:message "Subjects must specify which subject group they belong to." ;
   ] ;
 
   sh:property [
@@ -376,17 +376,17 @@ curricshapes:SubSubjectShape
     sh:minCount 1 ;
     sh:severity sh:Warning ;
     sh:name "covers strand" ;
-    sh:description "Every sub-subject should cover at least one strand." ;
-    sh:message "Sub-subject should cover at least one strand (WARNING)." ;
+    sh:description "Every subject should cover at least one strand." ;
+    sh:message "Subject should cover at least one strand (WARNING)." ;
   ] ;
 
   sh:sparql [
     sh:severity sh:Warning ;
-    sh:message "Sub-subject is not used in any scheme (WARNING - orphaned)" ;
+    sh:message "Subject is not used in any scheme (WARNING - orphaned)" ;
     sh:select """
       PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
-        $this a curric:SubSubject .
+        $this a curric:Subject .
         FILTER NOT EXISTS {
           ?scheme a curric:Scheme ;
                   curric:isSchemeOf $this .
@@ -415,11 +415,11 @@ curricshapes:SchemeShape
 
   sh:property [
     sh:path curric:isSchemeOf ;
-    sh:class curric:SubSubject ;
+    sh:class curric:Subject ;
     sh:minCount 1 ;
     sh:name "is scheme of" ;
-    sh:description "Every scheme must be part of at least one sub-subject." ;
-    sh:message "Schemes must specify which sub-subject(s) they belong to." ;
+    sh:description "Every scheme must be part of at least one subject." ;
+    sh:message "Schemes must specify which subject(s) they belong to." ;
   ] ;
 
   sh:property [
@@ -433,17 +433,17 @@ curricshapes:SchemeShape
   ] ;
 
   sh:sparql [
-    sh:message "Scheme's sub-subjects must all belong to the same subject" ;
+    sh:message "Scheme's subjects must all belong to the same subject group." ;
     sh:select """
       PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
-        $this curric:isSchemeOf ?subsubject1 , ?subsubject2 .
+        $this curric:isSchemeOf ?subject1 , ?subject2 .
         
-        ?subsubject1 curric:isSubSubjectOf ?subject1 .
-        ?subsubject2 curric:isSubSubjectOf ?subject2 .
+        ?subject1 curric:isSubjectOf ?subjectGroup1 .
+        ?subject2 curric:isSubjectOf ?subjectGroup2 .
         
-        FILTER (?subsubject1 != ?subsubject2)
         FILTER (?subject1 != ?subject2)
+        FILTER (?subjectGroup1 != ?subjectGroup2)
       }
     """ ;
   ] .
@@ -599,13 +599,13 @@ curricshapes:StrandShape
 
   sh:sparql [
     sh:severity sh:Warning ;
-    sh:message "Strand is not referenced by any sub-subject (WARNING - orphaned)" ;
+    sh:message "Strand is not referenced by any subject (WARNING - orphaned)" ;
     sh:select """
       PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       SELECT $this WHERE {
         $this a curric:Strand .
         FILTER NOT EXISTS {
-          ?subsubject a curric:SubSubject ;
+          ?subject a curric:Subject ;
                       curric:coversStrand $this .
         }
       }

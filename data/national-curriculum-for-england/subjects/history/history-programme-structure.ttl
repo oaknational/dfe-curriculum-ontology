@@ -49,6 +49,17 @@
   owl:imports <https://w3id.org/uk/curriculum/england/history-knowledge-taxonomy> .
 
 # ----------------------------------------------------------------------
+# Subject Group
+# ----------------------------------------------------------------------
+
+eng:subjectgroup-history
+  a curric:SubjectGroup ;
+  rdfs:label "History"@en ;
+  rdfs:comment "History subject group in the National Curriculum for England."@en ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
+  curric:coversDiscipline eng:discipline-history .
+  
+# ----------------------------------------------------------------------
 # Subject
 # ----------------------------------------------------------------------
 
@@ -56,17 +67,6 @@ eng:subject-history
   a curric:Subject ;
   rdfs:label "History"@en ;
   rdfs:comment "History subject in the National Curriculum for England."@en ;
-  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
-  curric:coversDiscipline eng:discipline-history .
-  
-# ----------------------------------------------------------------------
-# Sub-Subjects
-# ----------------------------------------------------------------------
-
-eng:subsubject-history
-  a curric:SubSubject ;
-  rdfs:label "History"@en ;
-  rdfs:comment "History sub-subject in the National Curriculum for England."@en ;
   dcterms:description """A high-quality history education will help pupils gain a coherent 
   knowledge and understanding of Britain’s past and that of the wider world. It should inspire 
   pupils’ curiosity to know more about the past. Teaching should equip pupils to ask perceptive 
@@ -76,7 +76,7 @@ eng:subsubject-history
   own identity and the challenges of their time."""@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
-  curric:isSubSubjectOf eng:subject-history ;
+  curric:isSubjectOf eng:subjectgroup-history ;
   curric:coversStrand eng:strand-knowledge-of-past ,
                    eng:strand-knowledge-of-history ;
   
@@ -122,7 +122,7 @@ eng:scheme-history-key-stage-1
   will study more fully at key stages 2 and 3."""@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
-  curric:isSchemeOf eng:subsubject-history ;
+  curric:isSchemeOf eng:subject-history ;
   curric:coversKeyStage eng:key-stage-1 .
 
 eng:scheme-history-key-stage-2
@@ -144,7 +144,7 @@ eng:scheme-history-key-stage-2
   content."""@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
-  curric:isSchemeOf eng:subsubject-history ;
+  curric:isSchemeOf eng:subject-history ;
   curric:coversKeyStage eng:key-stage-2 .
 
 eng:scheme-history-key-stage-3
@@ -167,7 +167,7 @@ eng:scheme-history-key-stage-3
   content."""@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
-  curric:isSchemeOf eng:subsubject-history ;
+  curric:isSchemeOf eng:subject-history ;
   curric:coversKeyStage eng:key-stage-3 .
 
 # ----------------------------------------------------------------------
