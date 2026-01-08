@@ -57,7 +57,7 @@ eng:subjectgroup-history
   curric:coversDiscipline eng:discipline-history .
   
 # ----------------------------------------------------------------------
-# Subject
+# Subject 
 # ----------------------------------------------------------------------
 
 eng:subject-history

@@ -23,7 +23,7 @@
   rdfs:label "National Curriculum for England - History Knowledge Taxonomy"@en ;
   dc:title "National Curriculum for England - History Knowledge Taxonomy"@en ;
   rdfs:comment """History knowledge taxonomy defining the hierarchical organization of historical 
-  content from strands through to content sub-descriptors."""@en ;
+  content from strands through to sub-content descriptors."""@en ;
 
   owl:versionInfo "0.1.0" ;
   owl:versionIRI <https://w3id.org/uk/curriculum/england/history-knowledge-taxonomy/0.1.0> ;
@@ -31,7 +31,7 @@
   
   dcterms:description """This file defines the History knowledge taxonomy for the National 
   Curriculum in England, organizing content through strands, sub-strands, content descriptors, 
-  and content sub-descriptors."""@en ;
+  and sub-content descriptors."""@en ;
   dc:creator "Department for Education" ;
   dcterms:created "2025-11-24T12:33:32Z"^^xsd:dateTime ;
   dcterms:modified "2025-12-03T12:33:32Z"^^xsd:dateTime ;
@@ -400,5 +400,5 @@ interconnections with other world developments."""@en ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime .
 
 # ----------------------------------------------------------------------
-# Content Sub-Descriptors
+# Sub-Content Descriptors
 # ----------------------------------------------------------------------

@@ -761,12 +761,12 @@ curricshapes:ContentDescriptorShape
   ] .
 
 # ----------------------------------------------------------------------
-# Shape: ContentSubDescriptor
+# Shape: SubContentDescriptor
 # ----------------------------------------------------------------------
 
-curricshapes:ContentSubDescriptorShape
+curricshapes:SubContentDescriptorShape
   a sh:NodeShape ;
-  sh:targetClass curric:ContentSubDescriptor ;
+  sh:targetClass curric:SubContentDescriptor ;
 
   sh:property [
     sh:path skos:prefLabel ;
@@ -774,8 +774,8 @@ curricshapes:ContentSubDescriptorShape
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:name "preferred label" ;
-    sh:description "Every content sub-descriptor must have exactly one skos:prefLabel." ;
-    sh:message "Content sub-descriptors must have exactly one skos:prefLabel for SKOS taxonomy." ;
+    sh:description "Every sub-content descriptor must have exactly one skos:prefLabel." ;
+    sh:message "Sub-content descriptors must have exactly one skos:prefLabel for SKOS taxonomy." ;
   ] ;
 
   sh:property [
@@ -784,8 +784,8 @@ curricshapes:ContentSubDescriptorShape
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:name "in scheme" ;
-    sh:description "Every content sub-descriptor must be part of exactly one concept scheme." ;
-    sh:message "Content sub-descriptors must specify which concept scheme they belong to." ;
+    sh:description "Every sub-content descriptor must be part of exactly one concept scheme." ;
+    sh:message "Sub-content descriptors must specify which concept scheme they belong to." ;
   ] ;
 
   sh:property [
@@ -794,15 +794,15 @@ curricshapes:ContentSubDescriptorShape
     sh:minCount 1 ;
     sh:maxCount 1 ;
     sh:name "broader" ;
-    sh:description "Every content sub-descriptor must belong to exactly one content descriptor." ;
-    sh:message "Content sub-descriptors must specify which content descriptor they belong to via skos:broader." ;
+    sh:description "Every sub-content descriptor must belong to exactly one content descriptor." ;
+    sh:message "Sub-content descriptors must specify which content descriptor they belong to via skos:broader." ;
   ] ;
 
   sh:property [
     sh:path curric:example ;
     sh:datatype rdf:langString ;
     sh:name "example" ;
-    sh:description "A content sub-descriptor may have zero or more text examples." ;
+    sh:description "A sub-content descriptor may have zero or more text examples." ;
   ] ;
 
   sh:property [
@@ -814,12 +814,12 @@ curricshapes:ContentSubDescriptorShape
 
   sh:sparql [
     sh:severity sh:Warning ;
-    sh:message "Content sub-descriptor is not referenced by any content descriptor via skos:narrower (WARNING - orphaned)" ;
+    sh:message "Sub-content descriptor is not referenced by any content descriptor via skos:narrower (WARNING - orphaned)" ;
     sh:select """
       PREFIX curric: <https://w3id.org/uk/curriculum/core/>
       PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
       SELECT $this WHERE {
-        $this a curric:ContentSubDescriptor .
+        $this a curric:SubContentDescriptor .
         FILTER NOT EXISTS {
           ?descriptor a curric:ContentDescriptor ;
                       skos:narrower $this .

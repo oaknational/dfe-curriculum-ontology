@@ -113,7 +113,7 @@ curric:Progression
 # ----------------------------------------------------------------------
 # Classes: Knowledge Structure
 # (Discipline, Strand, SubStrand, ContentDescriptor, 
-# ContentSubDescriptor, Theme)
+# SubContentDescriptor, Theme)
 # ----------------------------------------------------------------------
 
 curric:Discipline
@@ -144,10 +144,10 @@ curric:ContentDescriptor
   rdfs:comment "A statement of knowledge (a concept, fact or skill) within a sub-strand."@en ;
   rdfs:isDefinedBy curric: .
 
-curric:ContentSubDescriptor
+curric:SubContentDescriptor
   rdf:type owl:Class ;
   rdfs:subClassOf skos:Concept ;
-  rdfs:label "Content Sub-Descriptor"@en ;
+  rdfs:label "Sub-Content Descriptor"@en ;
   rdfs:comment "Elaboration or specific detail relating to a content descriptor."@en ;
   rdfs:isDefinedBy curric: .
 
@@ -362,7 +362,7 @@ curric:example
   rdf:type owl:DatatypeProperty ;
   rdfs:label "example"@en ;
   rdfs:comment "A text example that illustrates content detail."@en ;
-  rdfs:domain curric:ContentSubDescriptor ;
+  rdfs:domain curric:SubContentDescriptor ;
   rdfs:range rdf:langString ;
   rdfs:isDefinedBy curric: .
 
@@ -370,6 +370,6 @@ curric:exampleURL
   rdf:type owl:DatatypeProperty ;
   rdfs:label "example URL"@en ;
   rdfs:comment "A URL example that illustrates content detail."@en ;
-  rdfs:domain curric:ContentSubDescriptor ;
+  rdfs:domain curric:SubContentDescriptor ;
   rdfs:range xsd:anyURI ;
   rdfs:isDefinedBy curric: .
