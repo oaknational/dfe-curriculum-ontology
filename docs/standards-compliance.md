@@ -7,7 +7,7 @@
 
 ## Executive Summary
 
-The UK Curriculum Ontology has been developed as an **open, standards-compliant, interoperable semantic web resource** for representing educational curriculum data. This document demonstrates how the ontology achieves industry-leading compliance with W3C Recommendations, international educational metadata standards, and semantic web best practices.
+The DfE Curriculum Ontology has been developed as an **open, standards-compliant, interoperable semantic web resource** for representing educational curriculum data. This document demonstrates how the ontology achieves industry-leading compliance with W3C Recommendations, international educational metadata standards, and semantic web best practices.
 
 **Key Achievement**: This ontology meets the highest standards for **open data interoperability**, ensuring curriculum data can be shared, queried, validated, and integrated across educational systems, platforms, and organisations worldwide.
 
@@ -15,7 +15,7 @@ The UK Curriculum Ontology has been developed as an **open, standards-compliant,
 
 ## Design Objectives
 
-The UK Curriculum Ontology was designed to achieve:
+The DfE Curriculum Ontology was designed to achieve:
 
 1. **Standards Compliance**: Use established W3C Recommendations and international standards
 2. **Interoperability**: Enable seamless data exchange across educational systems and platforms
@@ -29,7 +29,7 @@ The UK Curriculum Ontology was designed to achieve:
 
 ## Standards Used
 
-The UK Curriculum Ontology implements the following international standards:
+The DfE Curriculum Ontology implements the following international standards:
 
 ### 1. RDF 1.1 (Resource Description Framework)
 
@@ -226,8 +226,8 @@ Every ontology file includes comprehensive Dublin Core metadata:
 **Example:**
 ```turtle
 <https://w3id.org/uk/curriculum/core/curriculum-ontology>
-  dcterms:title "UK Curriculum Ontology"@en ;
-  dcterms:description "Core vocabulary for describing curriculum structures in the UK"@en ;
+  dcterms:title "DfE Curriculum Ontology"@en ;
+  dcterms:description "Core vocabulary for describing curriculum structures"@en ;
   dcterms:creator "Department for Education" ;
   dcterms:created "2025-11-19"^^xsd:date ;
   dcterms:modified "2025-12-03"^^xsd:date ;
@@ -259,7 +259,7 @@ Schema.org enables:
 - **Widespread adoption**: Used by educational publishers, OER platforms, and learning management systems
 
 **How we use it:**
-The UK Curriculum Ontology is designed as the **target framework** for LRMI curriculum alignment. External learning resources can reference curriculum URIs using Schema.org's AlignmentObject to indicate what they teach or assess.
+The DfE Curriculum Ontology is designed as the **target framework** for LRMI curriculum alignment. External learning resources can reference curriculum URIs using Schema.org's AlignmentObject to indicate what they teach or assess.
 
 **Example of how others align to this ontology:**
 ```turtle
@@ -272,7 +272,7 @@ The UK Curriculum Ontology is designed as the **target framework** for LRMI curr
   schema:educationalAlignment [
     a schema:AlignmentObject ;
     schema:alignmentType "teaches" ;
-    schema:educationalFramework "UK National Curriculum for England" ;
+    schema:educationalFramework "National Curriculum for England" ;
     schema:targetName "Cells as the fundamental unit of living organisms" ;
     schema:targetUrl eng:content-descriptor-cells-as-unit-of-living-organism
   ] .
@@ -280,7 +280,7 @@ The UK Curriculum Ontology is designed as the **target framework** for LRMI curr
 
 **Benefits:**
 - Resources discoverable through Google Search and Google for Education
-- Publishers and OER platforms can align content to UK Curriculum standards
+- Publishers and OER platforms can align content to DfE Curriculum standards
 - Standard vocabulary for curriculum alignment recognized globally
 - Enables educational ecosystem to reference authoritative curriculum URIs
 
@@ -397,7 +397,7 @@ All ontology files include OGL licensing metadata:
 
 ## Interoperability Achievements
 
-The combination of these standards enables the UK Curriculum Ontology to achieve exceptional interoperability:
+The combination of these standards enables the DfE Curriculum Ontology to achieve exceptional interoperability:
 
 ### 1. Cross-Platform Compatibility
 - **RDF triple stores**: Apache Jena, GraphDB, Blazegraph, Virtuoso
@@ -412,7 +412,7 @@ The combination of these standards enables the UK Curriculum Ontology to achieve
 
 ### 3. Search Engine Integration
 - **Schema.org markup**: Google, Bing, Yahoo, Yandex understand educational properties
-- **LRMI alignment**: Resources can reference UK Curriculum URIs for discoverability
+- **LRMI alignment**: Resources can reference DfE Curriculum URIs for discoverability
 - **Structured data**: Web pages with curriculum references become searchable
 
 ### 4. Educational Platform Integration
@@ -444,7 +444,7 @@ The ontology follows Tim Berners-Lee's **4 principles of Linked Data**:
 4. ✅ **Include links to other URIs for discovery**
    Curriculum entities link to related concepts, enabling graph traversal
 
-This makes the UK Curriculum Ontology part of the global **Web of Data**, not just a standalone dataset.
+This makes the DfE Curriculum Ontology part of the global **Web of Data**, not just a standalone dataset.
 
 ---
 
@@ -476,7 +476,7 @@ The ontology implements multiple quality assurance mechanisms:
 
 ## Reusability and Extension
 
-The UK Curriculum Ontology is designed to be:
+The DfE Curriculum Ontology is designed to be:
 
 ### Reusable Across UK Nations
 While currently focused on England, the core ontology could also support:
@@ -499,7 +499,7 @@ The ontology provides a stable foundation while allowing innovation on top.
 
 ## Conclusion
 
-The UK Curriculum Ontology represents a **best-in-class implementation of open, standards-based curriculum data modeling**. By leveraging:
+The DfE Curriculum Ontology represents a **best-in-class implementation of open, standards-based curriculum data modeling**. By leveraging:
 
 - W3C Recommendations (RDF, OWL, SKOS, SHACL)
 - International metadata standards (Dublin Core, Schema.org)
@@ -507,7 +507,7 @@ The UK Curriculum Ontology represents a **best-in-class implementation of open, 
 - Open licensing (OGL v3.0)
 - Professional versioning and quality assurance
 
-The ontology achieves its core objective: **creating an interoperable, discoverable, and extensible open standard for UK curriculum representation**.
+The ontology achieves its core objective: **creating an interoperable, discoverable, and extensible open standard for DfE curriculum representation**.
 
 This foundation enables educational publishers, technology providers, schools, and government to build innovative tools, resources, and services on top of a reliable, standardised curriculum infrastructure that will remain stable and accessible for decades to come.
 
