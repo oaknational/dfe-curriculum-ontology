@@ -331,7 +331,7 @@ curric:isProgressionOf
 
 # ----------------------------------------------------------------------
 # Datatype Properties
-# (lowerAgeBoundary, upperAgeBoundary, hasAims, example, exampleURL)
+# (lowerAgeBoundary, upperAgeBoundary, aim, example, exampleURL)
 # ----------------------------------------------------------------------
 
 curric:lowerAgeBoundary
@@ -350,10 +350,10 @@ curric:upperAgeBoundary
   rdfs:range xsd:positiveInteger ;
   rdfs:isDefinedBy curric: .
 
-curric:hasAims
+curric:aim
   rdf:type owl:DatatypeProperty ;
-  rdfs:label "has aims"@en ;
-  rdfs:comment "Specific educational aims for this subject as stated in the National Curriculum."@en ;
+  rdfs:label "aim"@en ;
+  rdfs:comment "Specific educational aim for this subject as stated in the National Curriculum."@en ;
   rdfs:domain curric:Subject ;
   rdfs:range rdf:langString ;
   rdfs:isDefinedBy curric: .
