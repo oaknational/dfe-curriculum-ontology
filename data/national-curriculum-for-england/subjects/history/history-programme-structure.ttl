@@ -101,7 +101,6 @@ eng:subject-history
 eng:scheme-history-key-stage-1
   a curric:Scheme ;
   rdfs:label "History Key Stage 1"@en ;
-  rdfs:comment "History programme of study for key stage 1."@en ;
   dcterms:description """Pupils should develop an awareness of the past, using common words and 
   phrases relating to the passing of time. They should know where the people and events they study 
   fit within a chronological framework and identify similarities and differences between ways of 
@@ -121,7 +120,6 @@ eng:scheme-history-key-stage-1
 eng:scheme-history-key-stage-2
   a curric:Scheme ;
   rdfs:label "History Key Stage 2"@en ;
-  rdfs:comment "History programme of study for key stage 2."@en ;
   dcterms:description """Pupils should continue to develop a chronologically secure knowledge and 
   understanding of British, local and world history, establishing clear narratives within and 
   across the periods they study. They should note connections, contrasts and trends over time and 
@@ -143,7 +141,6 @@ eng:scheme-history-key-stage-2
 eng:scheme-history-key-stage-3
   a curric:Scheme ;
   rdfs:label "History Key Stage 3"@en ;
-  rdfs:comment "History programme of study for key stage 3."@en ;
   dcterms:description """Pupils should extend and deepen their chronologically secure knowledge and 
   understanding of British, local and world history, so that it provides a well-informed context 
   for wider learning. Pupils should identify significant events, make connections, draw contrasts, 
