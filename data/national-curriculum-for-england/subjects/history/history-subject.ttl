@@ -82,6 +82,9 @@ eng:subject-history
     understanding the connections between local, regional, national and international history; 
     between cultural, economic, military, political, religious and social history; and between 
     short- and long-term timescales."""@en ;
+  curric:rationale "Text for rationale..."@en ;
+  curric:structure "Text for structure..."@en ;
+  curric:schoolCurriculum "Text for school curriculum..."@en ;
   dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isSubjectOf eng:subjectgroup-history ;

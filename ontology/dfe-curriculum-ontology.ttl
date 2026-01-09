@@ -164,7 +164,7 @@ curric:Theme
 # coversKeyStage, isCoveredByScheme, coversDiscipline, 
 # isCoveredBySubjectGroup, coversStrand, isCoveredBySubject, 
 # coversContent, isIncludedByProgression, hasSubject, isSubjectOf, 
-# hasScheme, isSchemeOf, hasProgression, isProgressionOf)
+# hasScheme, isSchemeOf, hasProgression, isProgressionOf, aim)
 # ----------------------------------------------------------------------
 
 curric:hasKeyStage
@@ -329,9 +329,17 @@ curric:isProgressionOf
   owl:inverseOf curric:hasProgression ;
   rdfs:isDefinedBy curric: .
 
+curric:aim
+  rdf:type owl:ObjectProperty ;
+  rdfs:label "aim"@en ;
+  rdfs:comment "Specific educational aim for this subject as stated in the National Curriculum."@en ;
+  rdfs:domain curric:Subject ;
+  rdfs:range rdf:List ;
+  rdfs:isDefinedBy curric: .
+
 # ----------------------------------------------------------------------
 # Datatype Properties
-# (lowerAgeBoundary, upperAgeBoundary, aim, example, exampleURL)
+# (lowerAgeBoundary, upperAgeBoundary, aim, supportingGuidance, example, exampleURL)
 # ----------------------------------------------------------------------
 
 curric:lowerAgeBoundary
@@ -350,11 +358,38 @@ curric:upperAgeBoundary
   rdfs:range xsd:positiveInteger ;
   rdfs:isDefinedBy curric: .
 
-curric:aim
+curric:rationale
   rdf:type owl:DatatypeProperty ;
-  rdfs:label "aim"@en ;
-  rdfs:comment "Specific educational aim for this subject as stated in the National Curriculum."@en ;
+  rdfs:label "rationale"@en ;
+  rdfs:comment "Specific text relating to rationale."@en ;
   rdfs:domain curric:Subject ;
+  rdfs:range rdf:langString ;
+  rdfs:isDefinedBy curric: .
+
+curric:structure
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "structure"@en ;
+  rdfs:comment "Specific text relating to structure."@en ;
+  rdfs:domain curric:Subject ;
+  rdfs:range rdf:langString ;
+  rdfs:isDefinedBy curric: .
+
+curric:schoolCurriculum
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "school curriculum"@en ;
+  rdfs:comment "Specific text relating to school curriculum."@en ;
+  rdfs:domain curric:Subject ;
+  rdfs:range rdf:langString ;
+  rdfs:isDefinedBy curric: .
+
+curric:supportingGuidance
+  rdf:type owl:DatatypeProperty ;
+  rdfs:subPropertyOf skos:note ;
+  rdfs:label "supporting guidance"@en ;
+  rdfs:comment "Supporting guidance for a content descriptor or a sub-content descriptor."@en ;
+  rdfs:domain [
+    owl:unionOf (curric:ContentDescriptor curric:SubContentDescriptor)
+  ] ;
   rdfs:range rdf:langString ;
   rdfs:isDefinedBy curric: .
 
