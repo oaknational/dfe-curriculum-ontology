@@ -55,7 +55,6 @@
 eng:subjectgroup-history
   a curric:SubjectGroup ;
   rdfs:label "History"@en ;
-  rdfs:comment "History subject group in the National Curriculum for England."@en ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:coversDiscipline eng:discipline-history .
   
@@ -66,20 +65,6 @@ eng:subjectgroup-history
 eng:subject-history
   a curric:Subject ;
   rdfs:label "History"@en ;
-  rdfs:comment "History subject in the National Curriculum for England."@en ;
-  dcterms:description """A high-quality history education will help pupils gain a coherent 
-  knowledge and understanding of Britain’s past and that of the wider world. It should inspire 
-  pupils’ curiosity to know more about the past. Teaching should equip pupils to ask perceptive 
-  questions, think critically, weigh evidence, sift arguments, and develop perspective and 
-  judgement. History helps pupils to understand the complexity of people’s lives, the process of 
-  change, the diversity of societies and relationships between different groups, as well as their 
-  own identity and the challenges of their time."""@en ;
-  dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
-  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
-  curric:isSubjectOf eng:subjectgroup-history ;
-  curric:coversStrand eng:strand-knowledge-of-past ,
-                   eng:strand-knowledge-of-history ;
-  
   curric:aim 
     """Know and understand the history of these islands as a coherent, chronological narrative, 
     from the earliest times to the present day: how people’s lives have shaped this nation and how 
@@ -99,8 +84,13 @@ eng:subject-history
     """Gain historical perspective by placing their growing knowledge into different contexts: 
     understanding the connections between local, regional, national and international history; 
     between cultural, economic, military, political, religious and social history; and between 
-    short- and long-term timescales."""@en .
-
+    short- and long-term timescales."""@en ;
+  dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
+  curric:isSubjectOf eng:subjectgroup-history ;
+  curric:coversStrand eng:strand-knowledge-of-past ,
+                   eng:strand-knowledge-of-history .
+  
 # ----------------------------------------------------------------------
 # Schemes
 # ----------------------------------------------------------------------
@@ -177,161 +167,147 @@ eng:scheme-history-key-stage-3
 eng:progression-history-key-stage-1-second-order-concepts
   a curric:Progression ;
   rdfs:label "History Key Stage 1 Second Order Concepts"@en ;
-  rdfs:comment "History progression for key stage 1: Second Order Concepts."@en ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-1 ;
   curric:coversContent
-    eng:content-descriptor-narratives-analyses-accounts ,
-    eng:content-descriptor-narratives-analyses-accounts-consequence ,
-    eng:content-descriptor-narratives-analyses-accounts-change-and-continuity ,
-    eng:content-descriptor-narratives-analyses-accounts-similarity-and-difference ,
-    eng:content-descriptor-narratives-analyses-accounts-historical-significance ,
-    eng:content-descriptor-narratives-analyses-accounts-sources-and-evidence ,
-    eng:content-descriptor-narratives-analyses-accounts-historical-interpretations .
+    eng:contentdescriptor-narratives-analyses-accounts ,
+    eng:contentdescriptor-narratives-analyses-accounts-consequence ,
+    eng:contentdescriptor-narratives-analyses-accounts-change-and-continuity ,
+    eng:contentdescriptor-narratives-analyses-accounts-similarity-and-difference ,
+    eng:contentdescriptor-narratives-analyses-accounts-historical-significance ,
+    eng:contentdescriptor-narratives-analyses-accounts-sources-and-evidence ,
+    eng:contentdescriptor-narratives-analyses-accounts-historical-interpretations .
 
 eng:progression-history-key-stage-1-nature-of-historical-enquiry
   a curric:Progression ;
   rdfs:label "History Key Stage 1 Nature of Historical Enquiry"@en ;
-  rdfs:comment "History progression for key stage 1: Nature of Historical Enquiry."@en ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-1 ;
   curric:coversContent
-    eng:content-descriptor-historians-investigate-the-past ,
-    eng:content-descriptor-historians-construct-arguments .
+    eng:contentdescriptor-historians-investigate-the-past ,
+    eng:contentdescriptor-historians-construct-arguments .
 
 eng:progression-history-key-stage-1-substantive-concepts
   a curric:Progression ;
   rdfs:label "History Key Stage 1 Substantive Concepts"@en ;
-  rdfs:comment "History progression for key stage 1: Substantive Concepts."@en ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-1 ;
   curric:coversContent
-    eng:content-descriptor-abstract-terms-historically-grounded .
+    eng:contentdescriptor-abstract-terms-historically-grounded .
 
 eng:progression-history-key-stage-1-history-of-diverse-britain
   a curric:Progression ;
   rdfs:label "History Key Stage 1 History of Diverse Britain"@en ;
-  rdfs:comment "History progression for key stage 1: History of Diverse Britain."@en ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-1 ;
   curric:coversContent
-    eng:content-descriptor-changes-within-living-memory ,
-    eng:content-descriptor-events-beyond-living-memory ,
-    eng:content-descriptor-lives-of-significant-individuals ,
-    eng:content-descriptor-significant-historical-events-own-locality .
+    eng:contentdescriptor-changes-within-living-memory ,
+    eng:contentdescriptor-events-beyond-living-memory ,
+    eng:contentdescriptor-lives-of-significant-individuals ,
+    eng:contentdescriptor-significant-historical-events-own-locality .
 
 eng:progression-history-key-stage-2-second-order-concepts
   a curric:Progression ;
   rdfs:label "History Key Stage 2 Second Order Concepts"@en ;
-  rdfs:comment "History progression for key stage 2: Second Order Concepts."@en ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-2 ;
   curric:coversContent
-    eng:content-descriptor-narratives-analyses-accounts ,
-    eng:content-descriptor-narratives-analyses-accounts-consequence ,
-    eng:content-descriptor-narratives-analyses-accounts-change-and-continuity ,
-    eng:content-descriptor-narratives-analyses-accounts-similarity-and-difference ,
-    eng:content-descriptor-narratives-analyses-accounts-historical-significance ,
-    eng:content-descriptor-narratives-analyses-accounts-sources-and-evidence ,
-    eng:content-descriptor-narratives-analyses-accounts-historical-interpretations .
+    eng:contentdescriptor-narratives-analyses-accounts ,
+    eng:contentdescriptor-narratives-analyses-accounts-consequence ,
+    eng:contentdescriptor-narratives-analyses-accounts-change-and-continuity ,
+    eng:contentdescriptor-narratives-analyses-accounts-similarity-and-difference ,
+    eng:contentdescriptor-narratives-analyses-accounts-historical-significance ,
+    eng:contentdescriptor-narratives-analyses-accounts-sources-and-evidence ,
+    eng:contentdescriptor-narratives-analyses-accounts-historical-interpretations .
 
 eng:progression-history-key-stage-2-nature-of-historical-enquiry
   a curric:Progression ;
   rdfs:label "History Key Stage 2 Nature of Historical Enquiry"@en ;
-  rdfs:comment "History progression for key stage 2: Nature of Historical Enquiry."@en ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-2 ;
   curric:coversContent
-    eng:content-descriptor-historians-investigate-the-past ,
-    eng:content-descriptor-historians-construct-arguments .
+    eng:contentdescriptor-historians-investigate-the-past ,
+    eng:contentdescriptor-historians-construct-arguments .
 
 eng:progression-history-key-stage-2-substantive-concepts
   a curric:Progression ;
   rdfs:label "History Key Stage 2 Substantive Concepts"@en ;
-  rdfs:comment "History progression for key stage 2: Substantive Concepts."@en ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-2 ;
   curric:coversContent
-    eng:content-descriptor-abstract-terms-historically-grounded .
+    eng:contentdescriptor-abstract-terms-historically-grounded .
 
 eng:progression-history-key-stage-2-history-of-diverse-britain
   a curric:Progression ;
   rdfs:label "History Key Stage 2 History of Diverse Britain"@en ;
-  rdfs:comment "History progression for key stage 2: History of Diverse Britain."@en ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-2 ;
   curric:coversContent
-    eng:content-descriptor-changes-in-britain-stone-age-to-iron-age ,
-    eng:content-descriptor-roman-empire-impact-on-britain ,
-    eng:content-descriptor-settlement-by-anglo-saxons-and-scots ,
-    eng:content-descriptor-viking-and-anglo-saxon-struggle ,
-    eng:content-descriptor-local-history-study ,
-    eng:content-descriptor-aspect-british-history-beyond-1066 .
+    eng:contentdescriptor-changes-in-britain-stone-age-to-iron-age ,
+    eng:contentdescriptor-roman-empire-impact-on-britain ,
+    eng:contentdescriptor-settlement-by-anglo-saxons-and-scots ,
+    eng:contentdescriptor-viking-and-anglo-saxon-struggle ,
+    eng:contentdescriptor-local-history-study ,
+    eng:contentdescriptor-aspect-british-history-beyond-1066 .
 
 eng:progression-history-key-stage-2-significant-aspects-of-world-history
   a curric:Progression ;
   rdfs:label "History Key Stage 2 Significant Aspects of World History"@en ;
-  rdfs:comment "History progression for key stage 2: Significant Aspects of World History."@en ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-2 ;
   curric:coversContent
-    eng:content-descriptor-earliest-civilizations ,
-    eng:content-descriptor-ancient-greece ,
-    eng:content-descriptor-non-european-society .
+    eng:contentdescriptor-earliest-civilizations ,
+    eng:contentdescriptor-ancient-greece ,
+    eng:contentdescriptor-non-european-society .
 
 eng:progression-history-key-stage-3-second-order-concepts
   a curric:Progression ;
   rdfs:label "History Key Stage 3 Second Order Concepts"@en ;
-  rdfs:comment "History progression for key stage 3: Second Order Concepts."@en ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-3 ;
   curric:coversContent
-    eng:content-descriptor-narratives-analyses-accounts ,
-    eng:content-descriptor-narratives-analyses-accounts-consequence ,
-    eng:content-descriptor-narratives-analyses-accounts-change-and-continuity ,
-    eng:content-descriptor-narratives-analyses-accounts-similarity-and-difference ,
-    eng:content-descriptor-narratives-analyses-accounts-historical-significance ,
-    eng:content-descriptor-narratives-analyses-accounts-sources-and-evidence ,
-    eng:content-descriptor-narratives-analyses-accounts-historical-interpretations .
+    eng:contentdescriptor-narratives-analyses-accounts ,
+    eng:contentdescriptor-narratives-analyses-accounts-consequence ,
+    eng:contentdescriptor-narratives-analyses-accounts-change-and-continuity ,
+    eng:contentdescriptor-narratives-analyses-accounts-similarity-and-difference ,
+    eng:contentdescriptor-narratives-analyses-accounts-historical-significance ,
+    eng:contentdescriptor-narratives-analyses-accounts-sources-and-evidence ,
+    eng:contentdescriptor-narratives-analyses-accounts-historical-interpretations .
 
 eng:progression-history-key-stage-3-nature-of-historical-enquiry
   a curric:Progression ;
   rdfs:label "History Key Stage 3 Nature of Historical Enquiry"@en ;
-  rdfs:comment "History progression for key stage 3: Nature of Historical Enquiry."@en ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-3 ;
   curric:coversContent
-    eng:content-descriptor-historians-investigate-the-past ,
-    eng:content-descriptor-historians-construct-arguments .
+    eng:contentdescriptor-historians-investigate-the-past ,
+    eng:contentdescriptor-historians-construct-arguments .
 
 eng:progression-history-key-stage-3-substantive-concepts
   a curric:Progression ;
   rdfs:label "History Key Stage 3 Substantive Concepts"@en ;
-  rdfs:comment "History progression for key stage 3: Substantive Concepts."@en ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-3 ;
   curric:coversContent
-    eng:content-descriptor-abstract-terms-historically-grounded .
+    eng:contentdescriptor-abstract-terms-historically-grounded .
 
 eng:progression-history-key-stage-3-history-of-diverse-britain
   a curric:Progression ;
   rdfs:label "History Key Stage 3 History of Diverse Britain"@en ;
-  rdfs:comment "History progression for key stage 3: History of Diverse Britain."@en ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-3 ;
   curric:coversContent
-    eng:content-descriptor-local-history-study ,
-    eng:content-descriptor-church-state-society-1066-1509 ,
-    eng:content-descriptor-church-state-society-1509-1745 ,
-    eng:content-descriptor-ideas-power-industry-empire-1745-1901 ,
-    eng:content-descriptor-challenges-britain-europe-world-1901-present ,
-    eng:content-descriptor-aspect-british-history-before-1066 .
+    eng:contentdescriptor-local-history-study ,
+    eng:contentdescriptor-church-state-society-1066-1509 ,
+    eng:contentdescriptor-church-state-society-1509-1745 ,
+    eng:contentdescriptor-ideas-power-industry-empire-1745-1901 ,
+    eng:contentdescriptor-challenges-britain-europe-world-1901-present ,
+    eng:contentdescriptor-aspect-british-history-before-1066 .
 
 eng:progression-history-key-stage-3-significant-aspects-of-world-history
   a curric:Progression ;
   rdfs:label "History Key Stage 3 Significant Aspects of World History"@en ;
-  rdfs:comment "History progression for key stage 3: Significant Aspects of World History."@en ;
   dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
   curric:isProgressionOf eng:scheme-history-key-stage-3 ;
   curric:coversContent
-    eng:content-descriptor-significant-society-or-issue .
+    eng:contentdescriptor-significant-society-or-issue .

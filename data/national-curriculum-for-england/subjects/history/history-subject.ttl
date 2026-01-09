@@ -56,18 +56,12 @@ eng:subjectgroup-history
   curric:coversDiscipline eng:discipline-history .
   
 # ----------------------------------------------------------------------
-# Subject 
+# Subject
 # ----------------------------------------------------------------------
 
 eng:subject-history
   a curric:Subject ;
   rdfs:label "History"@en ;
-  dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
-  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
-  curric:isSubjectOf eng:subjectgroup-history ;
-  curric:coversStrand eng:strand-knowledge-of-past ,
-                   eng:strand-knowledge-of-history ;
-  
   curric:aim 
     """Know and understand the history of these islands as a coherent, chronological narrative, 
     from the earliest times to the present day: how people’s lives have shaped this nation and how 
@@ -87,4 +81,9 @@ eng:subject-history
     """Gain historical perspective by placing their growing knowledge into different contexts: 
     understanding the connections between local, regional, national and international history; 
     between cultural, economic, military, political, religious and social history; and between 
-    short- and long-term timescales."""@en .
+    short- and long-term timescales."""@en ;
+  dcterms:source <https://www.gov.uk/government/publications/national-curriculum-in-england-history-programmes-of-study> ;
+  dcterms:modified "2025-12-18T12:33:32Z"^^xsd:dateTime ;
+  curric:isSubjectOf eng:subjectgroup-history ;
+  curric:coversStrand eng:strand-knowledge-of-past ,
+                   eng:strand-knowledge-of-history .
