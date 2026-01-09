@@ -62,26 +62,27 @@ eng:subjectgroup-history
 eng:subject-history
   a curric:Subject ;
   rdfs:label "History"@en ;
-  curric:aim 
+  curric:aims (
     """Know and understand the history of these islands as a coherent, chronological narrative, 
     from the earliest times to the present day: how people’s lives have shaped this nation and how 
-    Britain has influenced and been influenced by the wider world."""@en ,
+    Britain has influenced and been influenced by the wider world."""@en
     """Know and understand significant aspects of the history of the wider world: the nature of 
     ancient civilisations; the expansion and dissolution of empires; characteristic features of 
-    past non-European societies; achievements and follies of mankind."""@en ,
+    past non-European societies; achievements and follies of mankind."""@en
     """Gain and deploy a historically grounded understanding of abstract terms such as ‘empire’, 
-    ‘civilisation’, ‘parliament’ and ‘peasantry’."""@en ,
+    ‘civilisation’, ‘parliament’ and ‘peasantry’."""@en
     """Understand historical concepts such as continuity and change, cause and consequence, 
     similarity, difference and significance, and use them to make connections, draw contrasts, 
     analyse trends, frame historically valid questions and create their own structured accounts, 
-    including written narratives and analyses."""@en ,
+    including written narratives and analyses."""@en
     """Understand the methods of historical enquiry, including how evidence is used rigorously to 
     make historical claims, and discern how and why contrasting arguments and interpretations of 
-    the past have been constructed."""@en ,
+    the past have been constructed."""@en
     """Gain historical perspective by placing their growing knowledge into different contexts: 
     understanding the connections between local, regional, national and international history; 
     between cultural, economic, military, political, religious and social history; and between 
-    short- and long-term timescales."""@en ;
+    short- and long-term timescales."""@en
+  ) ;
   curric:rationale "Text for rationale..."@en ;
   curric:structure "Text for structure..."@en ;
   curric:schoolCurriculum "Text for school curriculum..."@en ;

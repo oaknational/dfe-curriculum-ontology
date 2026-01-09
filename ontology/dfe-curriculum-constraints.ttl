@@ -352,13 +352,22 @@ curricshapes:SubjectShape
   ] ;
 
   sh:property [
-     sh:path curric:aim ;
-     sh:datatype rdf:langString ;
-     sh:minCount 1 ;
-     sh:name "aim" ;
-     sh:description "Every subject must have one or more aims." ;
-     sh:message "Subjects must have one or more aims." ;
-   ] ;
+    sh:path curric:aims ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:name "aims" ;
+    sh:description "Every subject must have an ordered list of aims." ;
+    sh:message "Subjects must have exactly one ordered list of aims with language-tagged string values." ;
+    sh:node [
+      sh:property [
+        sh:path ( [ sh:zeroOrMorePath rdf:rest ] rdf:first ) ;
+        sh:datatype rdf:langString ;
+        sh:minCount 1 ;
+        sh:description "Each aim in the list must be a language-tagged string." ;
+        sh:message "The aims list must contain at least one language-tagged string value." ;
+      ]
+    ]
+  ] ;
 
   sh:property [
     sh:path curric:isSubjectOf ;
@@ -569,6 +578,16 @@ curricshapes:StrandShape
   ] ;
 
   sh:property [
+    sh:path curric:displayOrder ;
+    sh:datatype xsd:positiveInteger ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:name "display order" ;
+    sh:description "Every strand must have a numeric display order." ;
+    sh:message "Strands must have exactly one positive integer display order value." ;
+  ] ;
+
+  sh:property [
     sh:path skos:inScheme ;
     sh:class skos:ConceptScheme ;
     sh:minCount 1 ;
@@ -647,6 +666,16 @@ curricshapes:SubStrandShape
   ] ;
 
   sh:property [
+    sh:path curric:displayOrder ;
+    sh:datatype xsd:positiveInteger ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:name "display order" ;
+    sh:description "Every sub-strand must have a numeric display order." ;
+    sh:message "Sub-strands must have exactly one positive integer display order value." ;
+  ] ;
+
+  sh:property [
     sh:path skos:inScheme ;
     sh:class skos:ConceptScheme ;
     sh:minCount 1 ;
@@ -707,6 +736,16 @@ curricshapes:ContentDescriptorShape
     sh:name "preferred label" ;
     sh:description "Every content descriptor must have exactly one skos:prefLabel." ;
     sh:message "Content descriptors must have exactly one skos:prefLabel for SKOS taxonomy." ;
+  ] ;
+
+  sh:property [
+    sh:path curric:displayOrder ;
+    sh:datatype xsd:positiveInteger ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:name "display order" ;
+    sh:description "Every content descriptor must have a numeric display order." ;
+    sh:message "Content descriptors must have exactly one positive integer display order value." ;
   ] ;
 
   sh:property [
@@ -776,6 +815,16 @@ curricshapes:SubContentDescriptorShape
     sh:name "preferred label" ;
     sh:description "Every sub-content descriptor must have exactly one skos:prefLabel." ;
     sh:message "Sub-content descriptors must have exactly one skos:prefLabel for SKOS taxonomy." ;
+  ] ;
+
+  sh:property [
+    sh:path curric:displayOrder ;
+    sh:datatype xsd:positiveInteger ;
+    sh:minCount 1 ;
+    sh:maxCount 1 ;
+    sh:name "display order" ;
+    sh:description "Every sub-content descriptor must have a numeric display order." ;
+    sh:message "Sub-content descriptors must have exactly one positive integer display order value." ;
   ] ;
 
   sh:property [

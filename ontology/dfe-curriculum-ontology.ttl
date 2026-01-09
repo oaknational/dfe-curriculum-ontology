@@ -329,10 +329,10 @@ curric:isProgressionOf
   owl:inverseOf curric:hasProgression ;
   rdfs:isDefinedBy curric: .
 
-curric:aim
+curric:aims
   rdf:type owl:ObjectProperty ;
-  rdfs:label "aim"@en ;
-  rdfs:comment "Specific educational aim for this subject as stated in the National Curriculum."@en ;
+  rdfs:label "aims"@en ;
+  rdfs:comment "Ordered list of educational aims for this subject as stated in the National Curriculum."@en ;
   rdfs:domain curric:Subject ;
   rdfs:range rdf:List ;
   rdfs:isDefinedBy curric: .
@@ -392,6 +392,13 @@ curric:supportingGuidance
   ] ;
   rdfs:range rdf:langString ;
   rdfs:isDefinedBy curric: .
+
+curric:displayOrder
+  rdf:type owl:DatatypeProperty ;
+  rdfs:label "display order"@en ;
+  rdfs:comment "Numeric position for ordered display of curriculum concepts."@en ;
+  rdfs:domain skos:Concept ;
+  rdfs:range xsd:integer .
 
 curric:example
   rdf:type owl:DatatypeProperty ;
