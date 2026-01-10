@@ -65,7 +65,7 @@ eng:subjectgroup-history
 eng:subject-history
   a curric:Subject ;
   rdfs:label "History"@en ;
-  curric:aim 
+  curric:aims 
     """Know and understand the history of these islands as a coherent, chronological narrative, 
     from the earliest times to the present day: how people’s lives have shaped this nation and how 
     Britain has influenced and been influenced by the wider world."""@en ,
